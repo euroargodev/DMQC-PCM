@@ -245,7 +245,7 @@ class Plotter:
         maxcols = 4
         fig_max_size = 2.5*self.m.K if self.m.K < maxcols else 10
         #fig_max_size = [2.5*self.m.K if self.m.K < maxcols else 10, 6*np.int(self.m.K/maxcols)]
-        defaults = {'figsize': (fig_max_size, 12), 'dpi': 80,
+        defaults = {'figsize': (fig_max_size, 8), 'dpi': 80,
                     'facecolor': 'w', 'edgecolor': 'k'}
         # defaults = {'figsize': fig_max_size, 'dpi': 80,
         #            'facecolor': 'w', 'edgecolor': 'k'}
@@ -261,7 +261,7 @@ class Plotter:
                 ax[k].plot(Qkq.values.T, da[VERTICAL_DIM], label=(
                     "%0.2f") % (Qkq[QUANT_DIM]), color=cmap(iq))
             ax[k].set_title(("Component: %i") % (k), color=cmapK(k))
-            ax[k].legend(loc='lower right')
+            #ax[k].legend(loc='lower right')
             ax[k].set_xlim(xlim)
             if isinstance(ylim, str):
                 ax[k].set_ylim(
@@ -273,13 +273,14 @@ class Plotter:
                 ax[k].set_ylabel(ylabel)
             ax[k].grid(True)
 
+        ax[k].legend(bbox_to_anchor=(1.5, 1), loc='upper right')
         plt.subplots_adjust(top=0.90)
         fig.suptitle('$\\bf{Vertical\\ structure\\ of\\ classes}$')
         fig_size = fig.get_size_inches()
         plt.draw()
         # print(fig_size)
         #fig.text((fig_size[0]/2)/fig_size[0], 1-(fig_size[1]-0.5)/fig_size[1], xlabel, va='center', fontsize=10)
-        fig.text((fig_size[0]/2)/fig_size[0], 0.35,
+        fig.text((fig_size[0]/2)/fig_size[0], 0.05,
                  xlabel, va='center', fontsize=10)
         # plt.tight_layout()
 
@@ -374,7 +375,7 @@ class Plotter:
                     "K=%i") % (Qqk[CLASS_DIM]), color=cmapK(k))
             ax[cnt].set_title(("quantile: %.2f") % (
                 da[QUANT_DIM].values[q]), color=cmap(q), fontsize=12)
-            ax[cnt].legend(loc='lower right', fontsize=11)
+            #ax[cnt].legend(loc='lower right', fontsize=11)
             ax[cnt].set_xlim(xlim)
 
             if isinstance(ylim, str):
@@ -388,13 +389,13 @@ class Plotter:
             ax[cnt].grid(True)
             cnt = cnt+1
 
+        ax[cnt-1].legend(bbox_to_anchor=(1.6, 1), loc='upper right', fontsize=11)
         plt.subplots_adjust(top=0.90)
         plt.rc('xtick', labelsize=10)
         plt.rc('ytick', labelsize=10)
         fig.suptitle('$\\bf{Vertical\\ structure\\ of\\ classes}$')
         fig_size = fig.get_size_inches()
-        fig.text((fig_size[0]/2)/fig_size[0], 1-(fig_size[1] -
-                                                 0.5)/fig_size[1], xlabel, va='center', fontsize=10)
+        fig.text((fig_size[0]/2)/fig_size[0], 0.05, xlabel, va='center', fontsize=10)
         # fig.text(0.04, 0.5, 'depth (m)', va='center',
         #         rotation='vertical', fontsize=12)
         # plt.tight_layout()
@@ -446,7 +447,6 @@ class Plotter:
             extent = np.array([min(self.ds[self.coords_dict.get('longitude')]), max(self.ds[self.coords_dict.get('longitude')]), min(
                 self.ds[self.coords_dict.get('latitude')]), max(self.ds[self.coords_dict.get('latitude')])]) 
             #+ np.array([-0.1, +0.1, -0.1, +0.1])
-            print(extent)
 
         if time_slice == 'most_freq_label':
             dsp = get_most_freq_labels(self.ds)

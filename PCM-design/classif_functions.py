@@ -116,7 +116,19 @@ def linear_interpolation_remap(
     return remapped
 
 def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path):
-    #TODO: explain function
+    """ Get data from argo reference database
+    
+        Parameters
+        ----------
+        geo_extent: array with geographical extent [min lon, max lon, min lat, max lat]
+        WMOboxes_latlon: WMOboxes_latlon file name
+        wmo_boxes: wmo_boxes file name
+        ref_path: path to argo reference database
+        
+        Returns
+        -------
+        Datset array with data
+    """
     
     # Read wmo boxes latlon: load txt file
     WMOboxes_latlon = np.loadtxt(WMOboxes_latlon, skiprows=1)
@@ -143,7 +155,10 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path):
     iprofiles = 0
     for ifile in boxes_list:
         
-        mat_dict_load = sp.io.loadmat(ref_path + 'argo_' + str(int(ifile)) + '.mat')
+        try:
+            mat_dict_load = sp.io.loadmat(ref_path + 'argo_' + str(int(ifile)) + '.mat')
+        except FileNotFoundError:
+            continue
     
         #concat
         if cnt == 0:
