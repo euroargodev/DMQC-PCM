@@ -127,7 +127,7 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path):
         
         Returns
         -------
-        Datset array with data
+        Dataset with data
     """
     
     # Read wmo boxes latlon: load txt file
@@ -141,22 +141,41 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path):
     boxes_list = WMOboxes_latlon[boo_array, 0]
     
     # Read wmo_boxes.mat
-    wmo_boxes = sp.io.loadmat('wmo_boxes.mat')
+    wmo_boxes = sp.io.loadmat(wmo_boxes)
     wmo_boxes = wmo_boxes.get('la_wmo_boxes')
+    
+    # check if CTD, argo or both
+    argo_data = np.any(wmo_boxes[:,3]==1)
+    ctd_data = np.any(wmo_boxes[:,1]==1)
     
     # look if boxes has data
     wmo_boxes_selec = wmo_boxes[np.isin(wmo_boxes[:,0], boxes_list),:]
-    # TODO: only argo data (think on it)
-    boxes_list = wmo_boxes_selec[wmo_boxes_selec[:,1]==1, 0]
+    boxes_list = wmo_boxes_selec[np.logical_or(wmo_boxes_selec[:,1],wmo_boxes_selec[:,3]==1), 0]
+    last_file = boxes_list[-1]
+    
+    if argo_data & ctd_data:
+        # duplicate boxes list
+        boxes_list = np.concatenate((boxes_list, boxes_list))
+        # start with argo data
+        file_str = 'argo_'
+        folder = '/argo_profiles/'
+    elif argo_data:
+        file_str = 'argo_'
+        folder = '/argo_profiles/'
+    elif ctd_data:
+        file_str = 'ctd_'
+        folder = '/historical_ctd/'
 
     #load from .mat files
     #files loop
     cnt = 0
     iprofiles = 0
     for ifile in boxes_list:
+
+        print(ref_path + file_str + str(int(ifile)) + '.mat')
         
         try:
-            mat_dict_load = sp.io.loadmat(ref_path + 'argo_' + str(int(ifile)) + '.mat')
+            mat_dict_load = sp.io.loadmat(ref_path + folder + file_str + str(int(ifile)) + '.mat')
         except FileNotFoundError:
             continue
     
@@ -205,6 +224,11 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path):
             mat_dict['dates'] = np.concatenate((mat_dict['dates'], mat_dict_load['dates']), axis=1)
         
         cnt = cnt+1
+        
+        # if ctd + argo
+        if ifile == last_file:
+            file_str = 'ctd_'
+            folder = '/historical_ctd/'
     
     #convert from dict to xarray
     ds = xr.Dataset(
