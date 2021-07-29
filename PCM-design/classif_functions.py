@@ -1,6 +1,7 @@
 #function for classification
 import xarray as xr
 import numpy as np
+import pandas as pd
 
 import scipy as sp
 from scipy.io import loadmat
@@ -242,7 +243,7 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path):
          coords=dict(
              long=(["n_profiles"], np.squeeze(mat_dict['long'])),
              lat=(["n_profiles"], np.squeeze(mat_dict['lat'])),
-             dates=(["n_profiles"], np.squeeze(mat_dict['dates'])),
+             dates=(["n_profiles"], pd.to_datetime(list(map(str, map(int, np.squeeze(mat_dict['dates'])))))),
          ),
          attrs=dict(
              __header__=mat_dict['__header__'],
