@@ -116,7 +116,7 @@ def linear_interpolation_remap(
     ).coords[output_dim]
     return remapped
 
-def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path):
+def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
     """ Get data from argo reference database
     
         Parameters
@@ -260,5 +260,19 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path):
     ds = ds.where(ds.long <= geo_extent[1], drop = True)
     ds = ds.where(ds.lat >= geo_extent[2], drop = True)
     ds = ds.where(ds.lat <= geo_extent[3], drop = True)
+    
+    #choose season
+    if 'all' not in season:
+        season_idxs = ds.groupby('dates.season').groups
+        
+        season_select = []
+        for key in season:
+            season_select = np.concatenate((season_select, np.squeeze(season_idxs.get(key))))
+            
+        if len(season) == 1:
+            season_select = np.array(season_select)
+            
+        season_select = np.sort(season_select.astype(int))
+        ds = ds.isel(n_profiles = season_select)
     
     return ds
