@@ -785,9 +785,12 @@ class Plotter:
         for cl in range(self.m.K):
 
             if time_bins == 'month':
+                x_ticks_k = [xaxis_labels[i] for i in counts_k.month.values -1]
                 starts = counts_cum.isel(k=cl) - counts_k.isel(k=cl)
                 #ax.barh(counts_k.month, counts_k.isel(k=cl), left=starts, color=kmap(cl), label='K=' + str(cl))
-                ax.barh(xaxis_labels, counts_k.isel(k=cl), left=starts,
+                #ax.barh(x_ticks_k, counts_k.isel(k=cl), left=starts,
+                #        color=kmap(cl), label='K=' + str(cl))
+                ax.barh(counts_k.month.values-1, counts_k.isel(k=cl), left=starts,
                         color=kmap(cl), label='K=' + str(cl))
 
             if time_bins == 'season':
