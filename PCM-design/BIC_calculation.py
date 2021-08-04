@@ -209,6 +209,15 @@ def BIC_calculation(ds, corr_dist, coords_dict, time_steps, pcm_features, featur
     # TODO: latitude and longitude values
     # TODO: automatic detection of variables names
     # TODO: If only one time step?
+    
+    def find_closest(A, target):
+        #A must be sorted
+        idx = A.searchsorted(target)
+        idx = np.clip(idx, 1, len(A)-1)
+        left = A[idx-1]
+        right = A[idx]
+        idx -= target - left < right - target
+        return idx
 
     # grid extent
     grid_extent = np.array([ds[coords_dict.get('longitude')].values.min(), ds[coords_dict.get('longitude')].values.max(
@@ -237,11 +246,17 @@ def BIC_calculation(ds, corr_dist, coords_dict, time_steps, pcm_features, featur
             latp = np.random.choice(ds[coords_dict.get('latitude')].values, 1, replace=False)
             lonp = np.random.choice(ds[coords_dict.get('longitude')].values, 1, replace=False)
             # remapping
-            new_lats, new_lons = mapping_corr_dist(
-                corr_dist=corr_dist, start_point=np.concatenate((lonp, latp)), grid_extent=grid_extent)
+            #new_lats, new_lons = mapping_corr_dist(
+            #    corr_dist=corr_dist, start_point=np.concatenate((lonp, latp)), grid_extent=grid_extent)
 
-            ds.sel({'latitude': 30, 'longitude': 30}, method='nearest')
-            ds_run_i = ds.sel({'latitude': list(new_lats), 'longitude': list(new_lons)}, method='nearest')
+            #ds.sel({'latitude': 30, 'longitude': 30}, method='nearest')
+            ilats_new = find_closest(ds.lat.values, new_lats)
+            print(ilats_new)
+            ilongs_new = find_closest(ds.long.values, new_lons)
+            print(ilongs_new)
+            #ds_run_i = ds.sel({'lat': list(new_lats), 'long': list(new_lons)}, method='nearest')
+            ds_run_i = ds.sel({'lat': ilats_new, 'long': ilongs_new})
+            print(ds_run_i)
             ds_run_i = ds_run_i.sel({'time': time_steps[itime]})
 
             # change lat and lot dimensions by index to be able to merge the datasets (it is not necessary to have lat lon information)
