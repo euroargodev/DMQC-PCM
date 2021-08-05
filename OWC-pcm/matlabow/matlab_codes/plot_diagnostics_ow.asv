@@ -663,7 +663,7 @@ end
 
 drawnow
 set(gcf,'papertype','usletter','paperunits','inches','paperorientation','portrait','paperposition',[.5,.25,8,10.25]);
-%print('-depsc ', strcat(po_system_configuration.FLOAT_PLOTS_DIRECTORY, pn_float_dir, pn_float_name, '_8.eps'));
+print('-depsc ', strcat(po_system_configuration.FLOAT_PLOTS_DIRECTORY, pn_float_dir, pn_float_name, '_8.eps'));
 
 
 end %if(isempty(find(isnan(cal_SAL)==0))==0) ---------------
