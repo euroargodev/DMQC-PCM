@@ -46,22 +46,17 @@ hist_Z = grid_Z(index_ellipse) ;
 
 % selection of profiles in the same class
 disp('%%%%%%%%%%%%% SELECT CLASSES IN find_besthist %%%%%%%%%%%%%%%%%%%%')
-
 % load .txt
 class_matrix = importdata(class_txt, ' ', 1);
 class_lats = class_matrix.data(:,1);
 class_lons = class_matrix.data(:,2);
 class_values = class_matrix.data(:,3);
-
 % find float profiles in classes list
 % TODO: I should include the float in the classification notebook
 disp(LAT)
-disp(LONG)
-disp(sum((abs(class_lats-LAT)<1e-3).*(abs(class_lons-LONG)<1e-3)))
-prof_class = class_values((abs(class_lats-LAT)<1e-3).*(abs(class_lons-LONG)<1e-3));
-disp('profile class')
-disp(prof_class)
+disp(sum((abs(class_lats-LAT)<1e-3)*()))
 %disp(class_lats(abs(class_lats-LAT)<1e-3))
+disp(class_lons)
 %class_prof = class_values(class_lats == LAT);
 %disp(class_prof)
 %ilats = ismember(class_lats, hist_lat);
