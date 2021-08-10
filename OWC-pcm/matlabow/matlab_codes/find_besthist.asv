@@ -36,32 +36,55 @@ end
 
 index_ellipse = find( ellipse<1 ) ;
 hist_long  = grid_long (index_ellipse) ;
-%disp(hist_long)
 hist_lat   = grid_lat  (index_ellipse) ;
-%disp(hist_lat)
 hist_dates = grid_dates(index_ellipse) ;
-%disp(hist_dates)
 hist_Z = grid_Z(index_ellipse) ;
-%disp(hist_Z)
 
-% selection of profiles in the same class
-disp('%%%%%%%%%%%%% SELECT CLASSES IN find_besthist %%%%%%%%%%%%%%%%%%%%')
+if ~isempty(class_txt)
+    % selection of profiles in the same class
+    disp('--------------SELECT CLASSES IN find_besthist--------------')
+
 % load .txt
 class_matrix = importdata(class_txt, ' ', 1);
 class_lats = class_matrix.data(:,1);
 class_lons = class_matrix.data(:,2);
 class_values = class_matrix.data(:,3);
+
 % find float profiles in classes list
 % TODO: I should include the float in the classification notebook
 disp(LAT)
-disp(sum((abs(class_lats-LAT)<1e-3)*()))
-%disp(class_lats(abs(class_lats-LAT)<1e-3))
-disp(class_lons)
-%class_prof = class_values(class_lats == LAT);
-%disp(class_prof)
-%ilats = ismember(class_lats, hist_lat);
+disp(LONG)
+prof_class = class_values((abs(class_lats-LAT)<1e-3)&(abs(class_lons-LONG)<1e-3));
+fprintf('profile class: %i\n', prof_class)
 
-%disp(sum(ilats))
+% find profiles in ellipse in the .txt and get classes
+class_elip = NaN(length(hist_lat),1);
+for iprof = 1: length(class_lats)
+    iclass_logical = (abs(hist_lat-class_lats(iprof))<1e-3)&(abs(hist_long-class_lons(iprof))<1e-3);
+    if sum(iclass_logical) == 1
+        class_elip(iclass_logical) = class_values(iprof);
+    end
+end
+fprintf('profiles in ellipse: %i\n', length(hist_lat))
+fprintf('profiles in ellipse and in .txt: %i\n', sum(~isnan(class_elip)))
+
+% choose profiles in the same class
+if ~isempty(prof_class)
+    index_ellipse = index_ellipse(class_elip == prof_class);
+    fprintf('profiles in ellipse and the same class: %i\n', length(index_ellipse))
+    hist_long  = hist_long(class_elip == prof_class) ;
+    hist_lat   = hist_lat(class_elip == prof_class) ;
+    hist_dates = hist_dates(class_elip == prof_class) ;
+    hist_Z = hist_Z(class_elip == prof_class) ;
+else
+    disp('Profile is not in classes .txt file. All profiles in ellipse are used')
+end
+
+disp(length(index_ellipse))
+disp(length(hist_long))
+disp(length(hist_lat))
+disp(length(hist_dates))
+disp(length(hist_Z))
 
 index=index_ellipse; %if <max_casts
 
@@ -85,7 +108,6 @@ if(length(index_ellipse)>max_casts)
         end
     end
     index_remain(ii)=[];
-
 
 %% sort remaining points by large spatial correlations ---
 
