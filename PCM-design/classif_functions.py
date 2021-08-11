@@ -261,6 +261,9 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
     ds = ds.where(ds.lat >= geo_extent[2], drop = True)
     ds = ds.where(ds.lat <= geo_extent[3], drop = True)
     
+    # drop ptmp variable
+    ds=ds.drop('ptmp')
+    
     #choose season
     if 'all' not in season:
         season_idxs = ds.groupby('dates.season').groups
