@@ -296,6 +296,7 @@ def add_floatdata(float_WMO, ds):
         -------
         Dataset including float profiles
     """
+    
     # load float profiles using argopy with option localftp
     import argopy
     argopy.set_options(src='localftp', local_ftp='/home/coriolis_exp/spool/co05/co0508/')
@@ -305,6 +306,17 @@ def add_floatdata(float_WMO, ds):
     ds_f = argo_loader.float([float_WMO]).to_xarray()
     ds_f = ds_f.argo.point2profile()
     #print(ds_f)
+    
+    #delete float profiles in reference dataset
+    cnt = 0
+    drop_index = []
+    for isource in ds['source'].values:
+        if str(float_WMO) in isource[0]:
+            #print(isource)
+            drop_index.append(cnt)
+        cnt = cnt +1S
+    ds = ds.drop_sel(n_profiles = drop_index)
+    ds['n_profiles'] = np.arange(len(ds['n_profiles'].values))
     
     # create a dataset similar to ds for concatenation
     nan_matrix = np.empty((len(ds_f['N_PROF'].values), len(ds['n_pres'].values) - len(ds_f['N_LEVELS'].values)))
