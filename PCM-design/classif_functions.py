@@ -264,6 +264,10 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
     # drop ptmp variable
     ds=ds.drop('ptmp')
     
+    # convert dimension to coordinates
+    ds['n_profiles'] = ds.n_profiles.values
+    ds['n_pres'] = ds.n_pres.values
+    
     #choose season
     if 'all' not in season:
         season_idxs = ds.groupby('dates.season').groups
@@ -279,3 +283,50 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
         ds = ds.isel(n_profiles = season_select)
     
     return ds
+
+def add_floatdata(float_WMO, ds):
+    """ Add selected float profiles to reference daataset
+    
+        Parameters
+        ----------
+        float_WMO: float number
+        ds: dataset with reference data from get_refdata function
+        
+        Returns
+        -------
+        Dataset including float profiles
+    """
+    # load float profiles using argopy with option localftp
+    import argopy
+    argopy.set_options(src='localftp', local_ftp='/home/coriolis_exp/spool/co05/co0508/')
+    from argopy import DataFetcher as ArgoDataFetcher
+    argo_loader = ArgoDataFetcher()
+    
+    ds_f = argo_loader.float([float_WMO]).to_xarray()
+    ds_f = ds_f.argo.point2profile()
+    #print(ds_f)
+    
+    # create a dataset similar to ds for concatenation
+    nan_matrix = np.empty((len(ds_f['N_PROF'].values), len(ds['n_pres'].values) - len(ds_f['N_LEVELS'].values)))
+    nan_matrix.fill(np.nan)
+    ds_fc = xr.Dataset(
+             data_vars=dict(
+                 pres=(["n_profiles", "n_pres"], np.concatenate((ds_f['PRES'].values, nan_matrix),axis=1)),
+                 temp=(["n_profiles", "n_pres"], np.concatenate((ds_f['TEMP'].values, nan_matrix),axis=1)),
+                 sal=(["n_profiles", "n_pres"], np.concatenate((ds_f['PSAL'].values, nan_matrix),axis=1)),
+                 source=(["n_profiles"], nan_matrix[:,1]),
+             ),
+             coords=dict(
+                 long=(["n_profiles"], ds_f['LONGITUDE'].values),
+                 lat=(["n_profiles"], ds_f['LATITUDE'].values),
+                 dates=(["n_profiles"], ds_f['TIME'].values),
+             )
+         )
+    ds_fc['n_profiles'] = ds_fc.n_profiles.values + len(ds.n_profiles.values)
+    ds_fc['n_pres'] = ds_fc.n_pres.values
+    #print(ds_fc)
+    
+    # combine datasets
+    ds_out = xr.combine_by_coords([ds, ds_fc])
+    
+    return ds_out
