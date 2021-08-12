@@ -314,7 +314,7 @@ def add_floatdata(float_WMO, ds):
         if str(float_WMO) in isource[0]:
             #print(isource)
             drop_index.append(cnt)
-        cnt = cnt +1S
+        cnt = cnt +1
     ds = ds.drop_sel(n_profiles = drop_index)
     ds['n_profiles'] = np.arange(len(ds['n_profiles'].values))
     
