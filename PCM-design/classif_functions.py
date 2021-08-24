@@ -173,7 +173,7 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
     iprofiles = 0
     for ifile in boxes_list:
 
-        print(ref_path + file_str + str(int(ifile)) + '.mat')
+        print(ref_path + folder + file_str + str(int(ifile)) + '.mat')
         
         try:
             mat_dict_load = sp.io.loadmat(ref_path + folder + file_str + str(int(ifile)) + '.mat')
