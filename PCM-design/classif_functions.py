@@ -180,11 +180,20 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
         except FileNotFoundError:
             continue
         
+        profile_depth = np.nanmax(mat_dict_load['pres'], axis=0)
+        #print('number of profiles < 800dbar')
+        #print(len(profile_depth[profile_depth<800]))
+        #print(profile_depth[profile_depth<800])
+        
         # source should be a str list
         new_source = []
         for isource in mat_dict_load['source'][0]:
             new_source.append(isource[0])
         mat_dict_load['source'] = new_source
+        #print(np.array(mat_dict_load['source'])[profile_depth<800])
+        profiles_to_see = mat_dict_load['temp'][:,profile_depth<800]
+        #if len(profile_depth[profile_depth<800]) != 0:
+        #    print(profiles_to_see[:,-1])
         
         #concat
         if cnt == 0:
