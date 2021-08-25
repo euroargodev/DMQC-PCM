@@ -178,6 +178,7 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
         try:
             mat_dict_load = sp.io.loadmat(ref_path + folder + file_str + str(int(ifile)) + '.mat')
         except FileNotFoundError:
+            print('file not found')
             continue
         
         profile_depth = np.nanmax(mat_dict_load['pres'], axis=0)
