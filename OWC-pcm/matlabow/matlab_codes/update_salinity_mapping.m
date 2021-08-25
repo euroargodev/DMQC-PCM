@@ -187,8 +187,8 @@ for i = 1 : length( missing_profile_index )
         % find ln_max_casts historical points that are most strongly correlated with the float profile
         
         %[ index ] = find_besthist( la_grid_lat, la_grid_long, la_grid_dates, la_grid_Z, LAT, LONG2, DATES, Z, latitude_large, latitude_small, longitude_large, longitude_small, phi_large, phi_small, map_age, map_use_pv, ln_max_casts );      % change config 129
-    %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/PCM_classes_NAtlac1_argo_LITTLE.txt';
-    class_txt = [];
+    class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_NAtlac1_argo_k2.txt';
+    %class_txt = [];
 	[ index ] = find_besthist( la_grid_lat, la_grid_long, la_grid_dates, la_grid_Z, LAT, LONG2, DATES, Z, latitude_large, latitude_small, longitude_large, longitude_small, phi_large, phi_small, map_age_small, map_age_large, map_use_pv, ln_max_casts, class_txt );  %AW June 2020
 	
         clear la_grid_lat la_grid_long la_grid_dates
