@@ -39,7 +39,7 @@ def interpolate_standard_levels(ds, std_lev):
     
     # vars to interpolate
     datavars = [dv for dv in list(ds.variables) if set(['n_pres', 'n_profiles']) == set(
-            ds[dv].dims) and 'ptmp' not in dv]
+            ds[dv].dims)]
     # coords
     coords = [dv for dv in list(ds.coords)]
     # vars depending on N_PROF only
@@ -173,20 +173,13 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
     iprofiles = 0
     for ifile in boxes_list:
 
-        print(ref_path + folder + file_str + str(int(ifile)) + '.mat')
+        print(ref_path + file_str + str(int(ifile)) + '.mat')
         
         try:
             mat_dict_load = sp.io.loadmat(ref_path + folder + file_str + str(int(ifile)) + '.mat')
         except FileNotFoundError:
-            print('file not found')
             continue
-        
-        # source should be a str list
-        new_source = []
-        for isource in mat_dict_load['source'][0]:
-            new_source.append(isource[0])
-        mat_dict_load['source'] = new_source
-        
+    
         #concat
         if cnt == 0:
             mat_dict = mat_dict_load
@@ -226,8 +219,7 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
             mat_dict['temp'] = np.concatenate((mat_dict['temp'], mat_dict_load['temp']), axis=1)
             mat_dict['ptmp'] = np.concatenate((mat_dict['ptmp'], mat_dict_load['ptmp']), axis=1)
             mat_dict['sal'] = np.concatenate((mat_dict['sal'], mat_dict_load['sal']), axis=1)
-            #mat_dict['source'] = np.concatenate((mat_dict['source'], mat_dict_load['source']), axis=1)
-            mat_dict['source'][len(mat_dict['source']):] = mat_dict_load['source']
+            mat_dict['source'] = np.concatenate((mat_dict['source'], mat_dict_load['source']), axis=1)
             mat_dict['long'] = np.concatenate((mat_dict['long'], mat_dict_load['long']), axis=1)
             mat_dict['lat'] = np.concatenate((mat_dict['lat'], mat_dict_load['lat']), axis=1)
             mat_dict['dates'] = np.concatenate((mat_dict['dates'], mat_dict_load['dates']), axis=1)
@@ -246,7 +238,7 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
              temp=(["n_pres", "n_profiles"], mat_dict['temp']),
              ptmp=(["n_pres", "n_profiles"], mat_dict['ptmp']),
              sal=(["n_pres", "n_profiles"], mat_dict['sal']),
-             source=(["n_profiles"], mat_dict['source']),
+             source=(["n_profiles"], np.squeeze(mat_dict['source'])),
          ),
          coords=dict(
              long=(["n_profiles"], np.squeeze(mat_dict['long'])),
@@ -259,7 +251,6 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
              __globals__=mat_dict['__version__'],
          )
      )
-    
     
     # Change lat values from [0-360] to [-180,180]
     ds.long.values = np.mod((ds.long.values+180),360)-180
@@ -330,13 +321,12 @@ def add_floatdata(float_WMO, ds):
     # create a dataset similar to ds for concatenation
     nan_matrix = np.empty((len(ds_f['N_PROF'].values), len(ds['n_pres'].values) - len(ds_f['N_LEVELS'].values)))
     nan_matrix.fill(np.nan)
-    source_matrix = ['selected_float'] * len(ds_f['N_PROF'].values)
     ds_fc = xr.Dataset(
              data_vars=dict(
                  pres=(["n_profiles", "n_pres"], np.concatenate((ds_f['PRES'].values, nan_matrix),axis=1)),
                  temp=(["n_profiles", "n_pres"], np.concatenate((ds_f['TEMP'].values, nan_matrix),axis=1)),
                  sal=(["n_profiles", "n_pres"], np.concatenate((ds_f['PSAL'].values, nan_matrix),axis=1)),
-                 source=(["n_profiles"], source_matrix),
+                 source=(["n_profiles"], nan_matrix[:,1]),
              ),
              coords=dict(
                  long=(["n_profiles"], ds_f['LONGITUDE'].values),
@@ -350,34 +340,5 @@ def add_floatdata(float_WMO, ds):
     
     # combine datasets
     ds_out = xr.combine_by_coords([ds, ds_fc])
-    
-    return ds_out
-
-def order_class_names(ds_out, K):
-    """ Rename class from south to nord to have always the same class name for the same dataset
-    
-        Parameters
-        ----------
-        ds_out: dataset including PCM_LABELS variable
-        K: number of classes
-        
-        Returns
-        -------
-        Dataset ordered class names in PCM_LABELS variable
-    """
-
-    def assign_cluster_number(x):
-        if x==x:
-            return float(order[int(x)])
-        else:
-            return x
-
-    max_lat_class = []
-    for ik in range(K):
-        max_lat_class.append(np.nanmax(ds_out['lat'].where(ds_out['PCM_LABELS'] == ik)))
-    order = np.argsort(max_lat_class)
-    
-    vfunc = np.vectorize(assign_cluster_number)
-    ds_out['PCM_LABELS'].values = vfunc(ds_out['PCM_LABELS'].values)
     
     return ds_out

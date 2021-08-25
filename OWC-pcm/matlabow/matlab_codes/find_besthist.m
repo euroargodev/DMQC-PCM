@@ -51,9 +51,9 @@ if ~isempty(class_txt)
     class_values = class_matrix.data(:,3);
 
     % find float profile in classes list
-    % TODO: I should include the float in the classification notebook
+    % TODO: if I find 2 profiles
     prof_class = class_values((abs(class_lats-LAT)<1e-3)&(abs(class_lons-LONG)<1e-3));
-    fprintf('profile class: %i\n', prof_class)
+    fprintf('profile class: %i\n', prof_class(1))
 
     % find profiles in ellipse in the .txt and get classes
     class_elip = NaN(length(hist_lat),1);
@@ -67,13 +67,13 @@ if ~isempty(class_txt)
     fprintf('profiles in ellipse and in .txt: %i\n', sum(~isnan(class_elip)))
 
     % choose profiles in the same class
-    if ~isempty(prof_class)
-        index_ellipse = index_ellipse(class_elip == prof_class);
+    if ~isempty(prof_class(1))
+        index_ellipse = index_ellipse(class_elip == prof_class(1));
         fprintf('profiles in ellipse and the same class: %i\n', length(index_ellipse))
-        hist_long  = hist_long(class_elip == prof_class) ;
-        hist_lat   = hist_lat(class_elip == prof_class) ;
-        hist_dates = hist_dates(class_elip == prof_class) ;
-        hist_Z = hist_Z(class_elip == prof_class) ;
+        hist_long  = hist_long(class_elip == prof_class(1)) ;
+        hist_lat   = hist_lat(class_elip == prof_class(1)) ;
+        hist_dates = hist_dates(class_elip == prof_class(1)) ;
+        hist_Z = hist_Z(class_elip == prof_class(1)) ;
     else
         disp('Profile is not in classes .txt file. All profiles in ellipse are used')
     end
