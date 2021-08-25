@@ -181,20 +181,11 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
             print('file not found')
             continue
         
-        profile_depth = np.nanmax(mat_dict_load['pres'], axis=0)
-        #print('number of profiles < 800dbar')
-        #print(len(profile_depth[profile_depth<800]))
-        #print(profile_depth[profile_depth<800])
-        
         # source should be a str list
         new_source = []
         for isource in mat_dict_load['source'][0]:
             new_source.append(isource[0])
         mat_dict_load['source'] = new_source
-        #print(np.array(mat_dict_load['source'])[profile_depth<800])
-        profiles_to_see = mat_dict_load['temp'][:,profile_depth<800]
-        #if len(profile_depth[profile_depth<800]) != 0:
-        #    print(profiles_to_see[:,-1])
         
         #concat
         if cnt == 0:
@@ -359,5 +350,34 @@ def add_floatdata(float_WMO, ds):
     
     # combine datasets
     ds_out = xr.combine_by_coords([ds, ds_fc])
+    
+    return ds_out
+
+def order_class_names(ds_out, K):
+    """ Rename class from south to nord to have always the same class name for the same dataset
+    
+        Parameters
+        ----------
+        ds_out: dataset including PCM_LABELS variable
+        K: number of classes
+        
+        Returns
+        -------
+        Dataset ordered class names in PCM_LABELS variable
+    """
+
+    def assign_cluster_number(x):
+        if x==x:
+            return float(order[int(x)])
+        else:
+            return x
+
+    max_lat_class = []
+    for ik in range(K):
+        max_lat_class.append(np.nanmax(ds_out['lat'].where(ds_out['PCM_LABELS'] == ik)))
+    order = np.argsort(max_lat_class)
+    
+    vfunc = np.vectorize(assign_cluster_number)
+    ds_out['PCM_LABELS'].values = vfunc(ds_out['PCM_LABELS'].values)
     
     return ds_out

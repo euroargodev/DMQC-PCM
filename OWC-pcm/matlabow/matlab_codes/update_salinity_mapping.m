@@ -187,19 +187,19 @@ for i = 1 : length( missing_profile_index )
         % find ln_max_casts historical points that are most strongly correlated with the float profile
         
         %[ index ] = find_besthist( la_grid_lat, la_grid_long, la_grid_dates, la_grid_Z, LAT, LONG2, DATES, Z, latitude_large, latitude_small, longitude_large, longitude_small, phi_large, phi_small, map_age, map_use_pv, ln_max_casts );      % change config 129
-    class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/PCM_classes_NAtlac1_argo_LITTLE.txt';
-    %class_txt = [];
+    %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/PCM_classes_NAtlac1_argo_LITTLE.txt';
+    class_txt = [];
 	[ index ] = find_besthist( la_grid_lat, la_grid_long, la_grid_dates, la_grid_Z, LAT, LONG2, DATES, Z, latitude_large, latitude_small, longitude_large, longitude_small, phi_large, phi_small, map_age_small, map_age_large, map_use_pv, ln_max_casts, class_txt );  %AW June 2020
 	
         clear la_grid_lat la_grid_long la_grid_dates
         
 	[ la_bhist_sal, la_bhist_ptmp, la_bhist_pres, la_bhist_lat, la_bhist_long, la_bhist_dates ] = retr_region_ow( la_wmo_numbers, pn_float_name, po_system_configuration, index, PRES, map_p_delta ) ;
         la_bhist_Z = la_grid_Z(index);
-    if i == 78
-        disp('%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%')
-        matfilename = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/4900136_paper/mat_files/prof78_refdata_class_LITTLE.mat';
-        save(matfilename, 'la_bhist_sal', 'la_bhist_ptmp', 'la_bhist_pres', 'la_bhist_lat', 'la_bhist_long', 'la_bhist_dates')
-    end
+    %if i == 78
+    %    disp('%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%')
+    %    matfilename = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/4900136_paper/mat_files/prof78_refdata_class_LITTLE.mat';
+    %    save(matfilename, 'la_bhist_sal', 'la_bhist_ptmp', 'la_bhist_pres', 'la_bhist_lat', 'la_bhist_long', 'la_bhist_dates')
+    %end
 
         % include JB's SAF frontal separation criteria if map_use_saf==1
 
