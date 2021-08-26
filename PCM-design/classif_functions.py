@@ -293,12 +293,13 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
     
     return ds
 
-def add_floatdata(float_WMO, ds):
+def add_floatdata(float_WMO, float_mat_path, ds):
     """ Add selected float profiles to reference daataset
     
         Parameters
         ----------
-        float_WMO: float number
+        float_WMO: float reference number
+        float_mat_path: path to float mat file
         ds: dataset with reference data from get_refdata function
         
         Returns
@@ -307,14 +308,17 @@ def add_floatdata(float_WMO, ds):
     """
     
     # load float profiles using argopy with option localftp
-    import argopy
-    argopy.set_options(src='localftp', local_ftp='/home/coriolis_exp/spool/co05/co0508/')
-    from argopy import DataFetcher as ArgoDataFetcher
-    argo_loader = ArgoDataFetcher()
+    #import argopy
+    #argopy.set_options(src='localftp', local_ftp='/home/coriolis_exp/spool/co05/co0508/')
+    #from argopy import DataFetcher as ArgoDataFetcher
+    #argo_loader = ArgoDataFetcher()
     
-    ds_f = argo_loader.float([float_WMO]).to_xarray()
-    ds_f = ds_f.argo.point2profile()
+    #ds_f = argo_loader.float([float_WMO]).to_xarray()
+    #ds_f = ds_f.argo.point2profile()
     #print(ds_f)
+    
+    #load float profiles from .mat file 
+    mat_dict_float = sp.io.loadmat(float_mat_path)
     
     #delete float profiles in reference dataset
     cnt = 0
@@ -328,24 +332,29 @@ def add_floatdata(float_WMO, ds):
     ds['n_profiles'] = np.arange(len(ds['n_profiles'].values))
     
     # create a dataset similar to ds for concatenation
-    nan_matrix = np.empty((len(ds_f['N_PROF'].values), len(ds['n_pres'].values) - len(ds_f['N_LEVELS'].values)))
+    
+    nan_matrix = np.empty((len(ds['n_pres'].values) - len(mat_dict_float['PRES'][:,1]), len(mat_dict_float['PRES'][1,:])))
     nan_matrix.fill(np.nan)
-    source_matrix = ['selected_float'] * len(ds_f['N_PROF'].values)
+    source_matrix = ['selected_float'] * len(mat_dict_float['PRES'][1,:])
+    print(mat_dict_float['LONG'])
     ds_fc = xr.Dataset(
              data_vars=dict(
-                 pres=(["n_profiles", "n_pres"], np.concatenate((ds_f['PRES'].values, nan_matrix),axis=1)),
-                 temp=(["n_profiles", "n_pres"], np.concatenate((ds_f['TEMP'].values, nan_matrix),axis=1)),
-                 sal=(["n_profiles", "n_pres"], np.concatenate((ds_f['PSAL'].values, nan_matrix),axis=1)),
+                 pres=(["n_pres", "n_profiles"], np.concatenate((mat_dict_float['PRES'], nan_matrix),axis=0)),
+                 temp=(["n_pres", "n_profiles"], np.concatenate((mat_dict_float['TEMP'], nan_matrix),axis=0)),
+                 sal=(["n_pres", "n_profiles"], np.concatenate((mat_dict_float['SAL'], nan_matrix),axis=0)),
                  source=(["n_profiles"], source_matrix),
              ),
              coords=dict(
-                 long=(["n_profiles"], ds_f['LONGITUDE'].values),
-                 lat=(["n_profiles"], ds_f['LATITUDE'].values),
-                 dates=(["n_profiles"], ds_f['TIME'].values),
+                 long=(["n_profiles"], np.squeeze(mat_dict_float['LONG'])),
+                 lat=(["n_profiles"], np.squeeze(mat_dict_float['LAT'])),
+                 dates=(["n_profiles"], pd.to_datetime(list(map(str, map(int, np.squeeze(mat_dict_float['DATES'])))))),
              )
          )
+    
     ds_fc['n_profiles'] = ds_fc.n_profiles.values + len(ds.n_profiles.values)
     ds_fc['n_pres'] = ds_fc.n_pres.values
+    # Change lat values from [0-360] to [-180,180]
+    ds_fc.long.values = np.mod((ds_fc.long.values+180),360)-180
     #print(ds_fc)
     
     # combine datasets
