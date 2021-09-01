@@ -188,21 +188,20 @@ for i = 1 : length( missing_profile_index )
         % find ln_max_casts historical points that are most strongly correlated with the float profile
         
         %[ index ] = find_besthist( la_grid_lat, la_grid_long, la_grid_dates, la_grid_Z, LAT, LONG2, DATES, Z, latitude_large, latitude_small, longitude_large, longitude_small, phi_large, phi_small, map_age, map_use_pv, ln_max_casts );      % change config 129
-    %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_3901928_argo_k3.txt';
-    %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_NAtlac1_argo.txt';
-    class_txt = [];
+    class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_3901928_argo_k3.txt';
+    %class_txt = [];
 	[ index ] = find_besthist( la_grid_lat, la_grid_long, la_grid_dates, la_grid_Z, LAT, LONG2, DATES, Z, latitude_large, latitude_small, longitude_large, longitude_small, phi_large, phi_small, map_age_small, map_age_large, map_use_pv, ln_max_casts, class_txt );  %AW June 2020
-	n_ref_prof(end +1) = length(index);
+	n_ref_prof(end -1) = length(index)
     
         clear la_grid_lat la_grid_long la_grid_dates
         
 	[ la_bhist_sal, la_bhist_ptmp, la_bhist_pres, la_bhist_lat, la_bhist_long, la_bhist_dates ] = retr_region_ow( la_wmo_numbers, pn_float_name, po_system_configuration, index, PRES, map_p_delta ) ;
         la_bhist_Z = la_grid_Z(index);
-    %if i == 44
-    %    disp('%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%')
-    %    matfilename = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/3901928_Antarctic/mat_files/3901928_prof44_refdata_k3_class.mat';
-    %    save(matfilename, 'la_bhist_sal', 'la_bhist_ptmp', 'la_bhist_pres', 'la_bhist_lat', 'la_bhist_long', 'la_bhist_dates')
-    %end
+    if i == 44
+        disp('%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%')
+        matfilename = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/3901928_Antarctic/mat_files/3901928_prof44_refdata_k3_class.mat';
+        save(matfilename, 'la_bhist_sal', 'la_bhist_ptmp', 'la_bhist_pres', 'la_bhist_lat', 'la_bhist_long', 'la_bhist_dates')
+    end
 
         % include JB's SAF frontal separation criteria if map_use_saf==1
 
@@ -358,7 +357,7 @@ for i = 1 : length( missing_profile_index )
   toc
   fclose('all');
 end %for i = 1 : length( missing_profile_index )
-save('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/4900136_paper/n_ref_prof.mat', 'n_ref_prof')
+save('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/3901928_Antarctic/n_ref_prof.mat', n_ref_prof)
 
 % quality control - subst all mapped_sal < 30 and > 40 with NaNs ----------
 

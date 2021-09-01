@@ -49,16 +49,35 @@ if ~isempty(class_txt)
     class_lats = class_matrix.data(:,1);
     class_lons = class_matrix.data(:,2);
     class_values = class_matrix.data(:,3);
+    
+    % if long > 360
+    if LONG >= 360
+        LONG_new = LONG - 360;
+    else
+        LONG_new = LONG;
+    end
+    
+    hist_long_new = hist_long;
+    for i=1:length(hist_long)
+        if hist_long(i) >= 360
+            hist_long_new(i) = hist_long(i) - 360;
+        end
+    end
+            
 
     % find float profile in classes list
     % TODO: if I find 2 profiles
-    prof_class = class_values((abs(class_lats-LAT)<1e-3)&(abs(class_lons-LONG)<1e-3));
-    fprintf('profile class: %i\n', prof_class(1))
+    fprintf('profile lat lon: %f, %f\n', LAT, LONG_new)
+    %disp(class_lats')
+    %disp(class_lons')
+    prof_class = class_values((abs(class_lats-LAT)<1e-3)&(abs(class_lons-LONG_new)<1e-3));
+    fprintf('profile class: %i\n', prof_class)
+    %fprintf('profile class: %i\n', prof_class(1))
 
     % find profiles in ellipse in the .txt and get classes
     class_elip = NaN(length(hist_lat),1);
     for iprof = 1: length(class_lats)
-        iclass_logical = (abs(hist_lat-class_lats(iprof))<1e-3)&(abs(hist_long-class_lons(iprof))<1e-3);
+        iclass_logical = (abs(hist_lat-class_lats(iprof))<1e-3)&(abs(hist_long_new-class_lons(iprof))<1e-3);
         if sum(iclass_logical) == 1
             class_elip(iclass_logical) = class_values(iprof);
         end
@@ -67,13 +86,13 @@ if ~isempty(class_txt)
     fprintf('profiles in ellipse and in .txt: %i\n', sum(~isnan(class_elip)))
 
     % choose profiles in the same class
-    if ~isempty(prof_class(1))
-        index_ellipse = index_ellipse(class_elip == prof_class(1));
+    if ~isempty(prof_class)
+        index_ellipse = index_ellipse(class_elip == prof_class);
         fprintf('profiles in ellipse and the same class: %i\n', length(index_ellipse))
-        hist_long  = hist_long(class_elip == prof_class(1)) ;
-        hist_lat   = hist_lat(class_elip == prof_class(1)) ;
-        hist_dates = hist_dates(class_elip == prof_class(1)) ;
-        hist_Z = hist_Z(class_elip == prof_class(1)) ;
+        hist_long  = hist_long(class_elip == prof_class) ;
+        hist_lat   = hist_lat(class_elip == prof_class) ;
+        hist_dates = hist_dates(class_elip == prof_class) ;
+        hist_Z = hist_Z(class_elip == prof_class) ;
     else
         disp('Profile is not in classes .txt file. All profiles in ellipse are used')
     end

@@ -39,7 +39,7 @@ def interpolate_standard_levels(ds, std_lev):
     
     # vars to interpolate
     datavars = [dv for dv in list(ds.variables) if set(['n_pres', 'n_profiles']) == set(
-            ds[dv].dims) and 'ptmp' not in dv]
+            ds[dv].dims)]
     # coords
     coords = [dv for dv in list(ds.coords)]
     # vars depending on N_PROF only
@@ -173,20 +173,13 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
     iprofiles = 0
     for ifile in boxes_list:
 
-        print(ref_path + folder + file_str + str(int(ifile)) + '.mat')
+        print(ref_path + file_str + str(int(ifile)) + '.mat')
         
         try:
             mat_dict_load = sp.io.loadmat(ref_path + folder + file_str + str(int(ifile)) + '.mat')
         except FileNotFoundError:
-            print('file not found')
             continue
-        
-        # source should be a str list
-        new_source = []
-        for isource in mat_dict_load['source'][0]:
-            new_source.append(isource[0])
-        mat_dict_load['source'] = new_source
-        
+    
         #concat
         if cnt == 0:
             mat_dict = mat_dict_load
@@ -226,7 +219,7 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
             mat_dict['temp'] = np.concatenate((mat_dict['temp'], mat_dict_load['temp']), axis=1)
             mat_dict['ptmp'] = np.concatenate((mat_dict['ptmp'], mat_dict_load['ptmp']), axis=1)
             mat_dict['sal'] = np.concatenate((mat_dict['sal'], mat_dict_load['sal']), axis=1)
-            mat_dict['source'][len(mat_dict['source']):] = mat_dict_load['source']
+            mat_dict['source'] = np.concatenate((mat_dict['source'], mat_dict_load['source']), axis=1)
             mat_dict['long'] = np.concatenate((mat_dict['long'], mat_dict_load['long']), axis=1)
             mat_dict['lat'] = np.concatenate((mat_dict['lat'], mat_dict_load['lat']), axis=1)
             mat_dict['dates'] = np.concatenate((mat_dict['dates'], mat_dict_load['dates']), axis=1)
@@ -245,7 +238,7 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
              temp=(["n_pres", "n_profiles"], mat_dict['temp']),
              ptmp=(["n_pres", "n_profiles"], mat_dict['ptmp']),
              sal=(["n_pres", "n_profiles"], mat_dict['sal']),
-             source=(["n_profiles"], mat_dict['source']),
+             source=(["n_profiles"], np.squeeze(mat_dict['source'])),
          ),
          coords=dict(
              long=(["n_profiles"], np.squeeze(mat_dict['long'])),
@@ -258,24 +251,15 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
              __globals__=mat_dict['__version__'],
          )
      )
-    print(min(np.mod((ds.long.values+180),360)-180))
-    print(max(np.mod((ds.long.values+180),360)-180))
-    
     
     # Change lat values from [0-360] to [-180,180]
-    # ds.long.values = np.mod((ds.long.values+180),360)-180
-    
-    # change long values to 0-360 as used in OW
-    #geo_extent[0] = np.mod(geo_extent[0], 360)
-    #geo_extent[1] = np.mod(geo_extent[1], 360)
+    ds.long.values = np.mod((ds.long.values+180),360)-180
     
     # chose profiles in geo_extent
-    ds = ds.where(np.mod((ds.long+180),360)-180 >= geo_extent[0], drop = True)
-    ds = ds.where(np.mod((ds.long+180),360)-180<= geo_extent[1], drop = True)
+    ds = ds.where(ds.long >= geo_extent[0], drop = True)
+    ds = ds.where(ds.long <= geo_extent[1], drop = True)
     ds = ds.where(ds.lat >= geo_extent[2], drop = True)
     ds = ds.where(ds.lat <= geo_extent[3], drop = True)
-    print(geo_extent[0])
-    print(geo_extent[1])
     
     # drop ptmp variable
     ds=ds.drop('ptmp')
@@ -300,13 +284,12 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
     
     return ds
 
-def add_floatdata(float_WMO, float_mat_path, ds):
+def add_floatdata(float_WMO, ds):
     """ Add selected float profiles to reference daataset
     
         Parameters
         ----------
-        float_WMO: float reference number
-        float_mat_path: path to float mat file
+        float_WMO: float number
         ds: dataset with reference data from get_refdata function
         
         Returns
@@ -314,8 +297,15 @@ def add_floatdata(float_WMO, float_mat_path, ds):
         Dataset including float profiles
     """
     
-    #load float profiles from .mat file 
-    mat_dict_float = sp.io.loadmat(float_mat_path)
+    # load float profiles using argopy with option localftp
+    import argopy
+    argopy.set_options(src='localftp', local_ftp='/home/coriolis_exp/spool/co05/co0508/')
+    from argopy import DataFetcher as ArgoDataFetcher
+    argo_loader = ArgoDataFetcher()
+    
+    ds_f = argo_loader.float([float_WMO]).to_xarray()
+    ds_f = ds_f.argo.point2profile()
+    #print(ds_f)
     
     #delete float profiles in reference dataset
     cnt = 0
@@ -329,61 +319,26 @@ def add_floatdata(float_WMO, float_mat_path, ds):
     ds['n_profiles'] = np.arange(len(ds['n_profiles'].values))
     
     # create a dataset similar to ds for concatenation
-    
-    nan_matrix = np.empty((len(ds['n_pres'].values) - len(mat_dict_float['PRES'][:,1]), len(mat_dict_float['PRES'][1,:])))
+    nan_matrix = np.empty((len(ds_f['N_PROF'].values), len(ds['n_pres'].values) - len(ds_f['N_LEVELS'].values)))
     nan_matrix.fill(np.nan)
-    source_matrix = ['selected_float'] * len(mat_dict_float['PRES'][1,:])
     ds_fc = xr.Dataset(
              data_vars=dict(
-                 pres=(["n_pres", "n_profiles"], np.concatenate((mat_dict_float['PRES'], nan_matrix),axis=0)),
-                 temp=(["n_pres", "n_profiles"], np.concatenate((mat_dict_float['TEMP'], nan_matrix),axis=0)),
-                 sal=(["n_pres", "n_profiles"], np.concatenate((mat_dict_float['SAL'], nan_matrix),axis=0)),
-                 source=(["n_profiles"], source_matrix),
+                 pres=(["n_profiles", "n_pres"], np.concatenate((ds_f['PRES'].values, nan_matrix),axis=1)),
+                 temp=(["n_profiles", "n_pres"], np.concatenate((ds_f['TEMP'].values, nan_matrix),axis=1)),
+                 sal=(["n_profiles", "n_pres"], np.concatenate((ds_f['PSAL'].values, nan_matrix),axis=1)),
+                 source=(["n_profiles"], nan_matrix[:,1]),
              ),
              coords=dict(
-                 long=(["n_profiles"], np.squeeze(mat_dict_float['LONG'])),
-                 lat=(["n_profiles"], np.squeeze(mat_dict_float['LAT'])),
-                 dates=(["n_profiles"], pd.to_datetime(list(map(str, map(int, np.squeeze(mat_dict_float['DATES'])))))),
+                 long=(["n_profiles"], ds_f['LONGITUDE'].values),
+                 lat=(["n_profiles"], ds_f['LATITUDE'].values),
+                 dates=(["n_profiles"], ds_f['TIME'].values),
              )
          )
-    
     ds_fc['n_profiles'] = ds_fc.n_profiles.values + len(ds.n_profiles.values)
     ds_fc['n_pres'] = ds_fc.n_pres.values
-    
-    # Change lat values from [0-360] to [-180,180]
-    #ds_fc.long.values = np.mod((ds_fc.long.values+180),360)-180
     #print(ds_fc)
     
     # combine datasets
     ds_out = xr.combine_by_coords([ds, ds_fc])
-    
-    return ds_out
-
-def order_class_names(ds_out, K):
-    """ Rename class from south to nord to have always the same class name for the same dataset
-    
-        Parameters
-        ----------
-        ds_out: dataset including PCM_LABELS variable
-        K: number of classes
-        
-        Returns
-        -------
-        Dataset ordered class names in PCM_LABELS variable
-    """
-
-    def assign_cluster_number(x):
-        if x==x:
-            return float(order[int(x)])
-        else:
-            return x
-
-    max_lat_class = []
-    for ik in range(K):
-        max_lat_class.append(np.nanmax(ds_out['lat'].where(ds_out['PCM_LABELS'] == ik)))
-    order = np.argsort(max_lat_class)
-    
-    vfunc = np.vectorize(assign_cluster_number)
-    ds_out['PCM_LABELS'].values = vfunc(ds_out['PCM_LABELS'].values)
     
     return ds_out
