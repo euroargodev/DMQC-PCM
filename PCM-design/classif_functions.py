@@ -264,8 +264,6 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
     ds = ds.where(np.mod((ds.long+180),360)-180<= geo_extent[1], drop = True)
     ds = ds.where(ds.lat >= geo_extent[2], drop = True)
     ds = ds.where(ds.lat <= geo_extent[3], drop = True)
-    print(geo_extent[0])
-    print(geo_extent[1])
     
     # drop ptmp variable
     ds=ds.drop('ptmp')
