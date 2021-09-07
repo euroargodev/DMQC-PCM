@@ -258,16 +258,6 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
              __globals__=mat_dict['__version__'],
          )
      )
-    print(min(np.mod((ds.long.values+180),360)-180))
-    print(max(np.mod((ds.long.values+180),360)-180))
-    
-    
-    # Change lat values from [0-360] to [-180,180]
-    # ds.long.values = np.mod((ds.long.values+180),360)-180
-    
-    # change long values to 0-360 as used in OW
-    #geo_extent[0] = np.mod(geo_extent[0], 360)
-    #geo_extent[1] = np.mod(geo_extent[1], 360)
     
     # chose profiles in geo_extent
     ds = ds.where(np.mod((ds.long+180),360)-180 >= geo_extent[0], drop = True)
