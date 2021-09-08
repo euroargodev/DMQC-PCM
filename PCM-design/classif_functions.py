@@ -7,6 +7,16 @@ import scipy as sp
 from scipy.io import loadmat
 from scipy import interpolate
 
+import seawater as sw
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import matplotlib.ticker as mticker
+
+import cartopy.feature as cfeature
+import cartopy.crs as ccrs
+from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
+
 def interpolate_standard_levels(ds, std_lev):
     """ Interpolate data to given presure standard levels (from interp_std_levels in argopy)
     
@@ -375,3 +385,186 @@ def order_class_names(ds_out, K):
     ds_out['PCM_LABELS'].values = vfunc(ds_out['PCM_LABELS'].values)
     
     return ds_out
+
+def mapping_corr_dist(corr_dist, start_point, grid_extent):
+    '''Remapping longitude/latitude grid using a start point. It creates a new grid from the start point 
+       where each point is separated the given correlation distance.
+
+           Parameters
+           ----------
+               corr_dist: correlation distance
+               start_point: latitude and longitude of the start point 
+               grid_extent: max and min latitude and longitude of the grid to be remapped 
+                    [min lon, max lon, min let, max lat]
+
+           Returns
+           ------
+               new_lats: new latitude vector with points separeted the correlation distance 
+               new_lons: new longitude vector with points separeted the correlation distance
+
+               '''
+
+    # angular distance d/earth's radius (km)
+    delta = corr_dist / 6371
+
+    # all in radians (conversion at the end)
+    grid_extent = grid_extent * np.pi / 180
+    start_point = start_point * np.pi / 180
+
+    ### while loop for lat nord ###
+    max_lat = grid_extent[3]
+    lat2 = -np.pi / 2
+    lat1 = start_point[1]
+    # bearing = 0 donc cos(0)=1 and sin(0)=0
+    new_lats = [lat1]
+    while lat2 < max_lat:
+        lat2 = np.arcsin(np.sin(lat1) * np.cos(delta) +
+                         np.cos(lat1) * np.sin(delta))
+        new_lats.append(lat2)
+        lat1 = lat2
+
+    ### while loop for lat sud ###
+    min_lat = grid_extent[2]
+    lat2 = np.pi / 2
+    lat1 = start_point[1]
+    # bearing = pi donc cos(pi)=-1 and sin(pi)=0
+    while lat2 > min_lat:
+        lat2 = np.arcsin(np.sin(lat1) * np.cos(delta) -
+                         np.cos(lat1) * np.sin(delta))
+        new_lats.append(lat2)
+        lat1 = lat2
+
+    new_lats = np.sort(new_lats) * 180 / np.pi
+
+    ### while loop for lon east ###
+    max_lon = grid_extent[1]
+    lon2 = -np.pi
+    lon1 = start_point[0]
+    lat1 = start_point[1]
+    # bearing = pi/2 donc cos(pi/2)=0 and sin(pi/2)=1
+    new_lons = [lon1]
+    dlon = np.arctan2(np.sin(delta) * np.cos(lat1),
+                      np.cos(delta) - np.sin(lat1) * np.sin(lat1))
+    while lon2 < max_lon:
+        lon2 = lon1 + dlon
+        new_lons.append(lon2)
+        lon1 = lon2
+
+    ### while loop for lon west ###
+    min_lon = grid_extent[0]
+    lon2 = np.pi
+    lon1 = start_point[0]
+    lat1 = start_point[1]
+    # bearing = -pi/2 donc cos(-pi/2)=0 and sin(-pi/2)=-1
+    dlon = np.arctan2(-np.sin(delta) * np.cos(lat1),
+                      np.cos(delta) - np.sin(lat1) * np.sin(lat1))
+    while lon2 > min_lon:
+        lon2 = lon1 + dlon
+        new_lons.append(lon2)
+        lon1 = lon2
+
+    new_lons = np.sort(new_lons) * 180 / np.pi
+
+    return new_lats, new_lons
+
+def get_regulargrid_dataset(ds, corr_dist, grid_extent, gridplot = True):
+
+    # random fist point
+    latp = np.random.choice(ds['lat'].values, 1, replace=False)
+    lonp = np.random.choice(ds['long'].values, 1, replace=False)
+    print(latp)
+    print(lonp)
+    print(grid_extent)
+    grid_extent = np.array(grid_extent)
+    
+    # latitude to -180 180
+    #np.mod((ds_fc.long.values+180),360)-180
+    
+    # remapping
+    grid_lats, grid_lons = mapping_corr_dist(
+                corr_dist=corr_dist, start_point=np.concatenate((lonp, latp)), grid_extent=grid_extent)
+    #print(len(grid_lats))
+    #print(len(grid_lons))
+    # dataset with profiles coordinates
+    ds_coords = ds[['long', 'lat']]
+    ds_coords['long'].values= np.mod((ds_coords['long'].values+180),360)-180
+    print(len(grid_lats))
+    print(len(grid_lons))
+    
+    
+    # for each point in new grid calculate distance in km and minimun
+    new_profiles = []
+    for ilat in range(len(grid_lats)):
+        print(ilat)
+        for ilon in range(len(grid_lons)):
+            #print(ilon)
+            # get profiles only near the point
+            ds_coordsi = ds_coords
+            #print(ds_coordsi)
+            if ilat == 0 or ilat >= len(grid_lats)-1:
+                ds_coordsi = ds_coordsi.where((ds_coordsi.long<grid_lons[ilon]+10) & (ds_coordsi.long>grid_lons[ilon] - 10), drop = True)
+                ds_coordsi = ds_coordsi.where((ds_coordsi.lat<grid_lats[ilat]+10) & (ds_coordsi.lat>grid_lats[ilat] - 10), drop = True)
+            elif ilon == 0 or ilon >= len(grid_lons)-1:
+                ds_coordsi = ds_coordsi.where((ds_coordsi.long<grid_lons[ilon]+10) & (ds_coordsi.long>grid_lons[ilon] - 10), drop = True)
+                ds_coordsi = ds_coordsi.where((ds_coordsi.lat<grid_lats[ilat]+10) & (ds_coordsi.lat>grid_lats[ilat] - 10), drop = True)
+            else:
+                ds_coordsi = ds_coordsi.where((ds_coordsi.long<grid_lons[ilon +1]) & (ds_coordsi.long>grid_lons[ilon -1]), drop = True)
+                ds_coordsi = ds_coordsi.where((ds_coordsi.lat<grid_lats[ilat +1]) & (ds_coordsi.lat>grid_lats[ilat -1]), drop = True)
+            #print(ds_coordsi)
+                
+            #ds = ds.where(np.mod((ds.long+180),360)-180 >= geo_extent[0], drop = True)
+            #ds = ds.where(np.mod((ds.long+180),360)-180<= geo_extent[1], drop = True)
+            #ds = ds.where(ds.lat >= geo_extent[2], drop = True)
+            #ds = ds.where(ds.lat <= geo_extent[3], drop = True)
+    
+            #calculate distance
+            distances=np.array([])
+            for iprof in ds_coordsi['n_profiles'].values:
+                idistance = sw.dist([ilat, ds_coordsi['lat'].sel(n_profiles=iprof)], [ilon, ds_coordsi['long'].sel(n_profiles=iprof)])
+                distances = np.append(distances, idistance[0])
+            #print(distances)
+            
+            #calculate min
+            if distances.size == 0:
+                continue
+            else:
+                new_profiles = np.append(new_profiles, ds_coordsi['n_profiles'].isel(n_profiles = np.argmin(distances)).values)
+                #print(new_profiles)
+                    
+    new_profiles = np.unique(new_profiles)
+    new_profiles = new_profiles.astype(int)
+    print(new_profiles)
+    
+    #select profiles in dataset
+    #ds_rg = ds.sel({'lat': list(new_lats), 'long': list(new_lons)}, method='nearest')
+    ds_rg = ds.isel(n_profiles=new_profiles)
+    
+    if gridplot:
+        proj=ccrs.PlateCarree()
+        subplot_kw = {'projection': proj}
+        fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(
+            6, 6), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
+
+        p1 = ax.scatter(grid_lons, grid_lats, s=3, transform=proj, label='grid')
+        p1 = ax.scatter(ds_rg['long'].values, ds_rg['lat'].values, s=3, transform=proj, label='selected ref data')
+        #p2 = ax.plot(ds_p['long'].isel(n_profiles = selected_float_index), ds_p['lat'].isel(n_profiles = selected_float_index), 
+        #         'ro-', transform=proj, markersize = 3, label = str(float_WMO) + ' float trajectory')
+
+        land_feature = cfeature.NaturalEarthFeature(
+            category='physical', name='land', scale='50m', facecolor=[0.9375, 0.9375, 0.859375])
+        ax.add_feature(land_feature, edgecolor='black')
+
+        defaults = {'linewidth': .5, 'color': 'gray', 'alpha': 0.5, 'linestyle': '--'}
+        gl = ax.gridlines(crs=ax.projection,draw_labels=True, **defaults)
+        gl.xlocator = mticker.FixedLocator(np.arange(-180, 180+1, 4))
+        gl.ylocator = mticker.FixedLocator(np.arange(-90, 90+1, 4))
+        gl.xformatter = LONGITUDE_FORMATTER
+        gl.yformatter = LATITUDE_FORMATTER
+        gl.xlabel_style = {'fontsize': 5}
+        gl.ylabel_style = {'fontsize': 5}
+        gl.xlabels_top = False
+        gl.ylabels_right = False
+
+        plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left')
+    
+    return ds_rg
