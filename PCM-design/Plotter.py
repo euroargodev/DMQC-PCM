@@ -400,7 +400,7 @@ class Plotter:
         #         rotation='vertical', fontsize=12)
         # plt.tight_layout()
 
-    def spatial_distribution(self, proj=ccrs.PlateCarree(), extent='auto', time_slice=0):
+    def spatial_distribution(self, proj=ccrs.PlateCarree(), extent='auto', time_slice=0, lonlat_grid =[4,4]):
         '''Plot spatial distribution of classes
 
            Parameters
@@ -409,6 +409,7 @@ class Plotter:
                extent: map extent
                time_slice: time snapshot to be plot (default 0). If time_slice = 'most_freq_label', most frequent label in dataseries is plotted.
                         most_freq_label option can only be used with gridded data
+               lonlat_grid: space between lon lat ticks (default: [4,4])
 
            Returns
            -------
@@ -441,10 +442,13 @@ class Plotter:
             this_ds['PCM_MOST_FREQ_LABELS'] = this_ds.map_blocks(
                 fct)['PCM_MOST_FREQ_LABELS'].load()
             return this_ds.unstack('N_OBS')
+        
+        # lontitud from 0-360 to -180+180
+        long_data = np.mod((self.ds[self.coords_dict.get('longitude')]+180),360)-180
 
         # spatial extent
         if isinstance(extent, str):
-            extent = np.array([min(self.ds[self.coords_dict.get('longitude')]), max(self.ds[self.coords_dict.get('longitude')]), min(
+            extent = np.array([min(long_data), max(long_data), min(
                 self.ds[self.coords_dict.get('latitude')]), max(self.ds[self.coords_dict.get('latitude')])]) 
             #+ np.array([-0.1, +0.1, -0.1, +0.1])
 
@@ -473,10 +477,10 @@ class Plotter:
 
         # check if gridded or profiles data
         if self.data_type == 'profiles':
-            sc = ax.scatter(dsp[self.coords_dict.get('longitude')], dsp[self.coords_dict.get('latitude')], s=3,
+            sc = ax.scatter(long_data, dsp[self.coords_dict.get('latitude')], s=3,
                             c=self.ds[var_name], cmap=kmap, transform=proj, vmin=0, vmax=self.m.K)
         if self.data_type == 'gridded':
-            sc = ax.pcolormesh(dsp[self.coords_dict.get('longitude')], dsp[self.coords_dict.get(
+            sc = ax.pcolormesh(long_data, dsp[self.coords_dict.get(
                 'latitude')], dsp[var_name], cmap=kmap, transform=proj, vmin=0, vmax=self.m.K)
 
         # function already in pyxpcm: deprecated
@@ -487,12 +491,10 @@ class Plotter:
 
         # function already in pyxpcm: deprecated
         #self.m.plot.latlongrid(ax, dx=lon_grid, dy=lat_grid)
-        lon_grid = 4
-        lat_grid = 4
         ax.set_xticks(np.arange(int(extent[0]), int(
-            extent[1]+1), lon_grid), crs=ccrs.PlateCarree())
+            extent[1]+1), lonlat_grid[0]), crs=ccrs.PlateCarree())
         ax.set_yticks(np.arange(int(extent[2]), int(
-            extent[3]+1), lat_grid), crs=ccrs.PlateCarree())
+            extent[3]+1), lonlat_grid[1]), crs=ccrs.PlateCarree())
         lon_formatter = LongitudeFormatter()
         lat_formatter = LatitudeFormatter()
         ax.xaxis.set_major_formatter(lon_formatter)
