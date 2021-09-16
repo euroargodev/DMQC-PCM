@@ -130,7 +130,7 @@ def linear_interpolation_remap(
     return remapped
 
 
-def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
+def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
     """ Get data from argo reference database
 
         Parameters
@@ -144,7 +144,13 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
         -------
         Dataset with data
     """
-
+    # get float trajectory
+    mat_dict_float = sp.io.loadmat(float_mat_path)
+    # calculate geographical extent
+    plus_box = 20 #degrees
+    geo_extent = [np.mod((mat_dict_float['LONG'].min()+180),360)-180 - plus_box, np.mod((mat_dict_float['LONG'].max()+180),360)-180 + plus_box, 
+                  mat_dict_float['LAT'].min()-plus_box, mat_dict_float['LAT'].max()+plus_box]
+    
     # Read wmo boxes latlon: load txt file
     WMOboxes_latlon = np.loadtxt(WMOboxes_latlon, skiprows=1)
 
@@ -290,11 +296,6 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
          )
      )
 
-    # chose profiles in geo_extent
-    ds = ds.where(np.mod((ds.long+180), 360)-180 >= geo_extent[0], drop=True)
-    ds = ds.where(np.mod((ds.long+180), 360)-180 <= geo_extent[1], drop=True)
-    ds = ds.where(ds.lat >= geo_extent[2], drop=True)
-    ds = ds.where(ds.lat <= geo_extent[3], drop=True)
 
     # drop ptmp variable
     ds = ds.drop('ptmp')
@@ -302,6 +303,31 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
     # convert dimension to coordinates
     ds['n_profiles'] = ds.n_profiles.values
     ds['n_pres'] = ds.n_pres.values
+    
+    # chose profiles in ellipses
+    #TODO: read longitude_large and latitude_large
+    longitude_large = 6
+    latitude_large = 4
+    
+    long_vector = np.array(ds['long'].values)
+    lat_vector = np.array(ds['lat'].values)
+    long_float = mat_dict_float['LONG'][0]
+    lat_float = mat_dict_float['LAT'][0]
+    
+    # if we are in 0-360 longitude
+    if np.any(long_vector > 350) & np.any(long_vector < 10):
+        long_vector[long_vector < 180] = long_vector[long_vector < 180] +360
+        long_float[long_float < 180] = long_float[long_float < 180] +360
+    
+    select_profs = np.array([])
+    for iprof in mat_dict_float['PROFILE_NO'][0]-1: #loop float profiles
+        #print(iprof)
+        ellipse = np.sqrt(np.power(long_vector - long_float[iprof], 2)/ np.power(longitude_large*3, 2) + 
+                       np.power(lat_vector - lat_float[iprof], 2)/ np.power(latitude_large*3, 2))
+        select_profs = np.append(select_profs, ds['n_profiles'].values[ellipse<1])
+    
+    select_profs = np.unique(select_profs).astype(int)
+    ds = ds.isel(n_profiles = select_profs)
 
     # choose season
     if 'all' not in season:
@@ -322,17 +348,17 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
 
 
 def add_floatdata(float_WMO, float_mat_path, ds):
-    """ Add selected float profiles to reference daataset
+    """ Get selected float profiles from .mat file
 
         Parameters
         ----------
         float_WMO: float reference number
         float_mat_path: path to float mat file
-        ds: dataset with reference data from get_refdata function
+        ds = reference profiles dataset 
 
         Returns
         -------
-        Dataset including float profiles
+        Dataset with float profiles
     """
 
     # load float profiles from .mat file
@@ -499,14 +525,16 @@ def mapping_corr_dist(corr_dist, start_point, grid_extent):
     return new_lats, new_lons
 
 
-def get_regulargrid_dataset(ds, corr_dist, grid_extent, gridplot=True):
+def get_regulargrid_dataset(ds, corr_dist, gridplot=True):
 
     # random fist point
     latp = np.random.choice(ds['lat'].values, 1, replace=False)
     lonp = np.random.choice(ds['long'].values, 1, replace=False)
 
-    print(grid_extent)
+    #mod((long3+180),360)-180
+    grid_extent = [min(np.mod((ds['long'].values+180),360)-180), max(np.mod((ds['long'].values+180),360)-180), min(ds['lat'].values), max(ds['lat'].values)]
     grid_extent = np.array(grid_extent)
+    print(grid_extent)
 
     # remapping
     grid_lats, grid_lons = mapping_corr_dist(
