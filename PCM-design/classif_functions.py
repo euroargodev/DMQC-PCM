@@ -534,7 +534,7 @@ def get_regulargrid_dataset(ds, corr_dist, gridplot=True):
     #mod((long3+180),360)-180
     grid_extent = [min(np.mod((ds['long'].values+180),360)-180), max(np.mod((ds['long'].values+180),360)-180), min(ds['lat'].values), max(ds['lat'].values)]
     grid_extent = np.array(grid_extent)
-    print(grid_extent)
+    #print(grid_extent)
 
     # remapping
     grid_lats, grid_lons = mapping_corr_dist(
@@ -543,7 +543,7 @@ def get_regulargrid_dataset(ds, corr_dist, gridplot=True):
     # dataset with profiles coordinates
     ds_coords = ds[['long', 'lat']]
     ds_coords['long'].values = np.mod((ds_coords['long'].values+180), 360)-180
-    print([len(grid_lats), len(grid_lons)])
+    #print([len(grid_lats), len(grid_lons)])
 
     # for each point in new grid calculate distance in km and minimun
     new_profiles = np.empty((len(grid_lons)-1, len(grid_lats)-1))
@@ -664,3 +664,207 @@ def get_regulargrid_dataset(ds, corr_dist, gridplot=True):
         plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left')
 
     return ds_rg
+
+def get_topo_grid(min_long, max_long, min_lat, max_lat):
+    """  Find depth grid over given area using tbase.int file
+        The old matlab version of this uses an old .int file from NOAA which contains
+        5 arcminute data of global terrain. Whilst other more complete data sets now
+        exists, the data files for them are very large, so this file can be used for now,
+        and perhaps we can update to better data when we either move the code online, or
+        find a way to susbet it/compress it reasonably.
+        The .int file is very weird, and stores 16bit integers in binary. The below
+        code opens the file and converts the old binary back to the numbers we expect.
+        It then finds global terrain over a specified area before closing the file
+        Parameters
+        ----------
+        min_long: minimum longitudinal value for grid
+        max_long: maximum longitudinal value for grid
+        min_lat: minimum latidunal value for grid
+        max_lat: maximum latidunal value for grid
+        Returns
+        -------
+        Matrices containing a uniform grid of latitudes and longitudes, along with the depth at these points
+    """
+     # check for max lat values
+    if max_lat > 90:
+        max_lat = 90
+    elif min_lat < -90:
+        min_lat = -90
+
+    # manipulate input values to match file for decoding
+    blat = int(np.max((np.floor(min_lat * 12), -90 * 12 + 1)))
+    tlat = int(np.ceil(max_lat * 12))
+    llong = int(np.floor(min_long * 12))
+    rlong = int(np.ceil(max_long * 12))
+
+    # use these values to form the grid
+    lgs = np.arange(llong, rlong + 1, 1) / 12
+    lts = np.flip(np.arange(blat, tlat + 1, 1) / 12, axis=0)
+
+    if rlong > 360 * 12 - 1:
+        rlong = rlong - 360 * 12
+        llong = llong - 360 * 12
+
+    if llong < 0:
+        rlong = rlong + 360 * 12
+        llong = llong + 360 * 12
+
+    decoder = [llong, rlong, 90 * 12 - blat, 90 * 12 - tlat]
+
+    # Open the binary file
+    # TODO: this should use a with statement to avoid holding on to an open handle in the event of an exception
+    elev_file = open('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/lib/m_map1.4/m_map1.4_mod/tbase.int', "rb")  # pylint: disable=consider-using-with
+    #elev_file = open(os.path.sep.join([config['CONFIG_DIRECTORY'], "tbase.int"]), "rb")  # pylint: disable=consider-using-with
+
+    if decoder[1] > 4319:
+        nlat = int(round(decoder[2] - decoder[3])) + 1  # get the amount of elevation values we need
+        nlgr = int(round(decoder[1] - 4320)) + 1
+        nlgl = int(4320 - decoder[0])
+
+        # initialise matrix to hold z values
+        topo_end = np.zeros((nlat, nlgr))
+
+        # decode the file, and get values
+        for i in range(nlat):
+            elev_file.seek((i + decoder[3]) * 360 * 12 * 2)
+            for j in range(nlgr):
+                topo_end[i, j] = struct.unpack('h', elev_file.read(2))[0]
+
+        topo_beg = np.zeros((nlat, nlgl))
+
+        for i in range(nlat):
+            elev_file.seek((i + decoder[3]) * 360 * 12 * 2 + decoder[0] * 2)
+            for j in range(nlgl):
+                topo_beg[i, j] = struct.unpack('h', elev_file.read(2))[0]
+
+        topo = np.concatenate([topo_beg, topo_end], axis=1)
+    else:
+        # get the amount of elevation values we need
+        nlat = int(round(decoder[2] - decoder[3])) + 1
+        nlong = int(round(decoder[1] - decoder[0])) + 1
+
+        # initialise matrix to hold z values
+        topo = np.zeros((nlat, nlong))
+
+        # decode the file, and get values
+        for i in range(nlat):
+            elev_file.seek((i + decoder[3]) * 360 * 12 * 2 + decoder[0] * 2)
+            for j in range(nlong):
+                topo[i, j] = struct.unpack('h', elev_file.read(2))[0]
+
+    # make the grid
+    longs, lats = np.meshgrid(lgs, lts)
+
+    # close the file
+    elev_file.close()
+
+    return topo, longs, lats
+
+def potential_vorticity(lat, z_value):
+    """ Calculates barotropic potential vorticity (pv)
+        Calculates the potential vorticity for a given latitude and z
+        Used to belong in "find_besthist", but was refactored and removed
+        to its own file for neatness.
+        Parameters
+        ----------
+        lat: latitude
+        Returns
+        -------
+        z_value: depth
+    """
+    earth_angular_velocity = 2 * 7.292 * 10 ** -5
+    lat_radians = lat * math.pi / 180
+
+    p_v = (earth_angular_velocity * math.sin(lat_radians)) / z_value
+
+    if p_v == 0:
+        p_v = 1 * 10 ** -5
+
+    return p_v
+
+def select_ellipses(long_vector, lat_vector, long_float, lat_float, map_pv_use=1):
+    
+
+    # find the depth of the ocean at the float location
+    # tbase.int file requires longitudes from 0 to +/-180
+    long_float_tbase = copy.deepcopy(long_float)
+
+    if long_float_tbase > 180:
+        long_float_tbase -= 360
+
+    # find the depth of the ocean at the float location
+    float_elev, float_x, float_y = get_topo_grid(long_float_tbase - 1,
+                                                 long_float_tbase + 1,
+                                                 lat_float - 1,
+                                                 lat_float + 1)
+    
+    float_interp = interpolate.interp2d(float_x[0, :],
+                                        float_y[:, 0],
+                                        float_elev,
+                                        kind='linear')
+    
+    float_z = -float_interp(long_float_tbase, lat_float)[0]
+    
+    # tbase.int file requires longitudes from 0 to +/-180
+    long_vector_tbase = deepcopy(long_vector)
+
+    g_180 = np.argwhere(long_vector_tbase > 180)
+
+    long_vector_tbase[g_180] -= 360
+
+    # find depth of the ocean at historical locations
+    grid_elev, grid_x, grid_y = get_topo_grid(np.amin(long_vector_tbase) - 1,
+                                              np.amax(long_vector_tbase) + 1,
+                                              np.amin(lat_vector) - 1,
+                                              np.amax(lat_vector) + 1)
+
+    grid_interp = interp2d(grid_x[0], grid_y[:, 0],
+                           grid_elev, kind='linear')
+
+    # As a note, the reason we vectorise the function here is because we do not
+    # want to compare every longitudinal value to ever latitude. Rather, we simply
+    # want to interpolate each pair of longitudes and latitudes.
+
+    grid_z = -1 * np.vectorize(grid_interp)(long_vector_tbase, lat_vector)
+
+    # set up potential vorticity
+    potential_vorticity_vec = np.vectorize(potential_vorticity)
+    pv_float = 0
+    pv_hist = 0
+
+    # if we are using potential vorticity, calculate it
+    if map_pv_use == 1:
+        pv_float = potential_vorticity(lat, z_value)
+        pv_hist = potential_vorticity_vec(grid_lat, grid_z_value)
+
+    # calculate ellipse
+    find_ellipse_vec = np.vectorize(find_ellipse)
+    ellipse = find_ellipse_vec(grid_long, long, longitude_large, grid_lat, lat, latitude_large,
+                               phi_large, pv_hist, pv_float)
+    
+    
+    # chose profiles in ellipses
+    #TODO: read longitude_large and latitude_large
+    longitude_large = 6
+    latitude_large = 4
+    
+    long_vector = np.array(ds['long'].values)
+    lat_vector = np.array(ds['lat'].values)
+    long_float = mat_dict_float['LONG'][0]
+    lat_float = mat_dict_float['LAT'][0]
+    
+    # if we are in 0-360 longitude
+    if np.any(long_vector > 350) & np.any(long_vector < 10):
+        long_vector[long_vector < 180] = long_vector[long_vector < 180] +360
+        long_float[long_float < 180] = long_float[long_float < 180] +360
+    
+    select_profs = np.array([])
+    for iprof in mat_dict_float['PROFILE_NO'][0]-1: #loop float profiles
+        #print(iprof)
+        ellipse = np.sqrt(np.power(long_vector - long_float[iprof], 2)/ np.power(longitude_large*3, 2) + 
+                       np.power(lat_vector - lat_float[iprof], 2)/ np.power(latitude_large*3, 2))
+        select_profs = np.append(select_profs, ds['n_profiles'].values[ellipse<1])
+    
+    select_profs = np.unique(select_profs).astype(int)
+    ds = ds.isel(n_profiles = select_profs)
+    
