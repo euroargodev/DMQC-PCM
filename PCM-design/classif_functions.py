@@ -133,7 +133,7 @@ def linear_interpolation_remap(
     return remapped
 
 
-def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path):
+def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path, config, map_pv_use):
     """ Get data from argo reference database
 
         Parameters
@@ -142,11 +142,14 @@ def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path):
         WMOboxes_latlon: WMOboxes_latlon file name
         wmo_boxes: wmo_boxes file name
         ref_path: path to argo reference database
+        config: dict with config parameter in ow_config.txt file
+        map_pv_use: use potential vorticity to calculate ellipses or not
 
         Returns
         -------
         Dataset with data
     """
+    
     # get float trajectory
     mat_dict_float = sp.io.loadmat(float_mat_path)
     # calculate geographical extent
@@ -308,26 +311,11 @@ def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path):
     ds['n_pres'] = ds.n_pres.values
     
     # chose profiles in ellipses
-    longitude_large = 6
-    latitude_large = 4
-    phi_large = 0.1
-    map_pv_use = 1
-    ds = select_ellipses(mat_dict_float, ds, longitude_large, latitude_large, phi_large, map_pv_use=map_pv_use) 
-
-    # choose season
-    #if 'all' not in season:
-    #    season_idxs = ds.groupby('dates.season').groups
-
-    #    season_select = []
-    #    for key in season:
-    #        season_select = np.concatenate(
-    #            (season_select, np.squeeze(season_idxs.get(key))))
-
-    #    if len(season) == 1:
-    #        season_select = np.array(season_select)
-
-    #    season_select = np.sort(season_select.astype(int))
-    #    ds = ds.isel(n_profiles=season_select)
+    #longitude_large = 6
+    #latitude_large = 4
+    #phi_large = 0.1
+    #map_pv_use = 1
+    ds = select_ellipses(mat_dict_float, ds, config, map_pv_use=map_pv_use) 
 
     return ds
 
@@ -774,22 +762,24 @@ def get_topo_grid(min_long, max_long, min_lat, max_lat):
     return topo, longs, lats
 
 
-def select_ellipses(mat_dict_float, ds, longitude_large, latitude_large, phi_large, map_pv_use=0):
+def select_ellipses(mat_dict_float, ds, config, map_pv_use=0):
     """ Select values arround float profiles using an ellipse
 
         Parameters
         ----------
         mat_dict_float: dictionary in float data
         ds: reference profiles dataset
-        longitude_large: parameter in ow_config.txt
-        latitude_large: parameter in ow_config.txt
-        phi_large: parameter in ow_config.txt
+        config: dictionary with parameters from ow_config.txt
         map_pv_use: use potential vorticity or not
 
         Returns
         -------
         Dataset with selected profiles 
     """    
+    
+    longitude_large = float(config['mapscale_longitude_large'])
+    latitude_large = float(config['mapscale_latitude_large'])
+    phi_large = float(config['mapscale_phi_large'])
     
     long_vector = np.array(ds['long'].values)
     lat_vector = np.array(ds['lat'].values)
