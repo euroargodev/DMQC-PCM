@@ -133,7 +133,7 @@ def linear_interpolation_remap(
     return remapped
 
 
-def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
+def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path):
     """ Get data from argo reference database
 
         Parameters
@@ -315,19 +315,19 @@ def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path, season='al
     ds = select_ellipses(mat_dict_float, ds, longitude_large, latitude_large, phi_large, map_pv_use=map_pv_use) 
 
     # choose season
-    if 'all' not in season:
-        season_idxs = ds.groupby('dates.season').groups
+    #if 'all' not in season:
+    #    season_idxs = ds.groupby('dates.season').groups
 
-        season_select = []
-        for key in season:
-            season_select = np.concatenate(
-                (season_select, np.squeeze(season_idxs.get(key))))
+    #    season_select = []
+    #    for key in season:
+    #        season_select = np.concatenate(
+    #            (season_select, np.squeeze(season_idxs.get(key))))
 
-        if len(season) == 1:
-            season_select = np.array(season_select)
+    #    if len(season) == 1:
+    #        season_select = np.array(season_select)
 
-        season_select = np.sort(season_select.astype(int))
-        ds = ds.isel(n_profiles=season_select)
+    #    season_select = np.sort(season_select.astype(int))
+    #    ds = ds.isel(n_profiles=season_select)
 
     return ds
 
@@ -510,7 +510,7 @@ def mapping_corr_dist(corr_dist, start_point, grid_extent):
     return new_lats, new_lons
 
 
-def get_regulargrid_dataset(ds, corr_dist, gridplot=False):
+def get_regulargrid_dataset(ds, corr_dist, gridplot=False, season='all'):
     '''Re-sampling od the dataset selecting profiles separated the correlation distance
 
            Parameters
@@ -659,6 +659,22 @@ def get_regulargrid_dataset(ds, corr_dist, gridplot=False):
         gl.ylabels_right=False
 
         plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left')
+        
+    # choose season
+    if 'all' not in season:
+        season_idxs = ds_rg.groupby('dates.season').groups
+
+        season_select = []
+        for key in season:
+            season_select = np.concatenate(
+                (season_select, np.squeeze(season_idxs.get(key))))
+
+        if len(season) == 1:
+            season_select = np.array(season_select)
+
+        season_select = np.sort(season_select.astype(int))
+        ds_rg = ds_rg.isel(n_profiles=season_select)
+
 
     return ds_rg
 
@@ -774,11 +790,6 @@ def select_ellipses(mat_dict_float, ds, longitude_large, latitude_large, phi_lar
         -------
         Dataset with selected profiles 
     """    
-
-    
-    longitude_large = 6
-    latitude_large = 4
-    phi_large = 0.1
     
     long_vector = np.array(ds['long'].values)
     lat_vector = np.array(ds['lat'].values)
