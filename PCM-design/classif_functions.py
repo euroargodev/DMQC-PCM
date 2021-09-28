@@ -17,6 +17,9 @@ import cartopy.feature as cfeature
 import cartopy.crs as ccrs
 from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 
+import copy
+import struct
+
 
 def interpolate_standard_levels(ds, std_lev):
     """ Interpolate data to given presure standard levels (from interp_std_levels in argopy)
@@ -130,7 +133,7 @@ def linear_interpolation_remap(
     return remapped
 
 
-def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
+def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path, config, map_pv_use):
     """ Get data from argo reference database
 
         Parameters
@@ -139,12 +142,21 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
         WMOboxes_latlon: WMOboxes_latlon file name
         wmo_boxes: wmo_boxes file name
         ref_path: path to argo reference database
+        config: dict with config parameter in ow_config.txt file
+        map_pv_use: use potential vorticity to calculate ellipses or not
 
         Returns
         -------
         Dataset with data
     """
-
+    
+    # get float trajectory
+    mat_dict_float = sp.io.loadmat(float_mat_path)
+    # calculate geographical extent
+    plus_box = 20 #degrees
+    geo_extent = [np.mod((mat_dict_float['LONG'].min()+180),360)-180 - plus_box, np.mod((mat_dict_float['LONG'].max()+180),360)-180 + plus_box, 
+                  mat_dict_float['LAT'].min()-plus_box, mat_dict_float['LAT'].max()+plus_box]
+    
     # Read wmo boxes latlon: load txt file
     WMOboxes_latlon = np.loadtxt(WMOboxes_latlon, skiprows=1)
 
@@ -290,11 +302,6 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
          )
      )
 
-    # chose profiles in geo_extent
-    ds = ds.where(np.mod((ds.long+180), 360)-180 >= geo_extent[0], drop=True)
-    ds = ds.where(np.mod((ds.long+180), 360)-180 <= geo_extent[1], drop=True)
-    ds = ds.where(ds.lat >= geo_extent[2], drop=True)
-    ds = ds.where(ds.lat <= geo_extent[3], drop=True)
 
     # drop ptmp variable
     ds = ds.drop('ptmp')
@@ -302,37 +309,29 @@ def get_refdata(geo_extent, WMOboxes_latlon, wmo_boxes, ref_path, season='all'):
     # convert dimension to coordinates
     ds['n_profiles'] = ds.n_profiles.values
     ds['n_pres'] = ds.n_pres.values
-
-    # choose season
-    if 'all' not in season:
-        season_idxs = ds.groupby('dates.season').groups
-
-        season_select = []
-        for key in season:
-            season_select = np.concatenate(
-                (season_select, np.squeeze(season_idxs.get(key))))
-
-        if len(season) == 1:
-            season_select = np.array(season_select)
-
-        season_select = np.sort(season_select.astype(int))
-        ds = ds.isel(n_profiles=season_select)
+    
+    # chose profiles in ellipses
+    #longitude_large = 6
+    #latitude_large = 4
+    #phi_large = 0.1
+    #map_pv_use = 1
+    ds = select_ellipses(mat_dict_float, ds, config, map_pv_use=map_pv_use) 
 
     return ds
 
 
 def add_floatdata(float_WMO, float_mat_path, ds):
-    """ Add selected float profiles to reference daataset
+    """ Get selected float profiles from .mat file
 
         Parameters
         ----------
         float_WMO: float reference number
         float_mat_path: path to float mat file
-        ds: dataset with reference data from get_refdata function
+        ds = reference profiles dataset 
 
         Returns
         -------
-        Dataset including float profiles
+        Dataset with float profiles
     """
 
     # load float profiles from .mat file
@@ -499,14 +498,28 @@ def mapping_corr_dist(corr_dist, start_point, grid_extent):
     return new_lats, new_lons
 
 
-def get_regulargrid_dataset(ds, corr_dist, grid_extent, gridplot=True):
+def get_regulargrid_dataset(ds, corr_dist, gridplot=False, season='all'):
+    '''Re-sampling od the dataset selecting profiles separated the correlation distance
 
+           Parameters
+           ----------
+               ds: reference profiles dataset
+               corr_dist: correlation distance
+               gridplot: plot the grid or not
+
+           Returns
+           ------
+               Re-sampled dataset
+
+               '''
     # random fist point
     latp = np.random.choice(ds['lat'].values, 1, replace=False)
     lonp = np.random.choice(ds['long'].values, 1, replace=False)
 
-    print(grid_extent)
+    #mod((long3+180),360)-180
+    grid_extent = [min(np.mod((ds['long'].values+180),360)-180), max(np.mod((ds['long'].values+180),360)-180), min(ds['lat'].values), max(ds['lat'].values)]
     grid_extent = np.array(grid_extent)
+    #print(grid_extent)
 
     # remapping
     grid_lats, grid_lons = mapping_corr_dist(
@@ -515,7 +528,7 @@ def get_regulargrid_dataset(ds, corr_dist, grid_extent, gridplot=True):
     # dataset with profiles coordinates
     ds_coords = ds[['long', 'lat']]
     ds_coords['long'].values = np.mod((ds_coords['long'].values+180), 360)-180
-    print([len(grid_lats), len(grid_lons)])
+    #print([len(grid_lats), len(grid_lons)])
 
     # for each point in new grid calculate distance in km and minimun
     new_profiles = np.empty((len(grid_lons)-1, len(grid_lats)-1))
@@ -634,5 +647,245 @@ def get_regulargrid_dataset(ds, corr_dist, grid_extent, gridplot=True):
         gl.ylabels_right=False
 
         plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left')
+        
+    # choose season
+    if 'all' not in season:
+        season_idxs = ds_rg.groupby('dates.season').groups
+
+        season_select = []
+        for key in season:
+            season_select = np.concatenate(
+                (season_select, np.squeeze(season_idxs.get(key))))
+
+        if len(season) == 1:
+            season_select = np.array(season_select)
+
+        season_select = np.sort(season_select.astype(int))
+        ds_rg = ds_rg.isel(n_profiles=season_select)
+
 
     return ds_rg
+
+def get_topo_grid(min_long, max_long, min_lat, max_lat):
+    """  Find depth grid over given area using tbase.int file
+        The old matlab version of this uses an old .int file from NOAA which contains
+        5 arcminute data of global terrain. Whilst other more complete data sets now
+        exists, the data files for them are very large, so this file can be used for now,
+        and perhaps we can update to better data when we either move the code online, or
+        find a way to susbet it/compress it reasonably.
+        The .int file is very weird, and stores 16bit integers in binary. The below
+        code opens the file and converts the old binary back to the numbers we expect.
+        It then finds global terrain over a specified area before closing the file
+        Parameters
+        ----------
+        min_long: minimum longitudinal value for grid
+        max_long: maximum longitudinal value for grid
+        min_lat: minimum latidunal value for grid
+        max_lat: maximum latidunal value for grid
+        Returns
+        -------
+        Matrices containing a uniform grid of latitudes and longitudes, along with the depth at these points
+    """
+     # check for max lat values
+    if max_lat > 90:
+        max_lat = 90
+    elif min_lat < -90:
+        min_lat = -90
+
+    # manipulate input values to match file for decoding
+    blat = int(np.max((np.floor(min_lat * 12), -90 * 12 + 1)))
+    tlat = int(np.ceil(max_lat * 12))
+    llong = int(np.floor(min_long * 12))
+    rlong = int(np.ceil(max_long * 12))
+
+    # use these values to form the grid
+    lgs = np.arange(llong, rlong + 1, 1) / 12
+    lts = np.flip(np.arange(blat, tlat + 1, 1) / 12, axis=0)
+
+    if rlong > 360 * 12 - 1:
+        rlong = rlong - 360 * 12
+        llong = llong - 360 * 12
+
+    if llong < 0:
+        rlong = rlong + 360 * 12
+        llong = llong + 360 * 12
+
+    decoder = [llong, rlong, 90 * 12 - blat, 90 * 12 - tlat]
+
+    # Open the binary file
+    # TODO: this should use a with statement to avoid holding on to an open handle in the event of an exception
+    elev_file = open('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/lib/m_map1.4/m_map1.4_mod/tbase.int', "rb")  # pylint: disable=consider-using-with
+    #elev_file = open(os.path.sep.join([config['CONFIG_DIRECTORY'], "tbase.int"]), "rb")  # pylint: disable=consider-using-with
+
+    if decoder[1] > 4319:
+        nlat = int(round(decoder[2] - decoder[3])) + 1  # get the amount of elevation values we need
+        nlgr = int(round(decoder[1] - 4320)) + 1
+        nlgl = int(4320 - decoder[0])
+
+        # initialise matrix to hold z values
+        topo_end = np.zeros((nlat, nlgr))
+
+        # decode the file, and get values
+        for i in range(nlat):
+            elev_file.seek((i + decoder[3]) * 360 * 12 * 2)
+            for j in range(nlgr):
+                topo_end[i, j] = struct.unpack('h', elev_file.read(2))[0]
+
+        topo_beg = np.zeros((nlat, nlgl))
+
+        for i in range(nlat):
+            elev_file.seek((i + decoder[3]) * 360 * 12 * 2 + decoder[0] * 2)
+            for j in range(nlgl):
+                topo_beg[i, j] = struct.unpack('h', elev_file.read(2))[0]
+
+        topo = np.concatenate([topo_beg, topo_end], axis=1)
+    else:
+        # get the amount of elevation values we need
+        nlat = int(round(decoder[2] - decoder[3])) + 1
+        nlong = int(round(decoder[1] - decoder[0])) + 1
+
+        # initialise matrix to hold z values
+        topo = np.zeros((nlat, nlong))
+
+        # decode the file, and get values
+        for i in range(nlat):
+            elev_file.seek((i + decoder[3]) * 360 * 12 * 2 + decoder[0] * 2)
+            for j in range(nlong):
+                topo[i, j] = struct.unpack('h', elev_file.read(2))[0]
+
+    # make the grid
+    longs, lats = np.meshgrid(lgs, lts)
+
+    # close the file
+    elev_file.close()
+
+    return topo, longs, lats
+
+
+def select_ellipses(mat_dict_float, ds, config, map_pv_use=0):
+    """ Select values arround float profiles using an ellipse
+
+        Parameters
+        ----------
+        mat_dict_float: dictionary in float data
+        ds: reference profiles dataset
+        config: dictionary with parameters from ow_config.txt
+        map_pv_use: use potential vorticity or not
+
+        Returns
+        -------
+        Dataset with selected profiles 
+    """    
+    
+    longitude_large = float(config['mapscale_longitude_large'])
+    latitude_large = float(config['mapscale_latitude_large'])
+    phi_large = float(config['mapscale_phi_large'])
+    
+    long_vector = np.array(ds['long'].values)
+    lat_vector = np.array(ds['lat'].values)
+    long_float = mat_dict_float['LONG'][0]
+    lat_float = mat_dict_float['LAT'][0]
+    
+    # find the depth of the ocean at the float location
+    # tbase.int file requires longitudes from 0 to +/-180
+    long_float_tbase = copy.deepcopy(long_float)
+
+    long_float_tbase[np.argwhere(long_float_tbase > 180)] -= 360
+
+    # find the depth of the ocean at the float location
+    float_elev, float_x, float_y = get_topo_grid(np.amin(long_float_tbase) - 1,
+                                                 np.amax(long_float_tbase) + 1,
+                                                 np.amin(lat_float) - 1,
+                                                 np.amax(lat_float) + 1)
+    
+    float_interp = interpolate.interp2d(float_x[0, :],
+                                        float_y[:, 0],
+                                        float_elev,
+                                        kind='linear')
+    
+    #float_z = -float_interp(long_float_tbase, lat_float)[0]
+    float_z = -1 * np.vectorize(float_interp)(long_float_tbase, lat_float)
+    
+    # tbase.int file requires longitudes from 0 to +/-180
+    long_vector_tbase = copy.deepcopy(long_vector)
+
+    g_180 = np.argwhere(long_vector_tbase > 180)
+
+    long_vector_tbase[g_180] -= 360
+
+    # find depth of the ocean at historical locations
+    grid_elev, grid_x, grid_y = get_topo_grid(np.amin(long_vector_tbase) - 1,
+                                              np.amax(long_vector_tbase) + 1,
+                                              np.amin(lat_vector) - 1,
+                                              np.amax(lat_vector) + 1)
+
+    grid_interp = interpolate.interp2d(grid_x[0], grid_y[:, 0],
+                           grid_elev, kind='linear')
+
+    # As a note, the reason we vectorise the function here is because we do not
+    # want to compare every longitudinal value to ever latitude. Rather, we simply
+    # want to interpolate each pair of longitudes and latitudes.
+
+    grid_z = -1 * np.vectorize(grid_interp)(long_vector_tbase, lat_vector)
+    
+    # set up potential vorticity
+    #potential_vorticity_vec = np.vectorize(potential_vorticity)
+    pv_float = 0
+    pv_hist = 0
+
+    # if we are using potential vorticity, calculate it
+    if map_pv_use == 1:
+        pv_float = np.divide(2*7.292*float(10)**-5 * np.sin(lat_float*np.pi/180), float_z)
+        pv_hist = np.divide(2*7.292*float(10)**-5 * np.sin(lat_vector*np.pi/180), grid_z)
+    
+    #proj=ccrs.PlateCarree()
+    #subplot_kw = {'projection': proj}
+    #fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(
+    #                       6, 6), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
+
+    #p1 = ax.contourf(grid_x, grid_y, grid_elev, transform=proj, cmap = 'ocean')
+    #p1 = ax.scatter(long_vector_tbase, lat_vector, s=3, c=grid_z, transform=proj, cmap = 'ocean')
+    #p1 = ax.scatter(long_vector_tbase, lat_vector, s=3, c=pv_hist, transform=proj, cmap = 'ocean')
+
+    #land_feature = cfeature.NaturalEarthFeature(
+    #                      category='physical', name='land', scale='50m', facecolor=[0.9375, 0.9375, 0.859375])
+    #ax.add_feature(land_feature, edgecolor='black')
+    
+    # if we are in 0-360 longitude
+    if np.any(long_vector > 350) & np.any(long_vector < 10):
+        long_vector[long_vector < 180] = long_vector[long_vector < 180] +360
+        long_float[long_float < 180] = long_float[long_float < 180] +360
+
+    select_profs = np.array([])
+    for iprof in mat_dict_float['PROFILE_NO'][0]-1: #loop float profiles
+        if map_pv_use == 1:
+            ellipse = np.sqrt(np.power(long_vector_tbase-long_float_tbase[iprof], 2)/ np.power(longitude_large*3, 2) + 
+                          np.power(lat_vector-lat_float[iprof], 2) / np.power(latitude_large*3, 2) +
+                         ((pv_float[iprof]-pv_hist) / np.sqrt( pv_float[iprof]**2+np.power(pv_hist, 2) ) / phi_large)**2 )
+        else:
+            ellipse = np.sqrt(np.power(long_vector - long_float[iprof], 2)/ np.power(longitude_large*3, 2) + 
+                       np.power(lat_vector - lat_float[iprof], 2)/ np.power(latitude_large*3, 2))
+        
+        select_profs = np.append(select_profs, ds['n_profiles'].values[ellipse<1])
+    
+        #ds_plot = ds.sel(n_profiles = ds['n_profiles'].values[ellipse<1])
+        #print(ds_plot)
+        #proj=ccrs.PlateCarree()
+        #subplot_kw = {'projection': proj}
+        #fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(
+        #                        6, 6), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
+
+        #p1 = ax.scatter(ds_plot['long'], ds_plot['lat'], s=3, transform=proj)
+        #p1 = ax.scatter(long_vector_tbase, lat_vector, c=ellipse, s=3, cmap='ocean', transform=proj)
+        #p1 = ax.scatter(long_float[iprof], lat_float[iprof], s=3, color='r', transform=proj)
+
+        #land_feature = cfeature.NaturalEarthFeature(
+        #                category='physical', name='land', scale='50m', facecolor=[0.9375, 0.9375, 0.859375])
+        #ax.add_feature(land_feature, edgecolor='black')
+        
+    
+    select_profs = np.unique(select_profs).astype(int)
+    ds = ds.isel(n_profiles = select_profs)
+    
+    return ds
+    
