@@ -374,6 +374,7 @@ def add_floatdata(float_WMO, float_mat_path, ds):
 
     ds_fc['n_profiles'] = ds_fc.n_profiles.values + len(ds.n_profiles.values)
     ds_fc['n_pres'] = ds_fc.n_pres.values
+    print([ds_fc['long'].min(), ds_fc['long'].max()])
 
     # Change lat values from [0-360] to [-180,180]
     # ds_fc.long.values = np.mod((ds_fc.long.values+180),360)-180
@@ -526,9 +527,16 @@ def get_regulargrid_dataset(ds, corr_dist, gridplot=False, season='all'):
                 corr_dist=corr_dist, start_point=np.concatenate((lonp, latp)), grid_extent=grid_extent)
 
     # dataset with profiles coordinates
-    ds_coords = ds[['long', 'lat']]
-    ds_coords['long'].values = np.mod((ds_coords['long'].values+180), 360)-180
-    #print([len(grid_lats), len(grid_lons)])
+    ds_coords = xr.Dataset(
+             coords=dict(
+                 long=(["n_profiles"], np.mod((ds['long'].values+180), 360)-180),
+                 lat=(["n_profiles"], ds['lat'].values),
+                 n_profiles=(["n_profiles"], ds['n_profiles'].values),
+             )
+         )
+    #ds_coords = ds[['long', 'lat']]
+    #ds_coords['long'].values = np.mod((ds_coords['long'].values+180), 360)-180
+    print([ds['long'].min(), ds['long'].max()])
 
     # for each point in new grid calculate distance in km and minimun
     new_profiles = np.empty((len(grid_lons)-1, len(grid_lats)-1))
