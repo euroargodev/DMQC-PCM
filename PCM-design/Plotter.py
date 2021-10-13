@@ -471,7 +471,7 @@ class Plotter:
 
         subplot_kw = {'projection': proj, 'extent': extent}
         fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(
-            6, 6), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
+            12, 12), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
         # TODO: function already in pyxpcm
         kmap = self.m.plot.cmap(name=self.cmap_name)
 

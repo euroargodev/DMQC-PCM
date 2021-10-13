@@ -305,17 +305,13 @@ def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path, config, ma
 
     # drop ptmp variable
     ds = ds.drop('ptmp')
-
+    
+    # chose profiles in ellipses
+    ds = select_ellipses(mat_dict_float, ds, config, map_pv_use=map_pv_use)
+    
     # convert dimension to coordinates
     ds['n_profiles'] = ds.n_profiles.values
     ds['n_pres'] = ds.n_pres.values
-    
-    # chose profiles in ellipses
-    #longitude_large = 6
-    #latitude_large = 4
-    #phi_large = 0.1
-    #map_pv_use = 1
-    ds = select_ellipses(mat_dict_float, ds, config, map_pv_use=map_pv_use) 
 
     return ds
 
@@ -416,249 +412,69 @@ def order_class_names(ds_out, K):
 
     return ds_out
 
-
-def mapping_corr_dist(corr_dist, start_point, grid_extent):
-    '''Remapping longitude/latitude grid using a start point. It creates a new grid from the start point
-       where each point is separated the given correlation distance.
-
-           Parameters
-           ----------
-               corr_dist: correlation distance
-               start_point: latitude and longitude of the start point
-               grid_extent: max and min latitude and longitude of the grid to be remapped
-                    [min lon, max lon, min let, max lat]
-
-           Returns
-           ------
-               new_lats: new latitude vector with points separeted the correlation distance
-               new_lons: new longitude vector with points separeted the correlation distance
-
-               '''
-
-    # angular distance d/earth's radius (km)
-    delta = corr_dist / 6371
-
-    # all in radians (conversion at the end)
-    grid_extent = grid_extent * np.pi / 180
-    start_point = start_point * np.pi / 180
-
-    ### while loop for lat nord ###
-    max_lat = grid_extent[3]
-    lat2 = -np.pi / 2
-    lat1 = start_point[1]
-    # bearing = 0 donc cos(0)=1 and sin(0)=0
-    new_lats = [lat1]
-    while lat2 < max_lat:
-        lat2 = np.arcsin(np.sin(lat1) * np.cos(delta) +
-                         np.cos(lat1) * np.sin(delta))
-        new_lats.append(lat2)
-        lat1 = lat2
-
-    ### while loop for lat sud ###
-    min_lat = grid_extent[2]
-    lat2 = np.pi / 2
-    lat1 = start_point[1]
-    # bearing = pi donc cos(pi)=-1 and sin(pi)=0
-    while lat2 > min_lat:
-        lat2 = np.arcsin(np.sin(lat1) * np.cos(delta) -
-                         np.cos(lat1) * np.sin(delta))
-        new_lats.append(lat2)
-        lat1 = lat2
-
-    new_lats = np.sort(new_lats) * 180 / np.pi
-
-    ### while loop for lon east ###
-    max_lon = grid_extent[1]
-    lon2 = -np.pi
-    lon1 = start_point[0]
-    lat1 = start_point[1]
-    # bearing = pi/2 donc cos(pi/2)=0 and sin(pi/2)=1
-    new_lons = [lon1]
-    dlon = np.arctan2(np.sin(delta) * np.cos(lat1),
-                      np.cos(delta) - np.sin(lat1) * np.sin(lat1))
-    while lon2 < max_lon:
-        lon2 = lon1 + dlon
-        new_lons.append(lon2)
-        lon1 = lon2
-
-    ### while loop for lon west ###
-    min_lon = grid_extent[0]
-    lon2 = np.pi
-    lon1 = start_point[0]
-    lat1 = start_point[1]
-    # bearing = -pi/2 donc cos(-pi/2)=0 and sin(-pi/2)=-1
-    dlon = np.arctan2(-np.sin(delta) * np.cos(lat1),
-                      np.cos(delta) - np.sin(lat1) * np.sin(lat1))
-    while lon2 > min_lon:
-        lon2 = lon1 + dlon
-        new_lons.append(lon2)
-        lon1 = lon2
-
-    new_lons = np.sort(new_lons) * 180 / np.pi
-
-    return new_lats, new_lons
-
-
-def get_regulargrid_dataset(ds, corr_dist, gridplot=False, season='all'):
+def get_regulargrid_dataset(ds, corr_dist, season='all'):
     '''Re-sampling od the dataset selecting profiles separated the correlation distance
 
            Parameters
            ----------
                ds: reference profiles dataset
                corr_dist: correlation distance
-               gridplot: plot the grid or not
+               season: choose season: 'DJF', 'MAM', 'JJA','SON' (default: 'all')
 
            Returns
            ------
                Re-sampled dataset
 
                '''
-    # random fist point
-    latp = np.random.choice(ds['lat'].values, 1, replace=False)
-    lonp = np.random.choice(ds['long'].values, 1, replace=False)
-
-    #mod((long3+180),360)-180
-    grid_extent = [min(np.mod((ds['long'].values+180),360)-180), max(np.mod((ds['long'].values+180),360)-180), min(ds['lat'].values), max(ds['lat'].values)]
-    grid_extent = np.array(grid_extent)
-    #print(grid_extent)
-
-    # remapping
-    grid_lats, grid_lons = mapping_corr_dist(
-                corr_dist=corr_dist, start_point=np.concatenate((lonp, latp)), grid_extent=grid_extent)
-
-    # dataset with profiles coordinates
-    ds_coords = xr.Dataset(
-             coords=dict(
-                 long=(["n_profiles"], np.mod((ds['long'].values+180), 360)-180),
-                 lat=(["n_profiles"], ds['lat'].values),
-                 n_profiles=(["n_profiles"], ds['n_profiles'].values),
-             )
-         )
-    #ds_coords = ds[['long', 'lat']]
-    #ds_coords['long'].values = np.mod((ds_coords['long'].values+180), 360)-180
-    print([ds['long'].min(), ds['long'].max()])
-
-    # for each point in new grid calculate distance in km and minimun
-    new_profiles = np.empty((len(grid_lons)-1, len(grid_lats)-1))
-    new_profiles[:] = np.NaN
-
-    for ilat in range(len(grid_lats)-1):
-        #print(ilat)
-        for ilon in range(len(grid_lons)-1):
-            # print(ilon)
-            # get profiles only near the point
-            ds_coordsi = ds_coords
-
-            # select data in grid
-            ds_coordsi = ds_coordsi.where((ds_coordsi.long > grid_lons[ilon]) & (
-                ds_coordsi.long < grid_lons[ilon + 1]), drop=True)
-            ds_coordsi = ds_coordsi.where((ds_coordsi.lat > grid_lats[ilat]) & (
-                ds_coordsi.lat < grid_lats[ilat + 1]), drop=True)
-            if ds_coordsi['n_profiles'].values.size == 0:
-                #print('no data in grid')
-                continue
-
-            # select randon ref profile
-            random_prof = np.random.choice(
-                ds_coordsi['n_profiles'].values, 1, replace=False)
-
-            # calculate distance to nearest points
-            for i in range(20):
-
-                # choose nearest points
-                if ilon == 0 & ilat == 0:
-                    # first point
-                    break
-                elif ilon == 0:
-                    nearest_profs=[new_profiles[ilon+1, ilat-1],
-                        new_profiles[ilon, ilat-1]]
-                elif ilat == 0:
-                    nearest_profs=[new_profiles[ilon-1, ilat]]
-                elif ilon == len(grid_lons)-2 or ilat == len(grid_lats)-2:
-                    nearest_profs=[new_profiles[ilon-1, ilat],
-                        new_profiles[ilon, ilat-1], new_profiles[ilon-1, ilat-1]]
-                else:
-                    nearest_profs=[new_profiles[ilon-1, ilat], new_profiles[ilon+1,
-                        ilat-1], new_profiles[ilon, ilat-1], new_profiles[ilon-1, ilat-1]]
-
-                # check if nearest profile is nan
-                nearest_profs=np.array(nearest_profs)
-                if np.all(np.isnan(nearest_profs)):
-                    #print('all nearest profiles are Nan')
-                    break
-                elif np.any(np.isnan(nearest_profs)):
-                    nearest_profs=nearest_profs[np.logical_not(
-                        np.isnan(nearest_profs))]
-
-                nearest_profs=np.array(nearest_profs).astype(int)
-                # print(nearest_profs)
-
-                distances=np.array([])
-                for iprof in nearest_profs:
-                    idistance=sw.dist([ds_coords['lat'].sel(n_profiles=random_prof).values[0], ds_coords['lat'].sel(n_profiles=iprof).values],
-                                        [ds_coords['long'].sel(n_profiles=random_prof).values[0], ds_coords['long'].sel(n_profiles=iprof).values])
-                    distances=np.append(distances, idistance[0])
-
-                # check if point is farther than correlation
-                if np.any(distances < 0.8*corr_dist):
-                    # choose another profile and check again
-                    random_prof=np.random.choice(
-                        ds_coordsi['n_profiles'].values, 1, replace=False)
-                else:
-                    #print('ok')
-                    #print(i)
-                    break
-                if i == 19:
-                    #print('end of loop, all profiles are very near')
-                    random_prof=np.NaN
-
-            # get profile number
-            new_profiles[ilon, ilat]=random_prof
-            # print(new_profiles)
-
-    # convert to 1D vector
-    new_profiles=new_profiles.flatten()
-    new_profiles=new_profiles[np.logical_not(np.isnan(new_profiles))]
-    new_profiles=np.unique(new_profiles)
-    new_profiles=new_profiles.astype(int)
-
-    # select profiles in dataset
-    ds_rg=ds.sel(n_profiles=new_profiles)
-
-    if gridplot:
-        proj=ccrs.PlateCarree()
-        subplot_kw={'projection': proj}
-        fig, ax=plt.subplots(nrows=1, ncols=1, figsize=(
-            12, 12), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
-
-        Mlons, Mlats=np.meshgrid(grid_lons, grid_lats)
-        p1=ax.scatter(Mlons, Mlats, s=3, transform=proj, label='grid')
-        p1=ax.scatter(ds_rg['long'].values, ds_rg['lat'].values,
-                      s=3, transform=proj, label='selected ref data')
-        # p2 = ax.plot(ds_p['long'].isel(n_profiles = selected_float_index), ds_p['lat'].isel(n_profiles = selected_float_index),
-        #         'ro-', transform=proj, markersize = 3, label = str(float_WMO) + ' float trajectory')
-
-        land_feature=cfeature.NaturalEarthFeature(
-            category='physical', name='land', scale='50m', facecolor=[0.9375, 0.9375, 0.859375])
-        ax.add_feature(land_feature, edgecolor='black')
-
-        defaults={'linewidth': .5, 'color': 'gray',
-            'alpha': 0.5, 'linestyle': '--'}
-        gl=ax.gridlines(crs=ax.projection, draw_labels=True, **defaults)
-        gl.xlocator=mticker.FixedLocator(np.arange(-180, 180+1, 4))
-        gl.ylocator=mticker.FixedLocator(np.arange(-90, 90+1, 4))
-        gl.xformatter=LONGITUDE_FORMATTER
-        gl.yformatter=LATITUDE_FORMATTER
-        gl.xlabel_style={'fontsize': 5}
-        gl.ylabel_style={'fontsize': 5}
-        gl.xlabels_top=False
-        gl.ylabels_right=False
-
-        plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left')
+    # create distance matrix
+    from sklearn.metrics.pairwise import haversine_distances
+    from math import radians
+    lats_in_radians = np.array([radians(_) for _ in ds['lat'].values])
+    lons_in_radians = np.array([radians(_) for _ in ds['long'].values])
+    coords_in_radians = np.column_stack((lats_in_radians, lons_in_radians))
+    dist_matrix = haversine_distances(coords_in_radians)
+    dist_matrix = dist_matrix * 6371000/1000  # multiply by Earth radius to get kilometers
+    #dist_matrix = dist_matrix.astype(np.int16)    
+    
+    # create mask
+    mask_s = np.empty((1,len(ds['n_profiles'].values)))
+    mask_s[:] = np.NaN
+    ds["mask_s"]=(['n_profiles'],  np.squeeze(mask_s))
+    
+    #loop
+    n_iterations = range(len(ds['n_profiles'].values))
+    for i in n_iterations:
         
+        random_p = np.random.choice(ds['n_profiles'].where(np.isnan(ds['mask_s']), drop=True).values, 1, replace=False)
+        random_p = int(random_p[0])
+        #print('------------')
+        #print(random_p)
+        
+        # points near than corr_dist = 1
+        mask_dist = np.isnan(ds['mask_s'].values)*1
+        dist_vector = np.array(dist_matrix[:,random_p])*np.array(mask_dist)
+        dist_vector[dist_vector == 0] = np.NaN
+        bool_near_points = (dist_vector < corr_dist)
+        #print('n point to delate:')
+        #print(sum(bool_near_points))
+        
+        # change mask
+        ds['mask_s'][random_p] = 1
+        ds['mask_s'][bool_near_points] = 0
+        #print('n points in mask == 1')
+        #print(sum(ds['mask_s'].values == 1))
+        #print('n points in mask == 0')
+        #print(sum(ds['mask_s'].values == 0))
+        
+        # stop condition
+        if np.any(np.isnan(ds['mask_s'])) == False:
+            print('no more points to delate')
+            print(i)
+            break
+                            
     # choose season
     if 'all' not in season:
-        season_idxs = ds_rg.groupby('dates.season').groups
+        season_idxs = ds.groupby('dates.season').groups
 
         season_select = []
         for key in season:
@@ -669,10 +485,11 @@ def get_regulargrid_dataset(ds, corr_dist, gridplot=False, season='all'):
             season_select = np.array(season_select)
 
         season_select = np.sort(season_select.astype(int))
-        ds_rg = ds_rg.isel(n_profiles=season_select)
+        ds = ds.isel(n_profiles=season_select)
+    
+    ds_t = ds.where(ds['mask_s']== 1, drop=True)
 
-
-    return ds_rg
+    return ds_t
 
 def get_topo_grid(min_long, max_long, min_lat, max_lat):
     """  Find depth grid over given area using tbase.int file
