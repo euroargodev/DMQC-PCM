@@ -434,7 +434,7 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
     coords_in_radians = np.column_stack((lats_in_radians, lons_in_radians))
     dist_matrix = haversine_distances(coords_in_radians)
     dist_matrix = dist_matrix * 6371000/1000  # multiply by Earth radius to get kilometers
-    #dist_matrix = dist_matrix.astype(np.int16)    
+    dist_matrix = dist_matrix.astype(np.int16)    
     
     # create mask
     mask_s = np.empty((1,len(ds['n_profiles'].values)))
@@ -452,7 +452,7 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
         
         # points near than corr_dist = 1
         mask_dist = np.isnan(ds['mask_s'].values)*1
-        dist_vector = np.array(dist_matrix[:,random_p])*np.array(mask_dist)
+        dist_vector = np.array(dist_matrix[:,random_p]).astype('float')*np.array(mask_dist)
         dist_vector[dist_vector == 0] = np.NaN
         bool_near_points = (dist_vector < corr_dist)
         #print('n point to delate:')
