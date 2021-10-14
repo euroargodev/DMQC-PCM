@@ -153,9 +153,15 @@ def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path, config, ma
     # get float trajectory
     mat_dict_float = sp.io.loadmat(float_mat_path)
     # calculate geographical extent
-    plus_box = 20 #degrees
-    geo_extent = [np.mod((mat_dict_float['LONG'].min()+180),360)-180 - plus_box, np.mod((mat_dict_float['LONG'].max()+180),360)-180 + plus_box, 
-                  mat_dict_float['LAT'].min()-plus_box, mat_dict_float['LAT'].max()+plus_box]
+    plus_box = 10 #degrees
+    longitude_large = float(config['mapscale_longitude_large'])
+    latitude_large = float(config['mapscale_latitude_large'])
+    lon_float_180 = np.mod((mat_dict_float['LONG']+180),360)-180
+    geo_extent = [lon_float_180.min() - longitude_large - plus_box, 
+                  lon_float_180.max() + longitude_large + plus_box, 
+                  mat_dict_float['LAT'].min() - latitude_large - plus_box, 
+                  mat_dict_float['LAT'].max() + latitude_large + plus_box]
+    print(geo_extent)
     
     # Read wmo boxes latlon: load txt file
     WMOboxes_latlon = np.loadtxt(WMOboxes_latlon, skiprows=1)
@@ -370,7 +376,6 @@ def add_floatdata(float_WMO, float_mat_path, ds):
 
     ds_fc['n_profiles'] = ds_fc.n_profiles.values + len(ds.n_profiles.values)
     ds_fc['n_pres'] = ds_fc.n_pres.values
-    print([ds_fc['long'].min(), ds_fc['long'].max()])
 
     # Change lat values from [0-360] to [-180,180]
     # ds_fc.long.values = np.mod((ds_fc.long.values+180),360)-180
@@ -447,24 +452,16 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
         
         random_p = np.random.choice(ds['n_profiles'].where(np.isnan(ds['mask_s']), drop=True).values, 1, replace=False)
         random_p = int(random_p[0])
-        #print('------------')
-        #print(random_p)
         
         # points near than corr_dist = 1
         mask_dist = np.isnan(ds['mask_s'].values)*1
         dist_vector = np.array(dist_matrix[:,random_p]).astype('float')*np.array(mask_dist)
         dist_vector[dist_vector == 0] = np.NaN
         bool_near_points = (dist_vector < corr_dist)
-        #print('n point to delate:')
-        #print(sum(bool_near_points))
         
         # change mask
         ds['mask_s'][random_p] = 1
         ds['mask_s'][bool_near_points] = 0
-        #print('n points in mask == 1')
-        #print(sum(ds['mask_s'].values == 1))
-        #print('n points in mask == 0')
-        #print(sum(ds['mask_s'].values == 0))
         
         # stop condition
         if np.any(np.isnan(ds['mask_s'])) == False:
@@ -682,7 +679,7 @@ def select_ellipses(mat_dict_float, ds, config, map_pv_use=0):
         long_float[long_float < 180] = long_float[long_float < 180] +360
 
     select_profs = np.array([])
-    for iprof in mat_dict_float['PROFILE_NO'][0]-1: #loop float profiles
+    for iprof in range(len(mat_dict_float['PROFILE_NO'][0])): #loop float profiles
         if map_pv_use == 1:
             ellipse = np.sqrt(np.power(long_vector_tbase-long_float_tbase[iprof], 2)/ np.power(longitude_large*3, 2) + 
                           np.power(lat_vector-lat_float[iprof], 2) / np.power(latitude_large*3, 2) +
