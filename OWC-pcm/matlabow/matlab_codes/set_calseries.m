@@ -30,15 +30,16 @@ try
 catch
     breaks = [];
     max_breaks = 4;   % 0 for linear trend and -1 for offset only!
-    %calseries = [ones(1,n)];
-    calseries = [ones(1,156) zeros(1,8)];
+    calseries = [ones(1,n)];
+    %calseries = [ones(1,156) zeros(1,8)];
     %calseries = [ones(1,78) 2*ones(1,n-78)]; 
     % calseries = [ones(1,33) 2*ones(1,n-33)];    % example: split the time series at profile 33
     % calseries = [ones(1,33) 0  ones(1,n-33-1)]; % example: ignore profile 34
     calib_profile_no = PROFILE_NO;
     use_theta_lt = [];
     use_theta_gt = [];
-    use_pres_gt = [600];
+    use_pres_gt = [];
+    %use_pres_gt = [600];
     %use_pres_gt = [];
     use_pres_lt = [];
     use_percent_gt = 0.5;

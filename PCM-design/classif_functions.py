@@ -161,7 +161,6 @@ def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path, config, ma
                   lon_float_180.max() + longitude_large + plus_box, 
                   mat_dict_float['LAT'].min() - latitude_large - plus_box, 
                   mat_dict_float['LAT'].max() + latitude_large + plus_box]
-    print(geo_extent)
     
     # Read wmo boxes latlon: load txt file
     WMOboxes_latlon = np.loadtxt(WMOboxes_latlon, skiprows=1)
@@ -437,8 +436,9 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
     lats_in_radians = np.array([radians(_) for _ in ds['lat'].values])
     lons_in_radians = np.array([radians(_) for _ in ds['long'].values])
     coords_in_radians = np.column_stack((lats_in_radians, lons_in_radians))
-    dist_matrix = haversine_distances(coords_in_radians)
-    dist_matrix = dist_matrix * 6371000/1000  # multiply by Earth radius to get kilometers
+    dist_matrix = haversine_distances(coords_in_radians).astype(np.float32)
+    #dist_matrix = haversine_distances(coords_in_radians).astype(np.float16) 
+    dist_matrix = dist_matrix * 6371  # multiply by Earth radius to get kilometers
     dist_matrix = dist_matrix.astype(np.int16)    
     
     # create mask
@@ -485,6 +485,8 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
         ds = ds.isel(n_profiles=season_select)
     
     ds_t = ds.where(ds['mask_s']== 1, drop=True)
+    
+    del dist_matrix
 
     return ds_t
 
