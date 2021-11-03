@@ -188,10 +188,12 @@ for i = 1 : length( missing_profile_index )
         % find ln_max_casts historical points that are most strongly correlated with the float profile
         
         %[ index ] = find_besthist( la_grid_lat, la_grid_long, la_grid_dates, la_grid_Z, LAT, LONG2, DATES, Z, latitude_large, latitude_small, longitude_large, longitude_small, phi_large, phi_small, map_age, map_use_pv, ln_max_casts );      % change config 129
-    class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_3901915_argo_k5_ellipse.txt';
+    %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_3901915_argo_k6_ellipse.txt';
+    %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_6900230_CTD_k4.txt';
+    %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_3901915_argo_k5_ellipse.txt';
     %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_3901928_argo_k4_ellipse.txt';
     %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_NAtlac1_argo.txt';
-    %class_txt = [];
+    class_txt = [];
 	[ index ] = find_besthist( la_grid_lat, la_grid_long, la_grid_dates, la_grid_Z, LAT, LONG2, DATES, Z, latitude_large, latitude_small, longitude_large, longitude_small, phi_large, phi_small, map_age_small, map_age_large, map_use_pv, ln_max_casts, class_txt );  %AW June 2020
 	n_ref_prof(end +1) = length(index);
     
@@ -199,11 +201,32 @@ for i = 1 : length( missing_profile_index )
         
 	[ la_bhist_sal, la_bhist_ptmp, la_bhist_pres, la_bhist_lat, la_bhist_long, la_bhist_dates ] = retr_region_ow( la_wmo_numbers, pn_float_name, po_system_configuration, index, PRES, map_p_delta ) ;
         la_bhist_Z = la_grid_Z(index);
-    if i == 66
-        disp('%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%')
-        matfilename = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/3901915_Agulhas/mat_files/3901915_prof66_refdata_k5.mat';
-        save(matfilename, 'la_bhist_sal', 'la_bhist_ptmp', 'la_bhist_pres', 'la_bhist_lat', 'la_bhist_long', 'la_bhist_dates')
-    end
+     if i == 47
+         disp('%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%')
+         matfilename = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/3901915_Agulhas/mat_files/4901218_prof47_refdata_noclass.mat';
+         save(matfilename, 'la_bhist_sal', 'la_bhist_ptmp', 'la_bhist_pres', 'la_bhist_lat', 'la_bhist_long', 'la_bhist_dates')
+     end
+%      if i == 51
+%          disp('%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%')
+%          matfilename = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/3901915_Agulhas/mat_files/3901915_prof51_refdata_class_CTD_990.mat';
+%          save(matfilename, 'la_bhist_sal', 'la_bhist_ptmp', 'la_bhist_pres', 'la_bhist_lat', 'la_bhist_long', 'la_bhist_dates')
+%      end
+%      if i == 72
+%          disp('%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%')
+%          matfilename = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/3901915_Agulhas/mat_files/3901915_prof72_refdata_class_CTD_990.mat';
+%          save(matfilename, 'la_bhist_sal', 'la_bhist_ptmp', 'la_bhist_pres', 'la_bhist_lat', 'la_bhist_long', 'la_bhist_dates')
+%      end
+%      if i == 83
+%          disp('%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%')
+%          matfilename = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/3901915_Agulhas/mat_files/3901915_prof83_refdata_class_CTD_990.mat';
+%          save(matfilename, 'la_bhist_sal', 'la_bhist_ptmp', 'la_bhist_pres', 'la_bhist_lat', 'la_bhist_long', 'la_bhist_dates')
+%      end
+%      if i == 195
+%          disp('%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%')
+%          matfilename = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/3901915_Agulhas/mat_files/3901915_prof195_refdata_class_CTD_990.mat';
+%          save(matfilename, 'la_bhist_sal', 'la_bhist_ptmp', 'la_bhist_pres', 'la_bhist_lat', 'la_bhist_long', 'la_bhist_dates')
+%      end
+
 
         % include JB's SAF frontal separation criteria if map_use_saf==1
 
@@ -359,7 +382,7 @@ for i = 1 : length( missing_profile_index )
   toc
   fclose('all');
 end %for i = 1 : length( missing_profile_index )
-save('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/3901915_Agulhas/mat_files/3901915_n_ref_prof_class_k5', 'n_ref_prof')
+%save('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/exemples/3901915_Agulhas/mat_files/3901915_n_ref_prof_class_k5.mat', 'n_ref_prof')
 
 % quality control - subst all mapped_sal < 30 and > 40 with NaNs ----------
 
