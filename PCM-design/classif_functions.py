@@ -355,6 +355,7 @@ def add_floatdata(float_WMO, float_mat_path, ds):
         (len(ds['n_pres'].values) - len(mat_dict_float['PRES'][:, 1]), len(mat_dict_float['PRES'][1, :])))
     nan_matrix.fill(np.nan)
     source_matrix = ['selected_float'] * len(mat_dict_float['PRES'][1, :])
+    source_matrix = [(source_matrix[i] + '_' + str(np.squeeze(mat_dict_float['PROFILE_NO'])[i])) for i in range(len(source_matrix))]
     ds_fc = xr.Dataset(
              data_vars=dict(
                  pres=(["n_pres", "n_profiles"], np.concatenate(
@@ -436,8 +437,9 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
     lats_in_radians = np.array([radians(_) for _ in ds['lat'].values])
     lons_in_radians = np.array([radians(_) for _ in ds['long'].values])
     coords_in_radians = np.column_stack((lats_in_radians, lons_in_radians))
-    dist_matrix = haversine_distances(coords_in_radians).astype(np.float32)
-    #dist_matrix = haversine_distances(coords_in_radians).astype(np.float16) 
+    dist_matrix = haversine_distances(coords_in_radians)
+    #dist_matrix = haversine_distances(coords_in_radians).astype(np.float32)
+    dist_matrix = haversine_distances(coords_in_radians).astype(np.float16) 
     dist_matrix = dist_matrix * 6371  # multiply by Earth radius to get kilometers
     dist_matrix = dist_matrix.astype(np.int16)    
     

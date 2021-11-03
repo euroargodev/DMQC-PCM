@@ -194,9 +194,9 @@ if ~isempty(class_txt)
 
     % load .txt
     class_matrix = importdata(class_txt, ' ', 1);
-    class_lats = class_matrix.data(:,1);
-    class_lons = class_matrix.data(:,2);
-    class_values = class_matrix.data(:,3);
+    class_lats = class_matrix.data(:,end-2);
+    class_lons = class_matrix.data(:,end-1);
+    class_values = class_matrix.data(:,end);
     
     hist_long  = grid_long (index) ;
     hist_lat   = grid_lat  (index) ;
@@ -223,6 +223,7 @@ if ~isempty(class_txt)
     %disp(class_lats')
     %disp(class_lons')
     prof_class = class_values((abs(class_lats-LAT)<1e-3)&(abs(class_lons-LONG_new)<1e-3));
+    %disp(class_values)
     fprintf('profile class: %i\n', prof_class)
     %fprintf('profile class: %i\n', prof_class(1))
 
