@@ -45,8 +45,7 @@ phi_large = str2double( po_system_configuration.MAPSCALE_PHI_LARGE );
 phi_small = str2double( po_system_configuration.MAPSCALE_PHI_SMALL );
 map_age_small = str2double( po_system_configuration.MAPSCALE_AGE_SMALL );  %AW June 2020
 use_pcm = str2double( po_system_configuration.USE_PCM );
-pcm_file = po_system_configuration.PCM_FILE;
-
+pcm_file = str2double( po_system_configuration.USE_PCM );
 %% added CC
 map_age_large = str2double( po_system_configuration.MAPSCALE_AGE_LARGE );
 %%
@@ -191,8 +190,13 @@ for i = 1 : length( missing_profile_index )
         % find ln_max_casts historical points that are most strongly correlated with the float profile
         
         %[ index ] = find_besthist( la_grid_lat, la_grid_long, la_grid_dates, la_grid_Z, LAT, LONG2, DATES, Z, latitude_large, latitude_small, longitude_large, longitude_small, phi_large, phi_small, map_age, map_use_pv, ln_max_casts );      % change config 129
-
-	[ index ] = find_besthist( la_grid_lat, la_grid_long, la_grid_dates, la_grid_Z, LAT, LONG2, DATES, Z, latitude_large, latitude_small, longitude_large, longitude_small, phi_large, phi_small, map_age_small, map_age_large, map_use_pv, ln_max_casts, use_pcm, pcm_file );  %AW June 2020
+    %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_3901915_argo_k6_ellipse.txt';
+    class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_6900230_CTD_k4.txt';
+    %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_3901915_argo_k5_ellipse.txt';
+    %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_3901928_argo_k4_ellipse.txt';
+    %class_txt = '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_NAtlac1_argo.txt';
+    %class_txt = [];
+	[ index ] = find_besthist( la_grid_lat, la_grid_long, la_grid_dates, la_grid_Z, LAT, LONG2, DATES, Z, latitude_large, latitude_small, longitude_large, longitude_small, phi_large, phi_small, map_age_small, map_age_large, map_use_pv, ln_max_casts, class_txt );  %AW June 2020
 	n_ref_prof(end +1) = length(index);
     
         clear la_grid_lat la_grid_long la_grid_dates

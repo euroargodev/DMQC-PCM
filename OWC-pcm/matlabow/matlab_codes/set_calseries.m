@@ -38,9 +38,8 @@ catch
     calib_profile_no = PROFILE_NO;
     use_theta_lt = [];
     use_theta_gt = [];
-    use_pres_gt = [];
     %use_pres_gt = [600];
-    %use_pres_gt = [];
+    use_pres_gt = [];
     use_pres_lt = [];
     use_percent_gt = 0.5;
 end

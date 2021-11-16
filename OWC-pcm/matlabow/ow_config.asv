@@ -73,15 +73,8 @@ MAP_USE_PV=1
 % 1=use SAF separation criteria, 0=don't use SAF separation criteria, in objective mapping
 MAP_USE_SAF=0
 
-% 1=use PCM for profile selection, 0=don't use PCM for profile selection
-USE_PCM=1
-PCM_FILE=/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_6900230_CTD_k4.txt
-%PCM_FILE=/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_3901915_argo_k6_ellipse.txt
-%PCM_FILE=/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_6900230_CTD_k4.txt
-%PCM_FILE=/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_3901915_argo_k5_ellipse.txt
-%PCM_FILE=/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_3901928_argo_k4_ellipse.txt
-%PCM_FILE=/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/PCM-design/output_files/PCM_classes_NAtlac1_argo.txt
-%PCM_FILE=[]
+% 1=use PCM for profile selection, 0=don't use PCM for pr
+MAP_USE_SAF=0
 
 % spatial decorrelation scales, in degrees
 MAPSCALE_LONGITUDE_LARGE=6

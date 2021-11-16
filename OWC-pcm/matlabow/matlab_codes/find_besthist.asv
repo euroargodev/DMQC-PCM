@@ -173,18 +173,14 @@ if use_pcm
             class_elip(iclass_logical) = class_values(iprof);
         end
     end
-    fprintf('profiles in ellipse: %i\n', length(hist_lat))
-    fprintf('profiles in class.txt: %i\n', sum(~isnan(class_elip)))
+    fprintf('profiles chosen by OW: %i\n', length(hist_lat))
+    fprintf('profiles chosen by OW in .txt: %i\n', sum(~isnan(class_elip)))
 
     % choose profiles in the same class
     if ~isempty(prof_class)
         fprintf('profiles in the same class: %i\n', sum(class_elip == prof_class))
-        
-        if sum(class_elip == prof_class) == 0
-            disp('There is not profiles with the same class in the ellipse. All profiles in ellipse are used')
-        else
-            index = index(class_elip == prof_class);
-        end
+        if sum(class_elip == prof_class)
+        index = index(class_elip == prof_class);
         
     else
         disp('Profile is not classified. All profiles in ellipse are used')
