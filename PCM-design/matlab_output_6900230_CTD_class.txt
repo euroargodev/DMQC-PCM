@@ -1,0 +1,670 @@
+Float 6900230
+class + CTD data
+
+>> ow_calibration
+ 
+__________________________________________
+CONFIGURATION FILE
+__________________________________________
+ow_config.txt
+ 
+09-Nov-2021 15:47:02 Working on 6900230
+UPDATE_SALINITY_MAPPING: Working on profile 1
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.709000, 350.875000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 183
+profiles in the same class: 29
+--------------------------------------------------------
+Elapsed time is 50.354203 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 2
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.577000, 350.992000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 181
+profiles in the same class: 82
+--------------------------------------------------------
+Elapsed time is 12.063008 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 3
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.512000, 351.192000
+profile class: 3
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 189
+profiles in the same class: 1
+--------------------------------------------------------
+Elapsed time is 11.918469 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 4
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.371000, 351.164000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 184
+profiles in the same class: 94
+--------------------------------------------------------
+Elapsed time is 11.881411 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 5
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.442000, 351.084000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 197
+profiles in the same class: 91
+--------------------------------------------------------
+Elapsed time is 12.077549 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 6
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.366000, 351.239000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 200
+profiles in the same class: 54
+--------------------------------------------------------
+Elapsed time is 11.699456 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 7
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.458000, 351.001000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 187
+profiles in the same class: 70
+--------------------------------------------------------
+Elapsed time is 11.931040 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 8
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.545000, 350.867000
+profile class: NaN
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 196
+profiles in the same class: 0
+--------------------------------------------------------
+Error in INTERP_CLIMATOLOGY, No good climatological data found
+Elapsed time is 11.508460 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 9
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.476000, 350.881000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 210
+profiles in the same class: 84
+--------------------------------------------------------
+Elapsed time is 11.774241 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 10
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.513000, 350.928000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 211
+profiles in the same class: 99
+--------------------------------------------------------
+Elapsed time is 11.860111 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 11
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.573000, 350.916000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 185
+profiles in the same class: 23
+--------------------------------------------------------
+Elapsed time is 11.629081 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 12
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.528000, 350.827000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 186
+profiles in the same class: 22
+--------------------------------------------------------
+Elapsed time is 11.663234 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 13
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.442000, 350.626000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 187
+profiles in the same class: 84
+--------------------------------------------------------
+Elapsed time is 12.035703 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 14
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.340000, 350.460000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 176
+profiles in the same class: 81
+--------------------------------------------------------
+Elapsed time is 11.774964 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 15
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.290000, 350.203000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 167
+profiles in the same class: 70
+--------------------------------------------------------
+Elapsed time is 11.847574 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 16
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.200000, 349.735000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 149
+profiles in the same class: 59
+--------------------------------------------------------
+Elapsed time is 16.429616 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 17
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.945000, 349.871000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 173
+profiles in the same class: 70
+--------------------------------------------------------
+Elapsed time is 11.104590 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 18
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.051000, 350.124000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 168
+profiles in the same class: 32
+--------------------------------------------------------
+Elapsed time is 11.560391 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 19
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.154000, 350.159000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 171
+profiles in the same class: 35
+--------------------------------------------------------
+Elapsed time is 11.511873 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 20
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.241000, 349.998000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 162
+profiles in the same class: 58
+--------------------------------------------------------
+Elapsed time is 11.752790 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 21
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.198000, 350.367000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 170
+profiles in the same class: 59
+--------------------------------------------------------
+Elapsed time is 11.648516 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 22
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.025000, 350.616000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 206
+profiles in the same class: 115
+--------------------------------------------------------
+Elapsed time is 11.831317 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 23
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.190000, 350.777000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 188
+profiles in the same class: 29
+--------------------------------------------------------
+Elapsed time is 11.573082 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 24
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.393000, 350.683000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 207
+profiles in the same class: 86
+--------------------------------------------------------
+Elapsed time is 11.946309 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 25
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.555000, 350.523000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 182
+profiles in the same class: 65
+--------------------------------------------------------
+Elapsed time is 11.786820 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 26
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 45.051000, 350.218000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 178
+profiles in the same class: 85
+--------------------------------------------------------
+Elapsed time is 11.868837 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 27
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 45.037000, 350.961000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 185
+profiles in the same class: 98
+--------------------------------------------------------
+Elapsed time is 12.007606 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 28
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.673000, 351.071000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 184
+profiles in the same class: 64
+--------------------------------------------------------
+Elapsed time is 11.815708 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 29
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.387000, 350.966000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 201
+profiles in the same class: 48
+--------------------------------------------------------
+Elapsed time is 11.606592 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 30
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.258000, 350.930000
+profile class: 1
+profiles chosen by OW: 211
+profiles chosen by OW in .txt: 149
+profiles in the same class: 64
+--------------------------------------------------------
+Elapsed time is 11.643848 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 31
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.280000, 350.998000
+profile class: 0
+profiles chosen by OW: 152
+profiles chosen by OW in .txt: 97
+profiles in the same class: 16
+--------------------------------------------------------
+Elapsed time is 11.601946 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 32
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.335000, 351.558000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 182
+profiles in the same class: 62
+--------------------------------------------------------
+Elapsed time is 11.756805 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 33
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.682000, 351.910000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 192
+profiles in the same class: 103
+--------------------------------------------------------
+Elapsed time is 11.744140 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 34
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.564000, 352.249000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 206
+profiles in the same class: 110
+--------------------------------------------------------
+Elapsed time is 11.832174 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 35
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.556000, 351.758000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 200
+profiles in the same class: 109
+--------------------------------------------------------
+Elapsed time is 11.897390 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 36
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 45.085000, 351.371000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 190
+profiles in the same class: 100
+--------------------------------------------------------
+Elapsed time is 12.068117 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 37
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 45.126000, 351.709000
+profile class: 3
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 196
+profiles in the same class: 2
+--------------------------------------------------------
+Elapsed time is 11.426794 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 38
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 45.123000, 351.113000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 191
+profiles in the same class: 100
+--------------------------------------------------------
+Elapsed time is 11.690160 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 39
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 45.087000, 351.601000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 191
+profiles in the same class: 104
+--------------------------------------------------------
+Elapsed time is 11.689214 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 40
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 45.390000, 351.663000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 198
+profiles in the same class: 106
+--------------------------------------------------------
+Elapsed time is 11.906815 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 41
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.881000, 351.541000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 187
+profiles in the same class: 101
+--------------------------------------------------------
+Elapsed time is 11.836288 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 42
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 45.249000, 351.287000
+profile class: 1
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 193
+profiles in the same class: 94
+--------------------------------------------------------
+Elapsed time is 11.887681 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 43
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 45.198000, 351.749000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 197
+profiles in the same class: 23
+--------------------------------------------------------
+Elapsed time is 11.616931 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 44
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.610000, 351.509000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 190
+profiles in the same class: 63
+--------------------------------------------------------
+Elapsed time is 11.777604 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 45
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.487000, 351.242000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 203
+profiles in the same class: 87
+--------------------------------------------------------
+Elapsed time is 11.995040 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 46
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.510000, 350.649000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 182
+profiles in the same class: 30
+--------------------------------------------------------
+Elapsed time is 11.494435 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 47
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.239000, 350.180000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 165
+profiles in the same class: 27
+--------------------------------------------------------
+Elapsed time is 11.529489 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 48
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.233000, 350.360000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 166
+profiles in the same class: 30
+--------------------------------------------------------
+Elapsed time is 11.524175 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 49
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 44.135000, 350.227000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 169
+profiles in the same class: 28
+--------------------------------------------------------
+Elapsed time is 11.515140 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 50
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.908000, 349.879000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 179
+profiles in the same class: 30
+--------------------------------------------------------
+Elapsed time is 10.831795 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 51
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.788000, 349.973000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 199
+profiles in the same class: 130
+--------------------------------------------------------
+Elapsed time is 11.261715 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 52
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.817000, 350.116000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 195
+profiles in the same class: 124
+--------------------------------------------------------
+Elapsed time is 11.853541 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 53
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.717000, 349.968000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 199
+profiles in the same class: 112
+--------------------------------------------------------
+Elapsed time is 11.348081 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 54
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.710000, 349.948000
+profile class: 3
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 202
+profiles in the same class: 12
+--------------------------------------------------------
+Elapsed time is 10.733689 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 55
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.667000, 349.870000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 199
+profiles in the same class: 19
+--------------------------------------------------------
+Elapsed time is 10.776125 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 56
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.502000, 349.975000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 190
+profiles in the same class: 104
+--------------------------------------------------------
+Elapsed time is 10.999489 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 57
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.519000, 349.923000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 202
+profiles in the same class: 126
+--------------------------------------------------------
+Elapsed time is 11.222448 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 58
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.448000, 349.978000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 180
+profiles in the same class: 105
+--------------------------------------------------------
+Elapsed time is 11.005182 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 59
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.432000, 349.838000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 196
+profiles in the same class: 127
+--------------------------------------------------------
+Elapsed time is 11.342853 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 60
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.436000, 349.761000
+profile class: 3
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 196
+profiles in the same class: 13
+--------------------------------------------------------
+Elapsed time is 10.435893 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 61
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.423000, 349.630000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 193
+profiles in the same class: 23
+--------------------------------------------------------
+Elapsed time is 10.639848 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 62
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.182000, 349.818000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 196
+profiles in the same class: 14
+--------------------------------------------------------
+Elapsed time is 10.449264 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 63
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.459000, 350.070000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 155
+profiles in the same class: 106
+--------------------------------------------------------
+Elapsed time is 11.434466 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 64
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.710000, 350.101000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 181
+profiles in the same class: 103
+--------------------------------------------------------
+Elapsed time is 11.424116 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 65
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.747000, 349.675000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 177
+profiles in the same class: 19
+--------------------------------------------------------
+Elapsed time is 10.450512 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 66
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.750000, 349.599000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 164
+profiles in the same class: 61
+--------------------------------------------------------
+Elapsed time is 10.553154 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 67
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.650000, 349.410000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 133
+profiles in the same class: 46
+--------------------------------------------------------
+Elapsed time is 10.823143 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 68
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.298000, 349.012000
+profile class: 0
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 173
+profiles in the same class: 52
+--------------------------------------------------------
+Elapsed time is 10.663722 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 69
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 43.090000, 349.112000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 192
+profiles in the same class: 126
+--------------------------------------------------------
+Elapsed time is 10.928510 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 70
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 42.796000, 349.114000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 155
+profiles in the same class: 112
+--------------------------------------------------------
+Elapsed time is 10.876181 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 71
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 42.570000, 349.370000
+profile class: 2
+profiles chosen by OW: 245
+profiles chosen by OW in .txt: 143
+profiles in the same class: 97
+--------------------------------------------------------
+Elapsed time is 10.649148 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 72
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 42.307000, 349.592000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 173
+profiles in the same class: 117
+--------------------------------------------------------
+Elapsed time is 11.052482 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 73
+--------------SELECT CLASSES IN find_besthist--------------
+profile lat lon: 42.336000, 349.943000
+profile class: 2
+profiles chosen by OW: 250
+profiles chosen by OW in .txt: 163
+profiles in the same class: 112
+--------------------------------------------------------
+Elapsed time is 10.824443 seconds.
+ 

@@ -471,7 +471,7 @@ class Plotter:
 
         subplot_kw = {'projection': proj, 'extent': extent}
         fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(
-            12, 12), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
+            10, 10), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
         # TODO: function already in pyxpcm
         kmap = self.m.plot.cmap(name=self.cmap_name)
 
@@ -479,6 +479,10 @@ class Plotter:
         if self.data_type == 'profiles':
             sc = ax.scatter(long_data, dsp[self.coords_dict.get('latitude')], s=3,
                             c=self.ds[var_name], cmap=kmap, transform=proj, vmin=0, vmax=self.m.K)
+            selected_float_index = [i for i, isource in enumerate(dsp['source'].values) if 'selected_float' in isource]
+            p2 = ax.plot(dsp[self.coords_dict.get('longitude')].isel(n_profiles = selected_float_index), 
+                         dsp[self.coords_dict.get('latitude')].isel(n_profiles = selected_float_index), 
+                         'ro', transform=proj, markersize = 3)
         if self.data_type == 'gridded':
             sc = ax.pcolormesh(long_data, dsp[self.coords_dict.get(
                 'latitude')], dsp[var_name], cmap=kmap, transform=proj, vmin=0, vmax=self.m.K)
