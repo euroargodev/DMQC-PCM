@@ -73,6 +73,15 @@ def interpolate_standard_levels(ds, std_lev):
     ds_out = ds_out[np.sort(ds_out.data_vars)]
     ds_out.attrs = ds.attrs  # Preserve original attributes
     # ds_out.argo._add_history('Interpolated on standard levels')
+    
+    # some format
+    #pres should be negative for the PCM
+    ds_out['PRES_INTERPOLATED'] = -np.abs(ds_out['PRES_INTERPOLATED'].values)
+    #axis attributtes for plotter class
+    ds_out.PRES_INTERPOLATED.attrs['axis'] = 'Z'
+    ds_out.lat.attrs['axis'] = 'Y'
+    ds_out.long.attrs['axis'] = 'X'
+    ds_out.dates.attrs['axis'] = 'T'
 
     return ds_out
 
