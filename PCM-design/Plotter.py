@@ -471,21 +471,48 @@ class Plotter:
 
         subplot_kw = {'projection': proj, 'extent': extent}
         fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(
-            10, 10), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
+            6, 6), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
         # TODO: function already in pyxpcm
         kmap = self.m.plot.cmap(name=self.cmap_name)
 
         # check if gridded or profiles data
         if self.data_type == 'profiles':
-            sc = ax.scatter(long_data, dsp[self.coords_dict.get('latitude')], s=3,
-                            c=self.ds[var_name], cmap=kmap, transform=proj, vmin=0, vmax=self.m.K)
+            sc = ax.scatter(long_data, dsp[self.coords_dict.get('latitude')], s=4,
+                            c=self.ds[var_name], cmap=kmap, transform=proj, vmin=0, vmax=self.m.K, zorder=1)
             selected_float_index = [i for i, isource in enumerate(dsp['source'].values) if 'selected_float' in isource]
-            p2 = ax.plot(dsp[self.coords_dict.get('longitude')].isel(n_profiles = selected_float_index), 
-                         dsp[self.coords_dict.get('latitude')].isel(n_profiles = selected_float_index), 
-                         'ro', transform=proj, markersize = 3)
+            #p2 = ax.plot(dsp[self.coords_dict.get('longitude')].isel(n_profiles = selected_float_index), 
+            #             dsp[self.coords_dict.get('latitude')].isel(n_profiles = selected_float_index), 
+            #             'ko-', markerfacecolor="None", transform=proj, markersize = 4)
         if self.data_type == 'gridded':
             sc = ax.pcolormesh(long_data, dsp[self.coords_dict.get(
                 'latitude')], dsp[var_name], cmap=kmap, transform=proj, vmin=0, vmax=self.m.K)
+        
+        # cycle number in float trajectory
+        float_source = dsp['source'].isel(n_profiles = selected_float_index)
+        float_cycles = [int(float_source.values[i].lstrip('selected_float_')) for i in range(len(float_source))]
+        cycles_labels = np.sort(np.append(np.arange(30,81,10),72))
+        #cycles_labels = [77,78,79]
+        #cycles_labels = np.arange(10,float_cycles[-1]+1,10)
+        p2 = ax.plot(dsp[self.coords_dict.get('longitude')].isel(n_profiles = selected_float_index), 
+                     dsp[self.coords_dict.get('latitude')].isel(n_profiles = selected_float_index), 
+                     'ko', markerfacecolor="None", transform=proj, markersize = 4, zorder=2)
+        
+        p2 = ax.plot(np.mod((dsp[self.coords_dict.get('longitude')].isel(n_profiles = selected_float_index)+180),360)-180, 
+                     dsp[self.coords_dict.get('latitude')].isel(n_profiles = selected_float_index), 
+                     'k-', markerfacecolor="None", transform=proj, markersize = 4, zorder=-1)
+        transform = ccrs.PlateCarree()._as_mpl_transform(ax)
+
+        for icycle in cycles_labels:
+            print('selected_float_' + str(icycle))
+            prof_data = dsp['source'].where(dsp['source'] == 'selected_float_' + str(icycle), drop=True)
+            if np.size(prof_data['n_profiles'].values) == 0:
+                continue
+            cycle_index = prof_data['n_profiles'].values[0]
+            print(cycle_index)
+            lat_value = prof_data['lat'].values[0]
+            long_value = prof_data['long'].values[0]
+            #ax.annotate(str(icycle), xy=(long_value, lat_value+0.05*lat_value), xycoords=transform, fontsize=7, weight='bold')
+            ax.annotate(str(icycle), xy=(long_value+0.07, lat_value+0.07), xycoords=transform, fontsize=7, weight='bold')
 
         # function already in pyxpcm: deprecated
         #self.m.plot.colorbar(ax=ax, shrink=0.3)
@@ -511,6 +538,7 @@ class Plotter:
         land_feature = cfeature.NaturalEarthFeature(
             category='physical', name='land', scale='50m', facecolor=[0.9375, 0.9375, 0.859375])
         ax.add_feature(land_feature, edgecolor='black')
+        title_str = '$\\bf{Spatial\\ ditribution\\ of\\ classes\\ (CTD\\ database)}$'
         ax.set_title(title_str)
         fig.canvas.draw()
         fig.tight_layout()

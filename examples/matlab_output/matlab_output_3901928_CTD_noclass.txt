@@ -1,0 +1,1108 @@
+ 
+__________________________________________
+CONFIGURATION FILE
+__________________________________________
+ow_config.txt
+ 
+22-Nov-2021 15:05:05 Working on 3901928
+UPDATE_SALINITY_MAPPING: Working on profile 1
+Elapsed time is 10.616817 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 2
+Elapsed time is 1.772433 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 3
+Elapsed time is 1.731629 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 4
+Elapsed time is 1.816578 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 5
+Elapsed time is 1.890561 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 6
+Elapsed time is 1.807057 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 7
+Elapsed time is 1.754022 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 8
+Elapsed time is 1.863584 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 9
+Elapsed time is 1.962037 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 10
+Elapsed time is 2.305096 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 11
+Elapsed time is 2.033349 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 12
+Elapsed time is 2.154073 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 13
+Elapsed time is 1.992635 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 14
+Elapsed time is 1.929097 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 15
+Elapsed time is 2.096457 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 16
+Elapsed time is 1.876799 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 17
+Elapsed time is 2.063683 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 18
+Elapsed time is 3.817285 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 19
+Elapsed time is 1.904258 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 20
+Elapsed time is 2.161923 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 21
+Elapsed time is 1.946724 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 22
+Elapsed time is 1.812650 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 23
+Elapsed time is 1.809294 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 24
+Elapsed time is 1.959389 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 25
+Elapsed time is 1.800502 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 26
+Elapsed time is 1.717516 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 27
+Elapsed time is 1.684661 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 28
+Elapsed time is 1.816287 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 29
+Elapsed time is 2.569667 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 30
+Elapsed time is 1.488080 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 31
+Elapsed time is 1.527705 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 32
+Elapsed time is 1.630383 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 33
+Elapsed time is 1.556970 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 34
+Elapsed time is 1.587868 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 35
+Elapsed time is 1.662280 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 36
+Elapsed time is 1.644088 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 37
+Elapsed time is 2.306808 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 38
+Elapsed time is 1.608195 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 39
+Elapsed time is 1.972100 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 40
+Elapsed time is 2.433398 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 41
+Elapsed time is 2.491532 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 42
+Elapsed time is 2.383484 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 43
+Elapsed time is 2.411113 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 44
+Elapsed time is 2.402546 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 45
+Elapsed time is 2.409190 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 46
+Elapsed time is 2.586368 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 47
+Elapsed time is 2.398492 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 48
+Elapsed time is 2.336970 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 49
+Elapsed time is 2.456101 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 50
+Elapsed time is 2.344534 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 51
+Elapsed time is 2.117534 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 52
+Elapsed time is 2.388866 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 53
+Elapsed time is 2.454986 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 54
+Elapsed time is 2.452308 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 55
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 3.637318 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 56
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 2.134993 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 57
+Elapsed time is 1.867925 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 58
+Elapsed time is 1.945254 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 59
+Elapsed time is 1.941473 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 60
+Elapsed time is 1.638423 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 61
+Elapsed time is 2.113342 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 62
+Elapsed time is 1.982800 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 63
+Elapsed time is 2.037462 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 64
+Elapsed time is 2.096702 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 65
+Elapsed time is 1.485063 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 66
+Elapsed time is 1.495088 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 67
+Elapsed time is 1.481083 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 68
+Elapsed time is 2.032843 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 69
+Elapsed time is 1.562217 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 70
+Elapsed time is 1.575641 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 71
+Elapsed time is 1.699312 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 72
+Elapsed time is 2.169247 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 73
+Elapsed time is 1.470589 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 74
+Elapsed time is 1.443973 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 75
+Elapsed time is 2.070815 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 76
+Elapsed time is 1.455147 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 77
+Elapsed time is 1.333594 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 78
+Elapsed time is 1.275120 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 79
+Elapsed time is 1.293075 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 80
+Elapsed time is 1.402137 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 81
+Elapsed time is 1.317322 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 82
+Elapsed time is 1.293943 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 83
+Elapsed time is 1.234190 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 84
+Elapsed time is 1.312677 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 85
+Elapsed time is 1.405793 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 86
+Elapsed time is 1.265812 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 87
+Elapsed time is 1.246103 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 88
+Elapsed time is 1.092349 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 89
+Elapsed time is 2.368981 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 90
+Elapsed time is 2.073645 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 91
+Elapsed time is 2.064293 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 92
+Elapsed time is 2.032941 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 93
+Elapsed time is 2.046230 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 94
+Elapsed time is 2.286374 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 95
+Elapsed time is 2.093355 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 96
+Elapsed time is 2.065321 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 97
+Elapsed time is 2.008140 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 98
+Elapsed time is 1.950082 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 99
+Elapsed time is 2.066466 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 100
+Elapsed time is 2.009593 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 101
+Elapsed time is 1.995626 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 102
+Elapsed time is 1.918229 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 103
+Elapsed time is 2.086540 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 104
+Elapsed time is 2.058904 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 105
+Elapsed time is 1.935870 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 106
+Elapsed time is 2.062081 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 107
+Elapsed time is 2.054430 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 108
+Elapsed time is 1.873987 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 109
+Elapsed time is 1.928301 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 110
+Elapsed time is 4.134012 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 111
+Elapsed time is 1.873299 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 112
+Elapsed time is 1.816328 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 113
+Elapsed time is 1.844686 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 114
+Elapsed time is 1.866369 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 115
+Elapsed time is 2.105825 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 116
+Elapsed time is 2.146410 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 117
+Elapsed time is 2.139275 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 118
+Elapsed time is 2.129247 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 119
+Elapsed time is 2.183004 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 120
+Elapsed time is 2.121591 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 121
+Elapsed time is 2.120373 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 122
+Elapsed time is 2.147392 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 123
+Elapsed time is 2.118739 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 124
+Elapsed time is 2.127804 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 125
+Elapsed time is 2.126221 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 126
+Elapsed time is 1.879655 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 127
+Elapsed time is 1.885582 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 128
+Elapsed time is 1.870912 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 129
+Elapsed time is 2.104358 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 130
+Elapsed time is 2.125851 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 131
+Elapsed time is 2.155766 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 132
+Elapsed time is 2.132709 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 133
+Elapsed time is 2.256087 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 134
+Elapsed time is 2.079090 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 135
+Elapsed time is 2.125153 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 136
+Elapsed time is 2.060596 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 137
+Elapsed time is 2.086560 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 138
+Elapsed time is 1.270187 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 139
+Elapsed time is 3.265280 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 140
+Elapsed time is 1.843499 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 141
+Elapsed time is 1.202715 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 142
+Elapsed time is 1.353826 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 143
+Elapsed time is 1.245446 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 144
+Elapsed time is 1.189151 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 145
+Elapsed time is 1.198612 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 146
+Elapsed time is 1.127785 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 147
+Elapsed time is 1.120474 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 148
+Elapsed time is 1.112510 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 149
+Elapsed time is 1.106554 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 150
+Elapsed time is 1.147000 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 151
+Elapsed time is 1.120043 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 152
+Elapsed time is 1.099102 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 153
+Elapsed time is 1.190938 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 154
+Elapsed time is 1.146646 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 155
+Elapsed time is 1.346235 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 156
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('eq')" style="font-weight:bold"> == </a>
+Matrix dimensions must agree.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('noise', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/noise.m', 31)" style="font-weight:bold">noise</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/noise.m',31,0)">line 31</a>)
+	j=find(r==tmp);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 319)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',319,0)">line 319</a>)
+	       noise_sal  = noise( la_hist_sal, la_hist_lat, la_hist_long ) ;
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+  update_salinity_mapping( flt_dir, flt_name, lo_system_configuration );
+} 
+ow_calibration
+ 
+__________________________________________
+CONFIGURATION FILE
+__________________________________________
+ow_config.txt
+ 
+22-Nov-2021 15:23:20 Working on 3901928
+UPDATE_SALINITY_MAPPING: Working on profile 1
+Elapsed time is 10.648159 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 2
+Elapsed time is 1.739620 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 3
+Elapsed time is 1.685452 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 4
+Elapsed time is 1.783149 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 5
+Elapsed time is 1.792488 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 6
+Elapsed time is 1.964965 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 7
+Elapsed time is 1.799753 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 8
+Elapsed time is 1.773676 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 9
+Elapsed time is 1.950957 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 10
+Elapsed time is 2.259006 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 11
+Elapsed time is 2.043353 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 12
+Elapsed time is 2.061535 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 13
+Elapsed time is 2.089466 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 14
+Elapsed time is 2.043017 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 15
+Elapsed time is 1.923552 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 16
+Elapsed time is 1.765521 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 17
+Elapsed time is 2.135868 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 18
+Elapsed time is 3.823034 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 19
+Elapsed time is 1.882023 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 20
+Elapsed time is 1.801760 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 21
+Elapsed time is 1.929114 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 22
+Elapsed time is 1.819352 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 23
+Elapsed time is 1.804233 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 24
+Elapsed time is 1.882242 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 25
+Elapsed time is 1.684675 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 26
+Elapsed time is 1.718087 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 27
+Elapsed time is 1.698935 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 28
+Elapsed time is 1.718394 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 29
+Elapsed time is 2.505518 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 30
+Elapsed time is 1.591626 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 31
+Elapsed time is 1.504530 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 32
+Elapsed time is 1.625361 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 33
+Elapsed time is 1.544762 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 34
+Elapsed time is 1.488028 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 35
+Elapsed time is 1.585624 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 36
+Elapsed time is 1.588783 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 37
+Elapsed time is 2.333180 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 38
+Elapsed time is 1.604242 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 39
+Elapsed time is 1.916313 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 40
+Elapsed time is 2.418846 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 41
+Elapsed time is 2.498881 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 42
+Elapsed time is 2.314697 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 43
+Elapsed time is 2.454863 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 44
+Elapsed time is 2.630779 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 45
+Elapsed time is 2.421328 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 46
+Elapsed time is 2.462804 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 47
+Elapsed time is 2.357165 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 48
+Elapsed time is 2.313823 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 49
+Elapsed time is 2.456581 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 50
+Elapsed time is 2.417517 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 51
+Elapsed time is 2.198873 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 52
+Elapsed time is 2.448676 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 53
+Elapsed time is 2.446472 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 54
+Elapsed time is 2.294935 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 55
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 3.839217 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 56
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 2.225937 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 57
+Elapsed time is 1.931075 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 58
+Elapsed time is 2.024117 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 59
+Elapsed time is 1.929040 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 60
+Elapsed time is 1.627335 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 61
+Elapsed time is 2.091847 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 62
+Elapsed time is 1.968746 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 63
+Elapsed time is 1.987496 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 64
+Elapsed time is 2.088614 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 65
+Elapsed time is 1.509823 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 66
+Elapsed time is 1.532583 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 67
+Elapsed time is 1.481044 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 68
+Elapsed time is 2.013972 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 69
+Elapsed time is 1.480754 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 70
+Elapsed time is 1.483823 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 71
+Elapsed time is 1.802027 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 72
+Elapsed time is 2.034448 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 73
+Elapsed time is 1.411052 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 74
+Elapsed time is 1.359215 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 75
+Elapsed time is 2.161457 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 76
+Elapsed time is 1.357213 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 77
+Elapsed time is 1.257605 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 78
+Elapsed time is 1.234208 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 79
+Elapsed time is 1.227471 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 80
+Elapsed time is 1.295930 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 81
+Elapsed time is 1.400932 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 82
+Elapsed time is 1.223863 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 83
+Elapsed time is 1.376894 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 84
+Elapsed time is 1.273723 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 85
+Elapsed time is 1.228406 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 86
+Elapsed time is 1.235735 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 87
+Elapsed time is 1.247709 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 88
+Elapsed time is 1.068183 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 89
+Elapsed time is 2.352660 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 90
+Elapsed time is 1.959764 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 91
+Elapsed time is 1.930528 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 92
+Elapsed time is 2.021839 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 93
+Elapsed time is 2.061587 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 94
+Elapsed time is 2.090994 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 95
+Elapsed time is 1.975102 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 96
+Elapsed time is 1.997880 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 97
+Elapsed time is 1.988305 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 98
+Elapsed time is 1.920647 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 99
+Elapsed time is 2.000891 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 100
+Elapsed time is 1.922057 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 101
+Elapsed time is 1.957684 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 102
+Elapsed time is 1.914534 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 103
+Elapsed time is 1.942373 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 104
+Elapsed time is 1.915771 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 105
+Elapsed time is 1.920810 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 106
+Elapsed time is 1.912620 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 107
+Elapsed time is 1.945509 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 108
+Elapsed time is 1.853869 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 109
+Elapsed time is 1.885297 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 110
+Elapsed time is 3.799549 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 111
+Elapsed time is 1.890296 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 112
+Elapsed time is 1.882987 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 113
+Elapsed time is 1.831526 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 114
+Elapsed time is 1.870199 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 115
+Elapsed time is 2.103180 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 116
+Elapsed time is 2.149775 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 117
+Elapsed time is 2.150962 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 118
+Elapsed time is 2.122713 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 119
+Elapsed time is 2.166664 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 120
+Elapsed time is 2.117077 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 121
+Elapsed time is 2.275303 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 122
+Elapsed time is 2.228869 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 123
+Elapsed time is 2.149266 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 124
+Elapsed time is 2.337873 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 125
+Elapsed time is 2.109885 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 126
+Elapsed time is 1.855706 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 127
+Elapsed time is 1.889213 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 128
+Elapsed time is 1.848171 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 129
+Elapsed time is 2.134858 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 130
+Elapsed time is 2.243449 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 131
+Elapsed time is 2.219263 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 132
+Elapsed time is 2.083055 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 133
+Elapsed time is 2.080157 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 134
+Elapsed time is 2.068735 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 135
+Elapsed time is 2.020436 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 136
+Elapsed time is 2.069356 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 137
+Elapsed time is 2.096807 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 138
+Elapsed time is 1.266796 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 139
+Elapsed time is 3.347904 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 140
+Elapsed time is 1.808369 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 141
+Elapsed time is 1.245224 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 142
+Elapsed time is 1.228260 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 143
+Elapsed time is 1.212984 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 144
+Elapsed time is 1.350164 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 145
+Elapsed time is 1.187428 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 146
+Elapsed time is 1.167244 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 147
+Elapsed time is 1.134251 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 148
+Elapsed time is 1.142484 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 149
+Elapsed time is 1.101611 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 150
+Elapsed time is 1.118623 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 151
+Elapsed time is 1.139233 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 152
+Elapsed time is 1.342252 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 153
+Elapsed time is 1.241113 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 154
+Elapsed time is 1.219327 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 155
+Elapsed time is 1.174735 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 156
+{Error using <a href="matlab:matlab.internal.language.introspective.errorDocCallback('eq')" style="font-weight:bold"> == </a>
+Matrix dimensions must agree.
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('noise', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/noise.m', 31)" style="font-weight:bold">noise</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/noise.m',31,0)">line 31</a>)
+	j=find(r==tmp);
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 319)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',319,0)">line 319</a>)
+	       noise_sal  = noise( la_hist_sal, la_hist_lat, la_hist_long ) ;
+
+Error in <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+  update_salinity_mapping( flt_dir, flt_name, lo_system_configuration );
+} 
+ow_calibration
+{'ow_calibration' is not found in the current folder or on the MATLAB path, but exists in:
+    /home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow
+    /home1/homedir5/perso/agarciaj/EARISE/OW/matlabow
+
+Change the MATLAB current folder or add its folder to the MATLAB path.
+} 
+ow_calibration
+ 
+__________________________________________
+CONFIGURATION FILE
+__________________________________________
+ow_config.txt
+ 
+23-Nov-2021 09:18:59 Working on 3901928
+UPDATE_SALINITY_MAPPING: Working on profile 1
+Elapsed time is 13.309178 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 2
+Elapsed time is 1.854513 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 3
+Elapsed time is 1.738068 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 4
+Elapsed time is 1.864611 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 5
+Elapsed time is 1.965175 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 6
+Elapsed time is 1.849866 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 7
+Elapsed time is 1.748665 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 8
+Elapsed time is 1.730804 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 9
+Elapsed time is 1.962671 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 10
+Elapsed time is 2.067613 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 11
+Elapsed time is 1.948563 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 12
+Elapsed time is 1.934354 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 13
+Elapsed time is 1.864471 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 14
+Elapsed time is 1.753491 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 15
+Elapsed time is 2.010123 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 16
+Elapsed time is 1.767297 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 17
+Elapsed time is 1.941067 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 18
+Elapsed time is 3.777307 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 19
+Elapsed time is 1.810620 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 20
+Elapsed time is 1.759962 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 21
+Elapsed time is 1.815689 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 22
+Elapsed time is 1.729789 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 23
+Elapsed time is 1.761944 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 24
+Elapsed time is 1.794480 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 25
+Elapsed time is 1.658957 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 26
+Elapsed time is 1.676795 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 27
+Elapsed time is 1.657391 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 28
+Elapsed time is 1.654635 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 29
+Elapsed time is 2.512147 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 30
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 1.538812 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 31
+Elapsed time is 1.486309 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 32
+Elapsed time is 1.503789 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 33
+Elapsed time is 1.543567 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 34
+Elapsed time is 1.455032 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 35
+Elapsed time is 1.539505 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 36
+Elapsed time is 1.537135 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 37
+Elapsed time is 2.319569 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 38
+Elapsed time is 1.517684 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 39
+Elapsed time is 1.869181 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 40
+Elapsed time is 2.460543 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 41
+Elapsed time is 2.410970 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 42
+Elapsed time is 2.171822 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 43
+Elapsed time is 2.310545 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 44
+Elapsed time is 2.275806 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 45
+Elapsed time is 2.254053 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 46
+Elapsed time is 2.339031 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 47
+Elapsed time is 2.263369 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 48
+Elapsed time is 2.252373 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 49
+Elapsed time is 2.374393 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 50
+Elapsed time is 2.254363 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 51
+Elapsed time is 2.011313 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 52
+Elapsed time is 2.354394 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 53
+Elapsed time is 2.303671 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 54
+Elapsed time is 2.196957 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 55
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 3.917810 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 56
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 2.163408 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 57
+Elapsed time is 1.806702 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 58
+Elapsed time is 1.855694 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 59
+Elapsed time is 2.148569 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 60
+Elapsed time is 1.603882 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 61
+Elapsed time is 2.011861 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 62
+Elapsed time is 1.878257 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 63
+Elapsed time is 1.901776 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 64
+Elapsed time is 1.977859 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 65
+Elapsed time is 1.391510 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 66
+Elapsed time is 1.520719 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 67
+Elapsed time is 1.402224 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 68
+Elapsed time is 1.977734 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 69
+Elapsed time is 1.389252 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 70
+Elapsed time is 1.396931 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 71
+Elapsed time is 1.533089 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 72
+Elapsed time is 1.935741 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 73
+Elapsed time is 1.329396 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 74
+Elapsed time is 1.294846 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 75
+Elapsed time is 2.163257 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 76
+Elapsed time is 1.313421 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 77
+Elapsed time is 1.204589 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 78
+Elapsed time is 1.205592 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 79
+Elapsed time is 1.186240 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 80
+Elapsed time is 1.254720 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 81
+Elapsed time is 1.206729 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 82
+Elapsed time is 1.185087 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 83
+Elapsed time is 1.151721 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 84
+Elapsed time is 1.197469 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 85
+Elapsed time is 1.183001 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 86
+Elapsed time is 1.188800 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 87
+Elapsed time is 1.177729 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 88
+Elapsed time is 1.027915 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 89
+Elapsed time is 2.285703 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 90
+Elapsed time is 1.893884 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 91
+Elapsed time is 1.861668 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 92
+Elapsed time is 1.910918 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 93
+Elapsed time is 1.887656 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 94
+Elapsed time is 1.939874 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 95
+Elapsed time is 1.902068 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 96
+Elapsed time is 1.902664 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 97
+Elapsed time is 1.894099 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 98
+Elapsed time is 1.847139 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 99
+Elapsed time is 1.877041 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 100
+Elapsed time is 1.848812 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 101
+Elapsed time is 1.832245 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 102
+Elapsed time is 1.857863 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 103
+Elapsed time is 1.857011 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 104
+Elapsed time is 1.835437 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 105
+Elapsed time is 1.839697 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 106
+Elapsed time is 1.828212 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 107
+Elapsed time is 1.870960 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 108
+Elapsed time is 1.789569 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 109
+Elapsed time is 1.830848 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 110
+Elapsed time is 3.840584 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 111
+Elapsed time is 1.820892 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 112
+Elapsed time is 1.733779 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 113
+Elapsed time is 1.730817 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 114
+Elapsed time is 1.783526 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 115
+Elapsed time is 2.016205 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 116
+Elapsed time is 2.063073 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 117
+Elapsed time is 2.028962 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 118
+Elapsed time is 2.068577 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 119
+Elapsed time is 2.062081 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 120
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 2.378793 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 121
+Elapsed time is 2.059174 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 122
+Elapsed time is 2.048938 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 123
+Elapsed time is 2.053209 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 124
+Elapsed time is 2.034532 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 125
+Elapsed time is 2.074001 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 126
+Elapsed time is 1.773128 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 127
+Elapsed time is 1.815262 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 128
+Elapsed time is 1.788375 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 129
+Elapsed time is 2.036451 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 130
+Elapsed time is 2.005524 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 131
+Elapsed time is 2.008998 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 132
+Elapsed time is 1.992875 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 133
+Elapsed time is 2.003663 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 134
+Elapsed time is 2.010245 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 135
+Elapsed time is 2.251973 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 136
+Elapsed time is 1.984528 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 137
+Elapsed time is 1.997636 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 138
+Elapsed time is 1.198110 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 139
+Elapsed time is 3.149145 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 140
+Elapsed time is 1.777877 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 141
+Elapsed time is 1.156197 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 142
+Elapsed time is 1.311892 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 143
+Elapsed time is 1.258915 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 144
+Elapsed time is 1.195233 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 145
+Elapsed time is 1.072271 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 146
+Elapsed time is 1.089492 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 147
+Elapsed time is 1.073181 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 148
+Elapsed time is 1.064566 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 149
+Elapsed time is 1.086698 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 150
+Elapsed time is 1.072692 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 151
+Elapsed time is 1.061788 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 152
+Elapsed time is 1.068834 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 153
+Elapsed time is 1.054850 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 154
+Elapsed time is 1.052876 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 155
+Elapsed time is 1.162640 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 156
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  8.708303e-18.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 342)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',342,0)">line 342</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  5.018634e-18.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 352)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',352,0)">line 352</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  5.490155e-18.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 342)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',342,0)">line 342</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  3.947512e-17.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 352)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',352,0)">line 352</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  3.030100e-18.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 342)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',342,0)">line 342</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  1.038769e-17.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 352)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',352,0)">line 352</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  9.937211e-18.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 342)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',342,0)">line 342</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  1.457221e-19.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 352)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',352,0)">line 352</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  1.639713e-18.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 342)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',342,0)">line 342</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  3.813478e-18.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 352)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',352,0)">line 352</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  7.271661e-18.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 342)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',342,0)">line 342</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  1.056106e-17.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 352)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',352,0)">line 352</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  5.227464e-18.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 342)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',342,0)">line 342</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  2.033478e-16.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 352)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',352,0)">line 352</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  9.182882e-18.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 342)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',342,0)">line 342</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  9.984357e-18.] 
+[> In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('map_data_grid', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m', 58)" style="font-weight:bold">map_data_grid</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/map_data_grid.m',58,0)">line 58</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('update_salinity_mapping', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m', 352)" style="font-weight:bold">update_salinity_mapping</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/matlab_codes/update_salinity_mapping.m',352,0)">line 352</a>)
+In <a href="matlab:matlab.internal.language.introspective.errorDocCallback('ow_calibration', '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m', 27)" style="font-weight:bold">ow_calibration</a> (<a href="matlab: opentoline('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/ow_calibration.m',27,0)">line 27</a>)
+] 
+Elapsed time is 1.196920 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 157
+Elapsed time is 1.047547 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 158
+Elapsed time is 1.080589 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 159
+Elapsed time is 1.108404 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 160
+Elapsed time is 1.108779 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 161
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 1.291001 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 162
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 1.262016 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 163
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 3.046711 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 164
+Elapsed time is 1.288693 seconds.
+ 
+___________________________________________
+SET CALSERIES PARAMETERS
+calseries: 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  0  0  0  0  0  0  0  0
+breaks = 
+max_breaks = 4
+use_theta_lt = 
+use_theta_gt = 
+use_pres_gt = 600
+use_pres_lt = 
+___________________________________________
+ 
+Best model found with 3 break points

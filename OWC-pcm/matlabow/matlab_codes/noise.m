@@ -26,10 +26,16 @@ for i=1:n
 	xlat0=xlat(i)*ones(n,1);
 	xlong0=xlong(i)*ones(n,1);
 	r=(xlat0-xlat).^2+ (xlong0-xlong).^2;
-	index=find( r > 0);
+    index=find( r > 0);
+    % VT 02/03/09: pb si r=0 pour tous les n
+    if isempty(index)
+        diff(:,i)=0;
+    else
+    % VT
 	[tmp]=min(r(index));
 	j=find(r==tmp);
 	diff(:,i)=a(:,i)-a(:,j(1));
+    end
 end
 for i=1:m
 	ii=find(isnan(diff(i,:))==0);

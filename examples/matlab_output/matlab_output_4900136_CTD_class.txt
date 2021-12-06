@@ -1,0 +1,1100 @@
+ 
+__________________________________________
+CONFIGURATION FILE
+__________________________________________
+ow_config.txt
+ 
+19-Nov-2021 14:40:03 Working on 4900136
+UPDATE_SALINITY_MAPPING: Working on profile 1
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.456001, 304.546001
+profile class: 3
+profiles in ellipse: 104
+profiles in class.txt: 76
+profiles in the same class: 32
+----------------------------------------------------------------
+Elapsed time is 30.955411 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 2
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.526001, 304.255001
+profile class: 3
+profiles in ellipse: 85
+profiles in class.txt: 69
+profiles in the same class: 40
+----------------------------------------------------------------
+Elapsed time is 6.044882 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 3
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.611000, 304.088001
+profile class: 3
+profiles in ellipse: 51
+profiles in class.txt: 44
+profiles in the same class: 24
+----------------------------------------------------------------
+Elapsed time is 5.860984 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 4
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.606998, 304.032001
+profile class: 0
+profiles in ellipse: 55
+profiles in class.txt: 48
+profiles in the same class: 22
+----------------------------------------------------------------
+Elapsed time is 5.982343 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 5
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.660999, 304.075001
+profile class: 3
+profiles in ellipse: 25
+profiles in class.txt: 24
+profiles in the same class: 18
+----------------------------------------------------------------
+Elapsed time is 5.880568 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 6
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.646000, 304.147999
+profile class: 3
+profiles in ellipse: 24
+profiles in class.txt: 23
+profiles in the same class: 17
+----------------------------------------------------------------
+Elapsed time is 5.856321 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 7
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.762001, 304.165001
+profile class: 0
+profiles in ellipse: 79
+profiles in class.txt: 54
+profiles in the same class: 25
+----------------------------------------------------------------
+Elapsed time is 5.873335 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 8
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.783001, 304.094002
+profile class: 0
+profiles in ellipse: 53
+profiles in class.txt: 36
+profiles in the same class: 12
+----------------------------------------------------------------
+Elapsed time is 5.826101 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 9
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.715000, 304.186001
+profile class: 3
+profiles in ellipse: 82
+profiles in class.txt: 65
+profiles in the same class: 41
+----------------------------------------------------------------
+Elapsed time is 5.922373 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 10
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.748001, 304.175999
+profile class: 0
+profiles in ellipse: 132
+profiles in class.txt: 105
+profiles in the same class: 35
+----------------------------------------------------------------
+Elapsed time is 5.914797 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 11
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.726002, 304.169998
+profile class: 3
+profiles in ellipse: 110
+profiles in class.txt: 87
+profiles in the same class: 58
+----------------------------------------------------------------
+Elapsed time is 5.902693 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 12
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.748001, 304.125999
+profile class: 0
+profiles in ellipse: 129
+profiles in class.txt: 102
+profiles in the same class: 35
+----------------------------------------------------------------
+Elapsed time is 5.867547 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 13
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.727001, 304.146999
+profile class: 0
+profiles in ellipse: 110
+profiles in class.txt: 87
+profiles in the same class: 29
+----------------------------------------------------------------
+Elapsed time is 5.920496 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 14
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.604000, 304.467999
+profile class: 0
+profiles in ellipse: 91
+profiles in class.txt: 72
+profiles in the same class: 29
+----------------------------------------------------------------
+Elapsed time is 5.923987 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 15
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.512001, 304.551998
+profile class: 0
+profiles in ellipse: 83
+profiles in class.txt: 55
+profiles in the same class: 26
+----------------------------------------------------------------
+Elapsed time is 5.949768 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 16
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.443001, 304.866001
+profile class: 3
+profiles in ellipse: 140
+profiles in class.txt: 108
+profiles in the same class: 39
+----------------------------------------------------------------
+Elapsed time is 5.892459 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 17
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.715000, 304.852001
+profile class: 3
+profiles in ellipse: 93
+profiles in class.txt: 77
+profiles in the same class: 47
+----------------------------------------------------------------
+Elapsed time is 6.022715 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 18
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.542000, 304.421001
+profile class: 0
+profiles in ellipse: 88
+profiles in class.txt: 72
+profiles in the same class: 28
+----------------------------------------------------------------
+Elapsed time is 5.985804 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 19
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.377998, 304.139000
+profile class: 3
+profiles in ellipse: 90
+profiles in class.txt: 62
+profiles in the same class: 30
+----------------------------------------------------------------
+Elapsed time is 6.001757 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 20
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.132999, 303.577999
+profile class: 0
+profiles in ellipse: 106
+profiles in class.txt: 89
+profiles in the same class: 57
+----------------------------------------------------------------
+Elapsed time is 6.107597 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 21
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.153000, 303.451000
+profile class: 3
+profiles in ellipse: 97
+profiles in class.txt: 69
+profiles in the same class: 28
+----------------------------------------------------------------
+Elapsed time is 6.002408 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 22
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.012001, 303.324001
+profile class: 0
+profiles in ellipse: 128
+profiles in class.txt: 98
+profiles in the same class: 65
+----------------------------------------------------------------
+Elapsed time is 6.068210 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 23
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.174999, 303.282001
+profile class: 0
+profiles in ellipse: 83
+profiles in class.txt: 57
+profiles in the same class: 27
+----------------------------------------------------------------
+Elapsed time is 6.170218 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 24
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.139000, 303.459999
+profile class: 0
+profiles in ellipse: 104
+profiles in class.txt: 77
+profiles in the same class: 48
+----------------------------------------------------------------
+Elapsed time is 6.168590 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 25
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.092999, 303.564999
+profile class: 0
+profiles in ellipse: 136
+profiles in class.txt: 106
+profiles in the same class: 69
+----------------------------------------------------------------
+Elapsed time is 6.160955 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 26
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.125000, 303.200001
+profile class: 0
+profiles in ellipse: 81
+profiles in class.txt: 53
+profiles in the same class: 27
+----------------------------------------------------------------
+Elapsed time is 6.088790 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 27
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.976002, 302.254002
+profile class: 0
+profiles in ellipse: 89
+profiles in class.txt: 73
+profiles in the same class: 36
+----------------------------------------------------------------
+Elapsed time is 6.008906 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 28
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.044998, 302.080002
+profile class: 0
+profiles in ellipse: 88
+profiles in class.txt: 76
+profiles in the same class: 41
+----------------------------------------------------------------
+Elapsed time is 5.990970 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 29
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.936001, 302.300999
+profile class: 0
+profiles in ellipse: 79
+profiles in class.txt: 63
+profiles in the same class: 33
+----------------------------------------------------------------
+Elapsed time is 5.991297 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 30
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.025002, 302.201000
+profile class: 3
+profiles in ellipse: 92
+profiles in class.txt: 75
+profiles in the same class: 35
+----------------------------------------------------------------
+Elapsed time is 6.101042 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 31
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 44.018002, 302.119999
+profile class: 3
+profiles in ellipse: 89
+profiles in class.txt: 77
+profiles in the same class: 36
+----------------------------------------------------------------
+Elapsed time is 6.139822 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 32
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.965000, 302.001999
+profile class: 0
+profiles in ellipse: 87
+profiles in class.txt: 73
+profiles in the same class: 36
+----------------------------------------------------------------
+Elapsed time is 6.026538 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 33
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.997002, 301.955002
+profile class: 0
+profiles in ellipse: 61
+profiles in class.txt: 54
+profiles in the same class: 31
+----------------------------------------------------------------
+Elapsed time is 6.028238 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 34
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.956001, 302.049999
+profile class: 0
+profiles in ellipse: 80
+profiles in class.txt: 64
+profiles in the same class: 32
+----------------------------------------------------------------
+Elapsed time is 6.050318 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 35
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.867001, 301.853001
+profile class: 3
+profiles in ellipse: 67
+profiles in class.txt: 57
+profiles in the same class: 22
+----------------------------------------------------------------
+Elapsed time is 6.005529 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 36
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.818001, 301.907001
+profile class: 0
+profiles in ellipse: 69
+profiles in class.txt: 61
+profiles in the same class: 35
+----------------------------------------------------------------
+Elapsed time is 5.895605 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 37
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.633999, 301.660000
+profile class: 0
+profiles in ellipse: 101
+profiles in class.txt: 86
+profiles in the same class: 58
+----------------------------------------------------------------
+Elapsed time is 6.102215 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 38
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.568001, 301.506001
+profile class: 0
+profiles in ellipse: 140
+profiles in class.txt: 114
+profiles in the same class: 78
+----------------------------------------------------------------
+Elapsed time is 6.140784 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 39
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.478001, 301.122002
+profile class: 3
+profiles in ellipse: 60
+profiles in class.txt: 51
+profiles in the same class: 19
+----------------------------------------------------------------
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 5.906344 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 40
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.303001, 300.588001
+profile class: 0
+profiles in ellipse: 62
+profiles in class.txt: 53
+profiles in the same class: 33
+----------------------------------------------------------------
+Elapsed time is 5.879233 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 41
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.487000, 301.137001
+profile class: 0
+profiles in ellipse: 61
+profiles in class.txt: 52
+profiles in the same class: 31
+----------------------------------------------------------------
+Elapsed time is 6.008695 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 42
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.382000, 301.109001
+profile class: 0
+profiles in ellipse: 89
+profiles in class.txt: 75
+profiles in the same class: 51
+----------------------------------------------------------------
+Elapsed time is 5.903331 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 43
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.353001, 301.558998
+profile class: 0
+profiles in ellipse: 154
+profiles in class.txt: 133
+profiles in the same class: 87
+----------------------------------------------------------------
+Elapsed time is 6.020236 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 44
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.109001, 302.058998
+profile class: 0
+profiles in ellipse: 184
+profiles in class.txt: 166
+profiles in the same class: 135
+----------------------------------------------------------------
+Elapsed time is 6.154889 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 45
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 43.181000, 302.671001
+profile class: 0
+profiles in ellipse: 185
+profiles in class.txt: 167
+profiles in the same class: 119
+----------------------------------------------------------------
+Elapsed time is 6.095182 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 46
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.825001, 303.389000
+profile class: 0
+profiles in ellipse: 188
+profiles in class.txt: 168
+profiles in the same class: 127
+----------------------------------------------------------------
+Elapsed time is 6.108510 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 47
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.785999, 303.639999
+profile class: 0
+profiles in ellipse: 210
+profiles in class.txt: 182
+profiles in the same class: 126
+----------------------------------------------------------------
+Elapsed time is 6.104422 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 48
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.414001, 303.834999
+profile class: 0
+profiles in ellipse: 198
+profiles in class.txt: 181
+profiles in the same class: 139
+----------------------------------------------------------------
+Elapsed time is 6.365884 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 49
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 41.772999, 303.470001
+profile class: 0
+profiles in ellipse: 250
+profiles in class.txt: 236
+profiles in the same class: 128
+----------------------------------------------------------------
+Elapsed time is 6.408059 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 50
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 41.887001, 303.250000
+profile class: 0
+profiles in ellipse: 250
+profiles in class.txt: 236
+profiles in the same class: 131
+----------------------------------------------------------------
+Elapsed time is 6.322204 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 51
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 41.715000, 302.859001
+profile class: 0
+profiles in ellipse: 250
+profiles in class.txt: 234
+profiles in the same class: 120
+----------------------------------------------------------------
+Elapsed time is 6.140050 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 52
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.049999, 303.058998
+profile class: 0
+profiles in ellipse: 250
+profiles in class.txt: 238
+profiles in the same class: 151
+----------------------------------------------------------------
+Elapsed time is 6.333683 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 53
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.236000, 303.278000
+profile class: 0
+profiles in ellipse: 236
+profiles in class.txt: 228
+profiles in the same class: 164
+----------------------------------------------------------------
+Elapsed time is 6.454810 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 54
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.473000, 303.145000
+profile class: 0
+profiles in ellipse: 211
+profiles in class.txt: 203
+profiles in the same class: 158
+----------------------------------------------------------------
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 6.426781 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 55
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.705002, 302.562000
+profile class: 0
+profiles in ellipse: 190
+profiles in class.txt: 179
+profiles in the same class: 147
+----------------------------------------------------------------
+Elapsed time is 6.255422 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 56
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.703999, 301.958000
+profile class: 0
+profiles in ellipse: 188
+profiles in class.txt: 177
+profiles in the same class: 151
+----------------------------------------------------------------
+Elapsed time is 6.380016 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 57
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.603001, 301.490002
+profile class: 0
+profiles in ellipse: 188
+profiles in class.txt: 179
+profiles in the same class: 152
+----------------------------------------------------------------
+Elapsed time is 6.380400 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 58
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.636002, 301.132000
+profile class: 0
+profiles in ellipse: 191
+profiles in class.txt: 182
+profiles in the same class: 155
+----------------------------------------------------------------
+Elapsed time is 6.404360 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 59
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.643002, 301.074001
+profile class: 2
+profiles in ellipse: 198
+profiles in class.txt: 185
+profiles in the same class: 8
+----------------------------------------------------------------
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 5.904055 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 60
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.730000, 300.528999
+profile class: 0
+profiles in ellipse: 183
+profiles in class.txt: 169
+profiles in the same class: 142
+----------------------------------------------------------------
+Elapsed time is 6.392986 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 61
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.754002, 300.353001
+profile class: 0
+profiles in ellipse: 182
+profiles in class.txt: 168
+profiles in the same class: 128
+----------------------------------------------------------------
+Elapsed time is 6.313092 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 62
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.555000, 300.410000
+profile class: 0
+profiles in ellipse: 197
+profiles in class.txt: 184
+profiles in the same class: 158
+----------------------------------------------------------------
+Elapsed time is 6.302101 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 63
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.429001, 300.494999
+profile class: 0
+profiles in ellipse: 200
+profiles in class.txt: 194
+profiles in the same class: 156
+----------------------------------------------------------------
+Elapsed time is 6.488215 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 64
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.389000, 300.278999
+profile class: 0
+profiles in ellipse: 198
+profiles in class.txt: 189
+profiles in the same class: 159
+----------------------------------------------------------------
+Elapsed time is 6.349817 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 65
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.491001, 300.376999
+profile class: 0
+profiles in ellipse: 195
+profiles in class.txt: 184
+profiles in the same class: 158
+----------------------------------------------------------------
+Elapsed time is 6.228122 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 66
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.471001, 300.625000
+profile class: 0
+profiles in ellipse: 196
+profiles in class.txt: 188
+profiles in the same class: 154
+----------------------------------------------------------------
+Elapsed time is 6.216259 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 67
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.562000, 300.353001
+profile class: 0
+profiles in ellipse: 194
+profiles in class.txt: 181
+profiles in the same class: 154
+----------------------------------------------------------------
+Elapsed time is 6.272065 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 68
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.577999, 300.352001
+profile class: 0
+profiles in ellipse: 190
+profiles in class.txt: 177
+profiles in the same class: 151
+----------------------------------------------------------------
+Elapsed time is 6.249922 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 69
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.414001, 299.717999
+profile class: 0
+profiles in ellipse: 181
+profiles in class.txt: 168
+profiles in the same class: 134
+----------------------------------------------------------------
+Elapsed time is 7.591345 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 70
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 42.167999, 299.172001
+profile class: 0
+profiles in ellipse: 185
+profiles in class.txt: 174
+profiles in the same class: 146
+----------------------------------------------------------------
+Elapsed time is 5.370350 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 71
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 41.896000, 298.534000
+profile class: 0
+profiles in ellipse: 220
+profiles in class.txt: 203
+profiles in the same class: 166
+----------------------------------------------------------------
+Elapsed time is 5.410638 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 72
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 41.556000, 297.980999
+profile class: 0
+profiles in ellipse: 229
+profiles in class.txt: 214
+profiles in the same class: 173
+----------------------------------------------------------------
+Elapsed time is 5.443798 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 73
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 41.316002, 298.169998
+profile class: 0
+profiles in ellipse: 250
+profiles in class.txt: 246
+profiles in the same class: 170
+----------------------------------------------------------------
+Elapsed time is 5.937963 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 74
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 40.687000, 298.476002
+profile class: 0
+profiles in ellipse: 250
+profiles in class.txt: 232
+profiles in the same class: 104
+----------------------------------------------------------------
+Elapsed time is 5.315003 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 75
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 40.999001, 298.724998
+profile class: 0
+profiles in ellipse: 250
+profiles in class.txt: 236
+profiles in the same class: 134
+----------------------------------------------------------------
+Elapsed time is 5.387420 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 76
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 41.044998, 299.395000
+profile class: 0
+profiles in ellipse: 250
+profiles in class.txt: 240
+profiles in the same class: 128
+----------------------------------------------------------------
+Elapsed time is 5.497909 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 77
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 40.873001, 298.903999
+profile class: 0
+profiles in ellipse: 250
+profiles in class.txt: 234
+profiles in the same class: 125
+----------------------------------------------------------------
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 5.583347 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 78
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 40.382999, 298.372002
+profile class: 2
+profiles in ellipse: 250
+profiles in class.txt: 224
+profiles in the same class: 75
+----------------------------------------------------------------
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 5.266262 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 79
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 39.263000, 298.120998
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 195
+profiles in the same class: 128
+----------------------------------------------------------------
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 10.555836 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 80
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 39.215000, 297.415001
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 206
+profiles in the same class: 109
+----------------------------------------------------------------
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 6.370212 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 81
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 39.300999, 298.960999
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 195
+profiles in the same class: 103
+----------------------------------------------------------------
+Elapsed time is 6.177255 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 82
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.776001, 300.741001
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 197
+profiles in the same class: 122
+----------------------------------------------------------------
+Elapsed time is 7.238830 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 83
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 39.405998, 302.992001
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 212
+profiles in the same class: 103
+----------------------------------------------------------------
+Elapsed time is 6.901610 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 84
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.972000, 303.365002
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 203
+profiles in the same class: 104
+----------------------------------------------------------------
+Elapsed time is 6.937608 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 85
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.683998, 304.006001
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 199
+profiles in the same class: 125
+----------------------------------------------------------------
+Elapsed time is 7.015011 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 86
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.581001, 305.605999
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 197
+profiles in the same class: 122
+----------------------------------------------------------------
+Elapsed time is 6.940449 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 87
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.766998, 305.870998
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 197
+profiles in the same class: 128
+----------------------------------------------------------------
+Elapsed time is 7.058549 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 88
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.506001, 305.723000
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 199
+profiles in the same class: 140
+----------------------------------------------------------------
+Elapsed time is 7.110550 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 89
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 36.841000, 305.754002
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 193
+profiles in the same class: 138
+----------------------------------------------------------------
+Elapsed time is 7.137961 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 90
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 36.292000, 305.502998
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 193
+profiles in the same class: 139
+----------------------------------------------------------------
+Elapsed time is 7.381447 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 91
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 36.303001, 305.473999
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 193
+profiles in the same class: 136
+----------------------------------------------------------------
+Elapsed time is 7.198044 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 92
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 36.566002, 305.118000
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 193
+profiles in the same class: 138
+----------------------------------------------------------------
+Elapsed time is 7.239645 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 93
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.133999, 304.047001
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 201
+profiles in the same class: 141
+----------------------------------------------------------------
+Elapsed time is 7.198994 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 94
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.709999, 303.479000
+profile class: 2
+profiles in ellipse: 250
+profiles in class.txt: 201
+profiles in the same class: 53
+----------------------------------------------------------------
+Elapsed time is 6.735550 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 95
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.189999, 304.007999
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 199
+profiles in the same class: 113
+----------------------------------------------------------------
+Elapsed time is 6.893259 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 96
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.557999, 304.181999
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 203
+profiles in the same class: 138
+----------------------------------------------------------------
+Elapsed time is 6.999350 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 97
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.069000, 304.099998
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 201
+profiles in the same class: 138
+----------------------------------------------------------------
+Elapsed time is 7.077976 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 98
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.283001, 303.563000
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 201
+profiles in the same class: 133
+----------------------------------------------------------------
+Elapsed time is 7.228987 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 99
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.186001, 303.452000
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 201
+profiles in the same class: 136
+----------------------------------------------------------------
+Elapsed time is 7.680421 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 100
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 36.641998, 303.425999
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 201
+profiles in the same class: 142
+----------------------------------------------------------------
+Elapsed time is 7.021362 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 101
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 36.528999, 303.945000
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 197
+profiles in the same class: 142
+----------------------------------------------------------------
+Elapsed time is 7.158691 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 102
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.032001, 304.569000
+profile class: 2
+profiles in ellipse: 250
+profiles in class.txt: 199
+profiles in the same class: 49
+----------------------------------------------------------------
+Elapsed time is 6.759873 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 103
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.171001, 303.587002
+profile class: 2
+profiles in ellipse: 250
+profiles in class.txt: 201
+profiles in the same class: 58
+----------------------------------------------------------------
+Elapsed time is 6.756021 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 104
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.832001, 303.425999
+profile class: 2
+profiles in ellipse: 250
+profiles in class.txt: 199
+profiles in the same class: 63
+----------------------------------------------------------------
+Elapsed time is 6.755986 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 105
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.516998, 304.799999
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 199
+profiles in the same class: 115
+----------------------------------------------------------------
+Elapsed time is 7.085988 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 106
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.667000, 304.721001
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 197
+profiles in the same class: 124
+----------------------------------------------------------------
+Elapsed time is 7.145120 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 107
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 36.582001, 303.855000
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 197
+profiles in the same class: 139
+----------------------------------------------------------------
+Elapsed time is 7.562155 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 108
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 36.903000, 304.348999
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 199
+profiles in the same class: 132
+----------------------------------------------------------------
+Elapsed time is 7.134189 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 109
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.575001, 304.452999
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 197
+profiles in the same class: 121
+----------------------------------------------------------------
+Elapsed time is 7.014966 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 110
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.903999, 304.465000
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 199
+profiles in the same class: 125
+----------------------------------------------------------------
+Elapsed time is 7.258379 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 111
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.062000, 304.437000
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 199
+profiles in the same class: 126
+----------------------------------------------------------------
+Elapsed time is 7.038645 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 112
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.133999, 304.384998
+profile class: 2
+profiles in ellipse: 250
+profiles in class.txt: 199
+profiles in the same class: 57
+----------------------------------------------------------------
+Elapsed time is 6.786225 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 113
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.430000, 303.535999
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 199
+profiles in the same class: 106
+----------------------------------------------------------------
+Elapsed time is 6.999266 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 114
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.112000, 304.060001
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 197
+profiles in the same class: 119
+----------------------------------------------------------------
+Elapsed time is 6.974539 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 115
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.650002, 304.962002
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 195
+profiles in the same class: 128
+----------------------------------------------------------------
+Elapsed time is 7.097881 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 116
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 37.741001, 306.457001
+profile class: 2
+profiles in ellipse: 250
+profiles in class.txt: 203
+profiles in the same class: 57
+----------------------------------------------------------------
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 6.834015 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 117
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.118000, 307.673000
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 205
+profiles in the same class: 124
+----------------------------------------------------------------
+Elapsed time is 7.175629 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 118
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.797001, 308.941002
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 201
+profiles in the same class: 105
+----------------------------------------------------------------
+Elapsed time is 7.053640 seconds.
+UPDATE_SALINITY_MAPPING: Working on profile 119
+--------------SELECT PROFILES USING CLASSIFICATION--------------
+profile lat lon: 38.667999, 310.223000
+profile class: 1
+profiles in ellipse: 250
+profiles in class.txt: 201
+profiles in the same class: 112
+----------------------------------------------------------------
+%%%%%%%%%%%%%%%% saving data %%%%%%%%%%%%%%%%
+Elapsed time is 16.448239 seconds.
+ 
+___________________________________________
+SET CALSERIES PARAMETERS
+calseries: 1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+breaks = 
+max_breaks = 4
+use_theta_lt = 
+use_theta_gt = 
+use_pres_gt = 600
+use_pres_lt = 
+___________________________________________
+ 
+Best model found with linear fit

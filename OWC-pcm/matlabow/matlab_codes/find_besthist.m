@@ -163,6 +163,9 @@ if use_pcm
 
     % find float profile in the .txt
     prof_class = class_values((abs(class_lats-LAT)<1e-3)&(abs(class_lons-LONG_new)<1e-3));
+    if ~isempty(prof_class)
+        prof_class = prof_class(1);
+    end
     fprintf('profile class: %i\n', prof_class)
 
     % find profiles in ellipse in the .txt and get classes

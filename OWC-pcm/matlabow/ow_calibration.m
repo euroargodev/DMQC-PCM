@@ -12,6 +12,8 @@
 % these variables have to be set before ow_calibration is called.
 %
 
+%diary '/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/examples/matlab_output/matlab_output_3901915_CTD_class.txt'
+
 lo_system_configuration = load_configuration( 'ow_config.txt' );
 
 for i=1:length(float_names)
@@ -32,3 +34,4 @@ for i=1:length(float_names)
 
 end
 
+%diary off
