@@ -426,20 +426,21 @@ def order_class_names(ds_out, K):
 
     return ds_out
 
-def get_regulargrid_dataset(ds, corr_dist, season='all'):
-    '''Re-sampling od the dataset selecting profiles separated the correlation distance
+def get_regulargrid_dataset(ds, corr_dist, season='all'):    
+    '''Re-sampling the dataset selecting profiles separated the correlation distance
 
            Parameters
            ----------
                ds: reference profiles dataset
                corr_dist: correlation distance
-               season: choose season: 'DJF', 'MAM', 'JJA','SON' (default: 'all')
+               season: choose season between 'DJF', 'MAM', 'JJA','SON' (default: 'all')
 
            Returns
            ------
                Re-sampled dataset
 
                '''
+
     # create distance matrix
     from sklearn.metrics.pairwise import haversine_distances
     from math import radians
@@ -476,8 +477,8 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
         
         # stop condition
         if np.any(np.isnan(ds['mask_s'])) == False:
-            print('no more points to delate')
-            print(i)
+            #print('no more points to delate')
+            #print(i)
             break
                             
     # choose season
@@ -502,7 +503,7 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
     return ds_t
 
 def get_topo_grid(min_long, max_long, min_lat, max_lat):
-    """  Find depth grid over given area using tbase.int file
+    """ Find depth grid over given area using tbase.int file
         The old matlab version of this uses an old .int file from NOAA which contains
         5 arcminute data of global terrain. Whilst other more complete data sets now
         exists, the data files for them are very large, so this file can be used for now,
@@ -769,7 +770,7 @@ def plot_spatialdist_ds(ds, float_WMO, float_traj=False):
     ax.set_xlim([lon_180.min()-1, lon_180.max()+1])
     ax.set_ylim([ds['lat'].min()-1, ds['lat'].max()+1])
 
-    #plt.draw()
+    plt.draw()
     
     
     
