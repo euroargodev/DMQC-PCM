@@ -7,7 +7,7 @@ The DMQC-PCM is a new quality control method based on machine learning. It uses 
 
 The preliminary implementation workflow is structured in some Jupyter Notebooks and a OWC version including the PCM option.
 
-<img src="https://user-images.githubusercontent.com/59824937/146351682-2aa8c72d-dc2f-4038-b372-44836c3a34b7.png" width="200">
+<center><img src="https://user-images.githubusercontent.com/59824937/146351682-2aa8c72d-dc2f-4038-b372-44836c3a34b7.png" width="400"></center>
 
 Figure 1. Workflow of the preliminary implemetation.
 
@@ -36,5 +36,5 @@ This repository has been developed at the Laboratory for Ocean Physics and Satel
 ![58258213](https://user-images.githubusercontent.com/59824937/146353317-56b3e70e-aed9-40e0-9212-3393d2e0ddd9.png)
 
 <div>
-<center><img src="attachment:146353099-bcd2bd4e-d310-4807-aee2-9cf24075f0c3.jpg" width="100"/> <img src="attachment:Logo-146353157-b45e9943-9643-45d0-bab5-80c22fc2d889.jpg" width="100"/> <img src="attachment:146353317-56b3e70e-aed9-40e0-9212-3393d2e0ddd9.png" width="100"/></center>
+<center><img src="https://user-images.githubusercontent.com/59824937/146353099-bcd2bd4e-d310-4807-aee2-9cf24075f0c3.jpg" width="100"/> <img src="https://user-images.githubusercontent.com/59824937/146353157-b45e9943-9643-45d0-bab5-80c22fc2d889.jpg" width="100"/> <img src="https://user-images.githubusercontent.com/59824937/146353317-56b3e70e-aed9-40e0-9212-3393d2e0ddd9.png" width="100"/></center>
 </div>
