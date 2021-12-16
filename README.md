@@ -1,5 +1,8 @@
 # DMQC-PCM
 
+*Authors*: Andrea Garcia Juan (andrea.garcia.juan@ifremer.fr), Kevin Balem (kevin.balem@ifremer.fr), Cécile Cabanes (cecile.cabanes@ifremer.fr) and Guillaume Maze (gmaze@ifremer.fr)
+***
+
 The DMQC-PCM is a new quality control method based on machine learning. It uses a statistical classifier (a PCM: Profile Classification Model) to organize and select more appropriately reference data for the quality control of an Argo float. You will find a preliminary implementation of this method in the current repository.
 
 The preliminary implementation workflow is structured in some Jupyter Notebooks and a OWC version including the PCM option.
@@ -32,5 +35,5 @@ This repository has been developed at the Laboratory for Ocean Physics and Satel
 ![58258213](https://user-images.githubusercontent.com/59824937/146353317-56b3e70e-aed9-40e0-9212-3393d2e0ddd9.png)
 
 <div>
-<center><img src="attachment:Logo-ifremer" width="100"/> <img src="attachment:Logo-LOPS_transparent_W" width="100"/> <img src="attachment:58258213" width="100"/></center>
+<center><img src="attachment:146353099-bcd2bd4e-d310-4807-aee2-9cf24075f0c3.jpg" width="100"/> <img src="attachment:Logo-146353157-b45e9943-9643-45d0-bab5-80c22fc2d889.jpg" width="100"/> <img src="attachment:146353317-56b3e70e-aed9-40e0-9212-3393d2e0ddd9.png" width="100"/></center>
 </div>
