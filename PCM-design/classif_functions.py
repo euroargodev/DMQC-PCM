@@ -550,7 +550,7 @@ def get_topo_grid(min_long, max_long, min_lat, max_lat):
 
     # Open the binary file
     # TODO: this should use a with statement to avoid holding on to an open handle in the event of an exception
-    elev_file = open('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/lib/m_map1.4/m_map1.4_mod/tbase.int', "rb")  # pylint: disable=consider-using-with
+    elev_file = open('/home6/homedir10/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/lib/m_map1.4/m_map1.4_mod/tbase.int', "rb")  # pylint: disable=consider-using-with
     #elev_file = open(os.path.sep.join([config['CONFIG_DIRECTORY'], "tbase.int"]), "rb")  # pylint: disable=consider-using-with
 
     if decoder[1] > 4319:
