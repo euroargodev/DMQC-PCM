@@ -29,9 +29,6 @@ class Plotter:
 
     def __init__(self, ds, m, coords_dict=None, cmap_name='Accent'):
 
-        # TODO: automatic detection of PCM_LABELS and q_variable ?
-        # TODO: Check if the PCM is trained:
-        # validation.check_is_fitted(m, 'fitted')
 
         self.ds = ds
         self.m = m
@@ -76,8 +73,16 @@ class Plotter:
         else:
             self.data_type = 'profiles'
 
-    def pie_classes(self):
+    def pie_classes(self, save_fig=[]):
         """Pie chart of classes
+        
+           Parameters
+           ----------
+               save_fig: path to save figure (default: [])
+               
+           Returns
+           ------
+               pie chart figure
 
         """
 
@@ -100,7 +105,6 @@ class Plotter:
         table_cn.append(['Total', str(sum([int(row[1]) for row in table_cn]))])
 
         fig, ax = plt.subplots(ncols=2, figsize=(10, 6))
-        # fig.set_cmap(kmap)
 
         cheader = ['$\\bf{K}$', '$\\bf{Number\\ of\\ profiles}$']
         ccolors = plt.cm.BuPu(np.full(len(cheader), 0.1))
@@ -126,7 +130,6 @@ class Plotter:
         centre_circle = plt.Circle((0, 0), 0.70, fc='white')
         fig = plt.gcf()
         ax[0].add_artist(centre_circle)
-        # fig.gca().add_artist(centre_circle)
 
         ax[0].axis('equal')
         ax[1].get_xaxis().set_visible(False)
@@ -135,6 +138,10 @@ class Plotter:
         the_table.scale(1, 1.5)
         fig.suptitle('$\\bf{Classes\\ distribution}$', fontsize=14)
         plt.tight_layout()
+        #plt.show()
+        
+        if save_fig!=[]:
+            plt.savefig(save_fig)
 
     @staticmethod
     def cmap_discretize(name, K):
@@ -177,6 +184,7 @@ class Plotter:
             # Return colormap object.
             new_cmap = mcolors.LinearSegmentedColormap(
                 cmap.name + "_%d" % N, cdict, N)
+            
         return new_cmap
 
     def vertical_structure(self,
@@ -189,6 +197,7 @@ class Plotter:
                            ylabel='depth (m)',
                            xlabel='feature',
                            ylim='auto',
+                           save_fig=[],
                            **kwargs):
         '''Plot vertical structure of each class
 
@@ -203,10 +212,11 @@ class Plotter:
                ylabel: (optional) y axis label (default = 'depth (m)')
                xlabel: (optional) x axis label (default = 'feature')
                ylim: (optional) y axis limits (default = 'auto')
+               save_fig: path to save figure (default: [])
                **kwargs
 
            Returns
-           ------
+           -------
                fig : :class:`matplotlib.pyplot.figure.Figure`
                ax : :class:`matplotlib.axes.Axes` object or array of Axes objects.
                     *ax* can be either a single :class:`matplotlib.axes.Axes` object or an
@@ -253,14 +263,15 @@ class Plotter:
             maxcols=maxcols, **{**defaults, **kwargs})  # TODO: function in pyxpcm
 
         if not xlim:
-            xlim = np.array([0.9 * da.min(), 1.1 * da.max()])
+            var_name = q_variable[0:-2]
+            xlim = np.array([self.ds[var_name].min(), self.ds[var_name].max()])
         for k in self.m:
             Qk = da.loc[{CLASS_DIM: k}]
             for (iq, q) in zip(np.arange(nQ), Qk[QUANT_DIM]):
                 Qkq = Qk.loc[{QUANT_DIM: q}]
                 ax[k].plot(Qkq.values.T, da[VERTICAL_DIM], label=(
-                    "%0.2f") % (Qkq[QUANT_DIM]), color=cmap(iq))
-            ax[k].set_title(("Component: %i") % (k), color=cmapK(k))
+                    "%0.2f") % (Qkq[QUANT_DIM]), color=cmap(iq), linewidth=1.5)
+            ax[k].set_title(("Component: %i") % (k), color=cmapK(k), fontsize=12)
             #ax[k].legend(loc='lower right')
             ax[k].set_xlim(xlim)
             if isinstance(ylim, str):
@@ -275,14 +286,17 @@ class Plotter:
 
         ax[k].legend(bbox_to_anchor=(1.5, 1), loc='upper right')
         plt.subplots_adjust(top=0.90)
-        fig.suptitle('$\\bf{Vertical\\ structure\\ of\\ classes}$')
+        fig.suptitle('$\\bf{Vertical\\ structure\\ of\\ classes}$', fontsize=12)
         fig_size = fig.get_size_inches()
         plt.draw()
-        # print(fig_size)
         #fig.text((fig_size[0]/2)/fig_size[0], 1-(fig_size[1]-0.5)/fig_size[1], xlabel, va='center', fontsize=10)
         fig.text((fig_size[0]/2)/fig_size[0], 0.05,
                  xlabel, va='center', fontsize=10)
         # plt.tight_layout()
+        plt.show()
+        
+        if save_fig!=[]:
+            fig.savefig(save_fig, dpi=300)
 
     def vertical_structure_comp(self, q_variable,
                                 plot_q='all',
@@ -293,6 +307,7 @@ class Plotter:
                                 ylabel='depth (m)',
                                 xlabel='feature',
                                 ylim='auto',
+                                save_fig=[],
                                 **kwargs):
         '''Plot vertical structure of each class
 
@@ -308,6 +323,7 @@ class Plotter:
                ylabel: (optional) y axis label (default = 'depth (m)')
                xlabel: (optional) x axis label (default = 'feature')
                ylim: (optional) y axis limits (default = 'auto'
+               save_fig: path to save figure (default: [])
 
            Returns
            ------
@@ -320,8 +336,6 @@ class Plotter:
                     keyword.
 
                '''
-
-        # TODO: merge with vertical_structure function
 
         # select quantile variable
         da = self.ds[q_variable]
@@ -357,7 +371,8 @@ class Plotter:
             cmap = self.cmap_discretize(plt.cm.get_cmap(name='brg'), nQ)
 
         if not xlim:
-            xlim = np.array([0.9 * da.min(), 1.1 * da.max()])
+            var_name = q_variable[0:-2]
+            xlim = np.array([self.ds[var_name].min(), self.ds[var_name].max()])
 
         maxcols = 4
         fig_max_size = 2.5*nQ_p if nQ_p < maxcols else 10
@@ -372,7 +387,7 @@ class Plotter:
             for k in self.m:
                 Qqk = Qq.loc[{CLASS_DIM: k}]
                 ax[cnt].plot(Qqk.values.T, da[VERTICAL_DIM], label=(
-                    "K=%i") % (Qqk[CLASS_DIM]), color=cmapK(k))
+                    "K=%i") % (Qqk[CLASS_DIM]), color=cmapK(k), linewidth=1.5)
             ax[cnt].set_title(("quantile: %.2f") % (
                 da[QUANT_DIM].values[q]), color=cmap(q), fontsize=12)
             #ax[cnt].legend(loc='lower right', fontsize=11)
@@ -389,18 +404,23 @@ class Plotter:
             ax[cnt].grid(True)
             cnt = cnt+1
 
-        ax[cnt-1].legend(bbox_to_anchor=(1.6, 1), loc='upper right', fontsize=11)
+        lgd = ax[cnt-1].legend(bbox_to_anchor=(1.6, 1), loc='upper right', fontsize=10)
         plt.subplots_adjust(top=0.90)
         plt.rc('xtick', labelsize=10)
         plt.rc('ytick', labelsize=10)
-        fig.suptitle('$\\bf{Vertical\\ structure\\ of\\ classes}$')
+        supt = fig.suptitle('$\\bf{Vertical\\ structure\\ of\\ classes}$', fontsize=12)
         fig_size = fig.get_size_inches()
+        #plt.draw()
         fig.text((fig_size[0]/2)/fig_size[0], 0.05, xlabel, va='center', fontsize=10)
         # fig.text(0.04, 0.5, 'depth (m)', va='center',
         #         rotation='vertical', fontsize=12)
-        # plt.tight_layout()
+        #plt.tight_layout()
+        #plt.show()
+        
+        if save_fig!=[]:
+            plt.savefig(save_fig, bbox_extra_artists=(lgd, supt,), bbox_inches='tight', dpi=300)
 
-    def spatial_distribution(self, proj=ccrs.PlateCarree(), extent='auto', time_slice=0, lonlat_grid =[4,4]):
+    def spatial_distribution(self, proj=ccrs.PlateCarree(), extent='auto', time_slice=0, lonlat_grid =[4,4], float_traj=False, save_fig=[]):
         '''Plot spatial distribution of classes
 
            Parameters
@@ -410,6 +430,8 @@ class Plotter:
                time_slice: time snapshot to be plot (default 0). If time_slice = 'most_freq_label', most frequent label in dataseries is plotted.
                         most_freq_label option can only be used with gridded data
                lonlat_grid: space between lon lat ticks (default: [4,4])
+               float_traj: plot float trajectory (default: False)
+               save_fig: path to save figure (default: [])
 
            Returns
            -------
@@ -471,7 +493,7 @@ class Plotter:
 
         subplot_kw = {'projection': proj, 'extent': extent}
         fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(
-            6, 6), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
+            10, 10), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
         # TODO: function already in pyxpcm
         kmap = self.m.plot.cmap(name=self.cmap_name)
 
@@ -480,48 +502,38 @@ class Plotter:
             sc = ax.scatter(long_data, dsp[self.coords_dict.get('latitude')], s=4,
                             c=self.ds[var_name], cmap=kmap, transform=proj, vmin=0, vmax=self.m.K, zorder=1)
             selected_float_index = [i for i, isource in enumerate(dsp['source'].values) if 'selected_float' in isource]
-            #p2 = ax.plot(dsp[self.coords_dict.get('longitude')].isel(n_profiles = selected_float_index), 
-            #             dsp[self.coords_dict.get('latitude')].isel(n_profiles = selected_float_index), 
-            #             'ko-', markerfacecolor="None", transform=proj, markersize = 4)
         if self.data_type == 'gridded':
             sc = ax.pcolormesh(long_data, dsp[self.coords_dict.get(
                 'latitude')], dsp[var_name], cmap=kmap, transform=proj, vmin=0, vmax=self.m.K)
         
         # cycle number in float trajectory
-        float_source = dsp['source'].isel(n_profiles = selected_float_index)
-        float_cycles = [int(float_source.values[i].lstrip('selected_float_')) for i in range(len(float_source))]
-        cycles_labels = np.sort(np.append(np.arange(30,81,10),72))
-        #cycles_labels = [77,78,79]
-        #cycles_labels = np.arange(10,float_cycles[-1]+1,10)
-        p2 = ax.plot(dsp[self.coords_dict.get('longitude')].isel(n_profiles = selected_float_index), 
-                     dsp[self.coords_dict.get('latitude')].isel(n_profiles = selected_float_index), 
-                     'ko', markerfacecolor="None", transform=proj, markersize = 4, zorder=2)
+        if float_traj:
+            float_source = dsp['source'].isel(n_profiles = selected_float_index)
+            float_cycles = [int(float_source.values[i].lstrip('selected_float_')) for i in range(len(float_source))]
+            cycles_labels = np.arange(10,float_cycles[-1]+1,10)
+            
+            p2 = ax.plot(dsp[self.coords_dict.get('longitude')].isel(n_profiles = selected_float_index), 
+                         dsp[self.coords_dict.get('latitude')].isel(n_profiles = selected_float_index), 
+                         'ko', markerfacecolor="None", transform=proj, markersize = 4, zorder=2)
         
-        p2 = ax.plot(np.mod((dsp[self.coords_dict.get('longitude')].isel(n_profiles = selected_float_index)+180),360)-180, 
-                     dsp[self.coords_dict.get('latitude')].isel(n_profiles = selected_float_index), 
-                     'k-', markerfacecolor="None", transform=proj, markersize = 4, zorder=-1)
-        transform = ccrs.PlateCarree()._as_mpl_transform(ax)
+            p2 = ax.plot(np.mod((dsp[self.coords_dict.get('longitude')].isel(n_profiles = selected_float_index)+180),360)-180, 
+                         dsp[self.coords_dict.get('latitude')].isel(n_profiles = selected_float_index), 
+                         'k-', markerfacecolor="None", transform=proj, markersize = 4, zorder=-1)
+            
+            transform = ccrs.PlateCarree()._as_mpl_transform(ax)
+            for icycle in cycles_labels:
+                prof_data = dsp['source'].where(dsp['source'] == 'selected_float_' + str(icycle), drop=True)
+                if np.size(prof_data['n_profiles'].values) == 0:
+                    continue
+                cycle_index = prof_data['n_profiles'].values[0]
+                lat_value = prof_data['lat'].values[0]
+                long_value = prof_data['long'].values[0]
+                ax.annotate(str(icycle), xy=(long_value+0.07, lat_value+0.07), xycoords=transform, fontsize=7, weight='bold')
 
-        for icycle in cycles_labels:
-            print('selected_float_' + str(icycle))
-            prof_data = dsp['source'].where(dsp['source'] == 'selected_float_' + str(icycle), drop=True)
-            if np.size(prof_data['n_profiles'].values) == 0:
-                continue
-            cycle_index = prof_data['n_profiles'].values[0]
-            print(cycle_index)
-            lat_value = prof_data['lat'].values[0]
-            long_value = prof_data['long'].values[0]
-            #ax.annotate(str(icycle), xy=(long_value, lat_value+0.05*lat_value), xycoords=transform, fontsize=7, weight='bold')
-            ax.annotate(str(icycle), xy=(long_value+0.07, lat_value+0.07), xycoords=transform, fontsize=7, weight='bold')
-
-        # function already in pyxpcm: deprecated
-        #self.m.plot.colorbar(ax=ax, shrink=0.3)
         cbar = plt.colorbar(sc, shrink=0.3)
         cbar.set_ticks(np.arange(0.5, self.m.K+0.5))
         cbar.set_ticklabels(range(self.m.K))
 
-        # function already in pyxpcm: deprecated
-        #self.m.plot.latlongrid(ax, dx=lon_grid, dy=lat_grid)
         ax.set_xticks(np.arange(int(extent[0]), int(
             extent[1]+1), lonlat_grid[0]), crs=ccrs.PlateCarree())
         ax.set_yticks(np.arange(int(extent[2]), int(
@@ -542,225 +554,20 @@ class Plotter:
         ax.set_title(title_str)
         fig.canvas.draw()
         fig.tight_layout()
-        plt.margins(0.1)
+        #plt.margins(0.1)
+        
+        if save_fig!=[]:
+            plt.savefig(save_fig, bbox_inches='tight', dpi=300)
 
-    def plot_posteriors(self, proj=ccrs.PlateCarree(), extent='auto', time_slice=0):
-        '''Plot posteriors in a map
 
-           Parameters
-           ----------
-               proj: projection (default ccrs.PlateCarree())
-               extent: map extent (default 'auto')
-               time_slice: time snapshot to be plot (default 0)
-
-           Returns
-           -------
-               fig : :class:`matplotlib.pyplot.figure.Figure`
-
-               ax : :class:`matplotlib.axes.Axes` object or array of Axes objects.
-                    *ax* can be either a single :class:`matplotlib.axes.Axes` object or an
-                    array of Axes objects if more than one subplot was created.  The
-                    dimensions of the resulting array can be controlled with the squeeze
-                    keyword.
-
-           '''
-
-        if 'time' in self.coords_dict and self.data_type == 'gridded':
-            dsp = self.ds.isel(time=time_slice)
-        else:
-            dsp = self.ds
-
-        # spatial extent
-        if isinstance(extent, str):
-            extent = np.array([min(dsp[self.coords_dict.get('longitude')]), max(dsp[self.coords_dict.get('longitude')]), min(
-                dsp[self.coords_dict.get('latitude')]), max(dsp[self.coords_dict.get('latitude')])]) + np.array([-0.1, +0.1, -0.1, +0.1])
-
-        # check if PCM_POST variable exists
-        assert ("PCM_POST" in dsp), "Dataset should include PCM_POST varible to be plotted. Use pyxpcm.predict_proba function with inplace=True option"
-
-        cmap = sns.light_palette("blue", as_cmap=True)
-        subplot_kw = {'projection': proj, 'extent': extent}
-        land_feature = cfeature.NaturalEarthFeature(
-            category='physical', name='land', scale='50m', facecolor=[0.9375, 0.9375, 0.859375])
-        lon_grid = np.floor_divide((self.ds[self.coords_dict.get('longitude')].max(
-        ) - self.ds[self.coords_dict.get('longitude')].min()), 5)
-        lat_grid = np.floor_divide((self.ds[self.coords_dict.get('latitude')].max(
-        ) - self.ds[self.coords_dict.get('latitude')].min()), 5)
-
-        # aspect ratio
-        maxcols = 2
-        ar = 1.0  # initial aspect ratio for first trial
-        wi = 12    # width of the whole figure in inches
-        hi = wi * ar  # height in inches
-        rows, cols = 1 + np.int(self.m.K / maxcols), maxcols
-
-        fig, ax = self.m.plot.subplots(
-            figsize=(wi, hi), maxcols=maxcols, subplot_kw=subplot_kw)  # TODO: function already in pyxpcm
-
-        for k in self.m:
-            if self.data_type == 'profiles':
-                sc = ax[k].scatter(dsp[self.coords_dict.get('longitude')], self.ds[self.coords_dict.get('latitude')], s=3, c=dsp['PCM_POST'].sel(pcm_class=k),
-                                   cmap=cmap, transform=proj, vmin=0, vmax=1)
-            if self.data_type == 'gridded':
-                sc = ax[k].pcolormesh(dsp[self.coords_dict.get('longitude')], dsp[self.coords_dict.get('latitude')], dsp['PCM_POST'].sel(pcm_class=k),
-                                      cmap=cmap, transform=proj, vmin=0, vmax=1)
-
-            plt.colorbar(sc, ax=ax[k], fraction=0.03, shrink=0.7)
-            self.m.plot.latlongrid(ax[k], fontsize=8, dx=lon_grid, dy=lat_grid)
-            ax[k].add_feature(land_feature, edgecolor='black')
-            ax[k].set_title('PCM Posteriors for k=%i' % k)
-            ax[k].tick_params(axis='both', labelsize=5)
-
-        # aspect ratio
-        plt.draw()
-        xmin, xmax = ax.get_xbound()
-        ymin, ymax = ax.get_ybound()
-        y2x_ratio = (ymax-ymin)/(xmax-xmin) * rows/cols
-        fig.set_figheight(wi * y2x_ratio)
-        print(wi * y2x_ratio)
-
-        if 'time' in self.coords_dict:
-            fig.suptitle('$\\bf{PCM\\  Posteriors}$' + ' \n probability of a profile to belong to a class k'
-                         + ' \n (time: ' + '%s' % dsp["time"].dt.strftime("%Y/%m/%d %H:%M").values + ')')
-        else:
-            fig.suptitle('$\\bf{PCM\\  Posteriors}$' +
-                         ' \n probability of a profile to belong to a class k')
-
-        #plt.subplots_adjust(wspace=0.1, hspace=0.1)
-        # fig.canvas.draw()
-        fig.tight_layout()
-        # fig.subplots_adjust(top=0.95)
-
-    def plot_robustness(self, proj=ccrs.PlateCarree(), extent='auto', time_slice=0):
-        '''Plot posteriors in a map
-
-           Parameters
-           ----------
-               proj: projection (default ccrs.PlateCarree())
-               extent: map extent (default 'auto')
-               time_slice: time snapshot to be plot (default 0)
-
-           Returns
-           -------
-               fig : :class:`matplotlib.pyplot.figure.Figure`
-
-               ax : :class:`matplotlib.axes.Axes` object or array of Axes objects.
-                    *ax* can be either a single :class:`matplotlib.axes.Axes` object or an
-                    array of Axes objects if more than one subplot was created.  The
-                    dimensions of the resulting array can be controlled with the squeeze
-                    keyword.
-
-           '''
-
-        if 'time' in self.coords_dict and self.data_type == 'gridded':
-            dsp = self.ds.sel(time=time_slice, method='nearest').squeeze()
-            title_string = '$\\bf{PCM\\  Robustness}$' + ' \n probability of a profile to belong to a class k' + \
-                ' \n (time: ' + \
-                '%s' % dsp["time"].dt.strftime("%Y/%m/%d %H:%M").values + ')'
-        else:
-            dsp = self.ds
-            title_string = '$\\bf{PCM\\  Robustness}$' + \
-                ' \n probability of a profile to belong to a class k'
-
-        # spatial extent
-        if isinstance(extent, str):
-            extent = np.array([min(dsp[self.coords_dict.get('longitude')]), max(dsp[self.coords_dict.get('longitude')]), min(
-                dsp[self.coords_dict.get('latitude')]), max(dsp[self.coords_dict.get('latitude')])]) + np.array([-0.1, +0.1, -0.1, +0.1])
-
-        # check if PCM_ROBUSTNESS variable exists
-        assert ("PCM_ROBUSTNESS" in dsp), "Dataset should include PCM_ROBUSTNESS varible to be plotted. Use pyxpcm.robustness function with inplace=True option"
-        assert ("PCM_ROBUSTNESS_CAT" in dsp), "Dataset should include PCM_ROBUSTNESS_CAT varible to be plotted. Use pyxpcm.robustness_digit function with inplace=True option"
-
-        subplot_kw = {'projection': proj, 'extent': extent}
-        land_feature = cfeature.NaturalEarthFeature(
-            category='physical', name='land', scale='50m', facecolor=[0.9375, 0.9375, 0.859375])
-        lon_grid = np.floor_divide((self.ds[self.coords_dict.get('longitude')].max(
-        ) - self.ds[self.coords_dict.get('longitude')].min()), 5)
-        lat_grid = np.floor_divide((self.ds[self.coords_dict.get('latitude')].max(
-        ) - self.ds[self.coords_dict.get('latitude')].min()), 5)
-
-        # aspect ratio
-        maxcols = 2
-        ar = 1.0  # initial aspect ratio for first trial
-        wi = 10    # width of the whole figure in inches
-        hi = wi * ar  # height in inches
-        rows, cols = 1 + np.int(self.m.K / maxcols), maxcols
-
-        # TODO: function already in pyxpcm
-        fig, ax = self.m.plot.subplots(
-            figsize=(wi, hi), maxcols=2, facecolor='w', edgecolor='k', dpi=120, subplot_kw=subplot_kw)
-        plt.subplots_adjust(wspace=0.2, hspace=0.4)
-        plt.rcParams['figure.constrained_layout.use'] = True
-
-        cmap = self.m.plot.cmap(usage='robustness')
-        kmap = self.m.plot.cmap(name=self.cmap_name)
-
-        for k in self.m:
-            if self.data_type == 'profiles':
-                sc = ax[k].scatter(dsp[self.coords_dict.get('longitude')], self.ds[self.coords_dict.get('latitude')], s=3, c=dsp['PCM_ROBUSTNESS_CAT'].where(dsp['PCM_LABELS'] == k),
-                                   cmap=cmap, transform=proj, vmin=0, vmax=5)
-            if self.data_type == 'gridded':
-                sc = ax[k].pcolormesh(dsp[self.coords_dict.get('longitude')], dsp[self.coords_dict.get('latitude')], dsp['PCM_ROBUSTNESS_CAT'].where(dsp['PCM_LABELS'] == k),
-                                      cmap=cmap, transform=proj, vmin=0, vmax=5)
-
-            # self.m.plot.latlongrid(ax[k], fontsize=6, dx=lon_grid, dy=lat_grid) deprecated
-            defaults = {'linewidth': .5, 'color': 'gray',
-                        'alpha': 0.5, 'linestyle': '--'}
-            gl = ax[k].gridlines(crs=ax[k].projection,
-                                 draw_labels=True, **defaults)
-            gl.xlocator = mticker.FixedLocator(
-                np.arange(-180, 180+1, lon_grid))
-            gl.ylocator = mticker.FixedLocator(np.arange(-90, 90+1,  lat_grid))
-            gl.xformatter = LONGITUDE_FORMATTER
-            gl.yformatter = LATITUDE_FORMATTER
-            gl.top_labels = False
-            gl.xlabel_style = {'fontsize': 5}
-            gl.right_labels = False
-            gl.ylabel_style = {'fontsize': 5}
-            ax[k].add_feature(land_feature, edgecolor='black')
-            ax[k].add_feature(land_feature, edgecolor='black')
-            #ax[k].set_title('k=%i' % k, color=kmap(k), fontweight='bold', x=1.05, y=0.84)
-            ax[k].set_title('k=%i' % k, color=kmap(k), fontweight='bold')
-
-        # aspect ratio
-        plt.draw()
-        xmin, xmax = ax[0].get_xbound()
-        ymin, ymax = ax[0].get_ybound()
-        y2x_ratio = (ymax-ymin)/(xmax-xmin) * rows/cols
-        fig.set_figheight(wi * y2x_ratio)
-        #print(wi * y2x_ratio)
-        # fig.subplots_adjust(top=0.90)
-        # fig.tight_layout()
-        #fig.tight_layout(rect=[0, 0, 1, 0.90])
-
-        fig.subplots_adjust(top=0.90)
-        #plt.subplots_adjust(wspace = 0.2, hspace=0.4)
-        fig.suptitle(title_string, fontsize=10)
-
-        # plt.subplots_adjust(hspace=0.3)
-        #plt.subplots_adjust(wspace = 0.2, hspace=0.4)
-
-        #boundaries = dsp['PCM_ROBUSTNESS_CAT'].attrs['bins']
-        rowl0 = dsp['PCM_ROBUSTNESS_CAT'].attrs['legend']
-        #cl = fig.colorbar(sc, ax=ax.ravel().tolist(),fraction=0.02)
-        cl = plt.colorbar(sc, ax=ax, fraction=0.02, pad=0.05)
-        cl.set_ticks([0, 1, 2, 3, 4, 5])
-        cl.set_ticklabels([0, 0.33, 0.66, 0.9, 0.99, 1])
-        for (i, j) in zip(np.arange(0.5, 5, 1), rowl0):
-            cl.ax.text(6, i, j, ha='left', va='center', fontsize=8)
-
-        # fig.canvas.draw()
-        # fig.tight_layout()
-        # fig.subplots_adjust(top=0.95)
-        plt.rcParams['figure.constrained_layout.use'] = False
-
-    def temporal_distribution(self, time_bins, start_month=0):
+    def temporal_distribution(self, time_bins, start_month=0, save_fig=[]):
         '''Plot temporal distribution of classes by moth or by season
 
            Parameters
            ----------
                 time_bins: 'month' or 'season'
                 start_month: (optional) start plot in this month (index from 1:Jan to 12:Dec)
+                save_fig: path to save figure (default: [])
 
             Returns
             -------
@@ -852,136 +659,135 @@ class Plotter:
         ax.set_xlabel(ylabel_string, fontsize=12)
         ax.set_title(title_string, fontsize=14)
         fig.tight_layout()
+        
+        if save_fig!=[]:
+            plt.savefig(save_fig, dpi=300)
+        
+    def float_traj_classes(self, save_fig=[]):
+        '''Plot float trajectory with float profile classes 
 
-    @staticmethod
-    def add_lowerband(mfname, outfname, band_height=70, color=(255, 255, 255, 255)):
-        """ Add lowerband to a figure
+           Parameters
+           ----------
+                save_fig: path to save figure (default: [])
 
-            Parameters
-            ----------
-            mfname : string
-                source figure file
-            outfname : string
-                output figure file
-        """
-        # TODO: do I need to use self here?
-        image = Image.open(mfname, 'r')
-        image_size = image.size
-        width = image_size[0]
-        height = image_size[1]
-        background = Image.new('RGBA', (width, height + band_height), color)
-        background.paste(image, (0, 0))
-        background.save(outfname)
+            Returns
+            -------
 
-    def add_2logo(self, mfname, outfname, logo_height=70, txt_color=(0, 0, 0, 255), data_src='CMEMS', bic_fig='no'):
-        """ Add 2 logos and text to a figure
 
-            Parameters
-            ----------
-            mfname : string
-                source figure file
-            outfname : string
-                output figure file
-        """
-        def pcm1liner(this_pcm):
-            def prtval(x): return "%0.2f" % x
-            def getrge(x): return [np.max(x), np.min(x)]
-            def prtrge(x): return "[%s:%s]" % (
-                prtval(getrge(x)[0]), prtval(getrge(x)[1]))
-            def prtfeatures(p): return "{%s}" % ", ".join(
-                ["'%s':%s" % (k, prtrge(v)) for k, v in p.features.items()])
-            return "PCM model information: K:%i, F:%i%s, %s" % (this_pcm.K,
-                                                                this_pcm.F,
-                                                                prtfeatures(
-                                                                    this_pcm),
-                                                                this_pcm._props['with_classifier'].upper())
+        '''
+        
+        selected_float_index = [i for i, isource in enumerate(self.ds['source'].values) if 'selected_float' in isource]
 
-        font_path = "logos/Calibri_Regular.ttf"
-        lfname2 = "logos/Blue-cloud_compact_color_W.jpg"
-        lfname1 = "logos/Logo-LOPS_transparent_W.jpg"
+        kmap = self.m.plot.cmap(name=self.cmap_name)
 
-        mimage = Image.open(mfname)
+        proj=ccrs.PlateCarree()
+        subplot_kw = {'projection': proj}
+        fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(
+                    8, 8), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
 
-        # Open logo images:
-        limage1 = Image.open(lfname1)
-        limage2 = Image.open(lfname2)
+        p1 = ax.plot(self.ds['long'].isel(n_profiles = selected_float_index), self.ds['lat'].isel(n_profiles = selected_float_index), 
+                         'k-', transform=proj, zorder=-1)
 
-        # Resize logos to match the requested logo_height:
-        aspect_ratio = limage1.size[1]/limage1.size[0]  # height/width
-        simage1 = limage1.resize((int(logo_height/aspect_ratio), logo_height))
+        p2 = ax.scatter(self.ds['long'].isel(n_profiles = selected_float_index), self.ds['lat'].isel(n_profiles = selected_float_index),
+                        s=20, c=self.ds['PCM_LABELS'].isel(n_profiles = selected_float_index), cmap=kmap, transform=proj, vmin=0, vmax=self.m.K, zorder=1)
+        
+        # plot cycle number
+        float_source = self.ds['source'].isel(n_profiles = selected_float_index)
+        float_cycles = [int(float_source.values[i].lstrip('selected_float_')) for i in range(len(float_source))]
+        cycles_labels = np.arange(10,float_cycles[-1]+1,10)
+        transform = ccrs.PlateCarree()._as_mpl_transform(ax)
+        for icycle in cycles_labels:
+            prof_data = self.ds['source'].where(self.ds['source'] == 'selected_float_' + str(icycle), drop=True)
+            if np.size(prof_data['n_profiles'].values) == 0:
+                continue
+            cycle_index = prof_data['n_profiles'].values[0]
+            lat_value = prof_data['lat'].values[0]
+            long_value = prof_data['long'].values[0]
+            ax.annotate(str(icycle), xy=(long_value+0.07, lat_value+0.07), xycoords=transform, fontsize=7, weight='bold')
 
-        aspect_ratio = limage2.size[1]/limage2.size[0]  # height/width
-        simage2 = limage2.resize((int(logo_height/aspect_ratio), logo_height))
+        land_feature = cfeature.NaturalEarthFeature(
+                    category='physical', name='land', scale='50m', facecolor=[0.9375, 0.9375, 0.859375])
+        ax.add_feature(land_feature, edgecolor='black')
 
-        # Paste logos along the lower white band of the main figure:
-        box = (0, mimage.size[1]-logo_height)
-        mimage.paste(simage1, box)
+        defaults = {'linewidth': .5, 'color': 'gray', 'alpha': 0.5, 'linestyle': '--'}
+        gl = ax.gridlines(crs=ax.projection,draw_labels=True, **defaults)
+        gl.xlocator = mticker.FixedLocator(np.arange(-180, 180+1, 4))
+        gl.ylocator = mticker.FixedLocator(np.arange(-90, 90+1, 4))
+        gl.xformatter = LONGITUDE_FORMATTER
+        gl.yformatter = LATITUDE_FORMATTER
+        gl.xlabel_style = {'fontsize': 8}
+        gl.ylabel_style = {'fontsize': 8}
+        gl.xlabels_top = False
+        gl.ylabels_right = False
+        lon_180 = np.mod((self.ds['long'].isel(n_profiles = selected_float_index)+180),360)-180
+        ax.set_xlim([lon_180.min()-1, lon_180.max()+1])
+        ax.set_ylim([self.ds['lat'].isel(n_profiles = selected_float_index).min()-1, self.ds['lat'].isel(n_profiles = selected_float_index).max()+1])
 
-        box = (simage1.size[0], mimage.size[1]-logo_height)
-        mimage.paste(simage2, box)
+        cbar = plt.colorbar(p2, shrink=0.3, pad=0.02)
+        cbar.set_ticks(np.arange(0.5, self.m.K+0.5))
+        cbar.set_ticklabels(range(self.m.K))
+        cbar.ax.tick_params(labelsize=10)
+        cbar.set_label('Class', fontsize=10)
+        
+        title_string = 'Float profile classes'
+        ax.set_title(title_string, fontsize=12)
+        
+        if save_fig!=[]:
+            plt.savefig(save_fig, bbox_inches='tight', dpi=300)
+        
+        
+    def float_cycles_prob(self, var_name='PCM_POST', save_fig=[]):
+        '''Plot posterior or robustness of float profiles 
 
-        # Add dataset and model information
-        # time extent
-        if 'time' not in self.coords_dict:
-            time_string = 'Period: Unknown'
-        elif len(self.ds[self.coords_dict.get('time')].sizes) == 0:
-            # TODO: when using isel hours information is lost
-            time_extent = self.ds[self.coords_dict.get(
-                'time')].dt.strftime("%Y/%m/%d %H:%M")
-            time_string = 'Period: %s' % time_extent.values
+           Parameters
+           ----------
+                save_fig: path to save figure (default: [])
+
+            Returns
+            -------
+
+
+        '''
+        
+        selected_float_index = [i for i, isource in enumerate(self.ds['source'].values) if 'selected_float' in isource]
+        float_labels = self.ds['PCM_LABELS'].isel(n_profiles = selected_float_index)
+        
+        if 'ROBUSTNESS' in var_name: 
+            float_prob = self.ds[var_name].isel(n_profiles = selected_float_index)
         else:
-            time_extent = [min(self.ds[self.coords_dict.get('time')].dt.strftime(
-                "%Y/%m/%d")), max(self.ds[self.coords_dict.get('time')].dt.strftime("%Y/%m/%d"))]
-            time_string = 'Period: from %s to %s' % (
-                time_extent[0].values, time_extent[1].values)
+            float_prob = self.ds[var_name].isel(n_profiles = selected_float_index, pcm_class = float_labels.astype(np.int16))
+            
+        float_source = self.ds['source'].isel(n_profiles = selected_float_index)
+        float_cycles = [int(float_source.values[i].lstrip('selected_float_')) for i in range(len(float_source))]
+        cycles_labels = np.arange(10,float_cycles[-1],10)
 
-        # spatial extent
-        lat_extent = [min(self.ds[self.coords_dict.get('latitude')].values), max(
-            self.ds[self.coords_dict.get('latitude')].values)]
-        lon_extent = [min(self.ds[self.coords_dict.get('longitude')].values), max(
-            self.ds[self.coords_dict.get('longitude')].values)]
-        spatial_string = 'Domain: lat:%s, lon:%s' % (
-            str(lat_extent), str(lon_extent))
+        kmap = self.m.plot.cmap(name=self.cmap_name)
 
-        if bic_fig == 'no':
-            txtA = "User selection:\n   %s\n   %s\n   %s\nSource: %s\n%s" % (self.ds.attrs.get(
-                'title'), time_string, spatial_string, self.ds.attrs.get('credit'), pcm1liner(self.m))
+        fig, ax = plt.subplots(figsize=(18, 5))
+
+        rects1 = ax.plot(float_cycles, float_prob, '-', zorder=-1)
+        rects2 = ax.scatter(float_cycles, float_prob, s=40, c=float_labels, cmap=kmap, zorder=1, vmin=0, vmax=self.m.K)
+
+        if 'ROBUSTNESS' in var_name: 
+            ax.set_ylabel('Robustness', fontsize=16)
+            ax.set_yticks(np.arange(1,5+1))
+            ax.set_yticklabels(self.ds['PCM_ROBUSTNESS_CAT'].attrs['legend'], fontsize=14)
+            ax.set_title('Robustness of each float profile', fontsize=16)
         else:
-            txtA = "User selection:\n   %s\n   %s\n   %s\nSource: %s" % (self.ds.attrs.get(
-                'title'), time_string, spatial_string, self.ds.attrs.get('credit'))
+            ax.set_ylabel('Posteriors', fontsize=16)
+            ax.set_title('Probability of a profile to be in its class', fontsize=16)
 
-        fontA = ImageFont.truetype(font_path, 10)
+        ax.set_xlabel('Float profile number', fontsize=16)
+        ax.set_xticks(cycles_labels)
+        ax.set_xlim([0.5, float_cycles[-1]+0.5])
 
-        txtsA = fontA.getsize_multiline(txtA)
+        ax.tick_params(axis='both', which='major', labelsize=14)        
 
-        xoffset = 5 + simage1.size[0] + simage2.size[0]
-        if 0:  # Align text to the top of the band:
-            posA = (xoffset, mimage.size[1]-logo_height - 1)
-        else:  # Align text to the bottom of the band:
-            posA = (xoffset, mimage.size[1]-txtsA[1]-5)
-
-        # Print
-        drawA = ImageDraw.Draw(mimage)
-        drawA.text(posA, txtA, txt_color, font=fontA)
-
-        # Final save
-        mimage.save(outfname)
-
-    # function which saves figure and add logos
-    def save_BlueCloud(self, out_name, bic_fig='no'):
-
-        # save image
-        # plt.margins(0.1)
-        plt.savefig(out_name, bbox_inches='tight', pad_inches=0.1)
-
-        # add lower band
-        #self.add_lowerband(out_name, out_name, band_height = 120, color=(255, 255, 255, 255))
-        self.add_lowerband(out_name, out_name)
-
-        # add logo
-        #self.add_2logo(out_name, out_name, logo_height=120, txt_color=(0, 0, 0, 255), data_src='CMEMS')
-        self.add_2logo(out_name, out_name, bic_fig=bic_fig)
-
-        print('Figure saved in %s' % out_name)
-
-    pass
+        cbar = plt.colorbar(rects2, shrink=0.6, pad=0.02)
+        cbar.set_ticks(np.arange(0.5, self.m.K+0.5))
+        cbar.set_ticklabels(range(self.m.K))
+        cbar.ax.tick_params(labelsize=16)
+        cbar.set_label('Class', fontsize=16)
+        
+        if save_fig!=[]:
+            plt.savefig(save_fig, bbox_inches='tight', dpi=300)

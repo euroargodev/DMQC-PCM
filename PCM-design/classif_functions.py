@@ -426,20 +426,21 @@ def order_class_names(ds_out, K):
 
     return ds_out
 
-def get_regulargrid_dataset(ds, corr_dist, season='all'):
-    '''Re-sampling od the dataset selecting profiles separated the correlation distance
+def get_regulargrid_dataset(ds, corr_dist, season='all'):    
+    '''Re-sampling the dataset selecting profiles separated the correlation distance
 
            Parameters
            ----------
                ds: reference profiles dataset
                corr_dist: correlation distance
-               season: choose season: 'DJF', 'MAM', 'JJA','SON' (default: 'all')
+               season: choose season between 'DJF', 'MAM', 'JJA','SON' (default: 'all')
 
            Returns
            ------
                Re-sampled dataset
 
                '''
+
     # create distance matrix
     from sklearn.metrics.pairwise import haversine_distances
     from math import radians
@@ -476,8 +477,8 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
         
         # stop condition
         if np.any(np.isnan(ds['mask_s'])) == False:
-            print('no more points to delate')
-            print(i)
+            #print('no more points to delate')
+            #print(i)
             break
                             
     # choose season
@@ -502,7 +503,7 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
     return ds_t
 
 def get_topo_grid(min_long, max_long, min_lat, max_lat):
-    """  Find depth grid over given area using tbase.int file
+    """ Find depth grid over given area using tbase.int file
         The old matlab version of this uses an old .int file from NOAA which contains
         5 arcminute data of global terrain. Whilst other more complete data sets now
         exists, the data files for them are very large, so this file can be used for now,
@@ -549,7 +550,7 @@ def get_topo_grid(min_long, max_long, min_lat, max_lat):
 
     # Open the binary file
     # TODO: this should use a with statement to avoid holding on to an open handle in the event of an exception
-    elev_file = open('/home1/homedir5/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/lib/m_map1.4/m_map1.4_mod/tbase.int', "rb")  # pylint: disable=consider-using-with
+    elev_file = open('/home6/homedir10/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/lib/m_map1.4/m_map1.4_mod/tbase.int', "rb")  # pylint: disable=consider-using-with
     #elev_file = open(os.path.sep.join([config['CONFIG_DIRECTORY'], "tbase.int"]), "rb")  # pylint: disable=consider-using-with
 
     if decoder[1] > 4319:
@@ -723,4 +724,54 @@ def select_ellipses(mat_dict_float, ds, config, map_pv_use=0):
     ds = ds.isel(n_profiles = select_profs)
     
     return ds
+
+def plot_spatialdist_ds(ds, float_WMO, float_traj=False):
+    """ Plot spatial distribution of the dataset
+
+        Parameters
+        ----------
+        ds: dataset with lat and long variables
+        float_WMO: float reference 
+        float_traj: plot float trajectory (default: False)
+
+        Returns
+        -------
+        Spatial distribution plot
+    """
+    
+    proj=ccrs.PlateCarree()
+    subplot_kw = {'projection': proj}
+    fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(
+            8, 8), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
+
+    p1 = ax.scatter(ds['long'], ds['lat'], s=3, transform=proj, label='Argo reference data')
+    
+    if float_traj:
+        selected_float_index = [i for i, isource in enumerate(ds['source'].values) if 'selected_float' in isource]
+        p2 = ax.plot(ds['long'].isel(n_profiles = selected_float_index), ds['lat'].isel(n_profiles = selected_float_index), 
+                     'ro-', transform=proj, markersize = 3, label = str(float_WMO) + ' float trajectory')
+        plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left')
+
+    land_feature = cfeature.NaturalEarthFeature(
+            category='physical', name='land', scale='50m', facecolor=[0.9375, 0.9375, 0.859375])
+    ax.add_feature(land_feature, edgecolor='black')
+
+    defaults = {'linewidth': .5, 'color': 'gray', 'alpha': 0.5, 'linestyle': '--'}
+    gl = ax.gridlines(crs=ax.projection,draw_labels=True, **defaults)
+    gl.xlocator = mticker.FixedLocator(np.arange(-180, 180+1, 4))
+    gl.ylocator = mticker.FixedLocator(np.arange(-90, 90+1, 4))
+    gl.xformatter = LONGITUDE_FORMATTER
+    gl.yformatter = LATITUDE_FORMATTER
+    gl.xlabel_style = {'fontsize': 8}
+    gl.ylabel_style = {'fontsize': 8}
+    gl.xlabels_top = False
+    gl.ylabels_right = False
+    lon_180 = np.mod((ds['long']+180),360)-180
+    ax.set_xlim([lon_180.min()-1, lon_180.max()+1])
+    ax.set_ylim([ds['lat'].min()-1, ds['lat'].max()+1])
+
+    plt.draw()
+    
+    
+    
     
