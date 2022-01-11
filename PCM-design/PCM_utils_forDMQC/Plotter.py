@@ -14,6 +14,52 @@ import xarray as xr
 
 from PIL import Image, ImageFont, ImageDraw
 
+def plot_spatialdist_ds(ds, float_WMO, float_traj=False):
+    """ Plot spatial distribution of the dataset
+
+        Parameters
+        ----------
+        ds: dataset with lat and long variables
+        float_WMO: float reference 
+        float_traj: plot float trajectory (default: False)
+
+        Returns
+        -------
+        Spatial distribution plot
+    """
+    
+    proj=ccrs.PlateCarree()
+    subplot_kw = {'projection': proj}
+    fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(
+            8, 8), dpi=120, facecolor='w', edgecolor='k', subplot_kw=subplot_kw)
+
+    p1 = ax.scatter(ds['long'], ds['lat'], s=3, transform=proj, label='Argo reference data')
+    
+    if float_traj:
+        selected_float_index = [i for i, isource in enumerate(ds['source'].values) if 'selected_float' in isource]
+        p2 = ax.plot(ds['long'].isel(n_profiles = selected_float_index), ds['lat'].isel(n_profiles = selected_float_index), 
+                     'ro-', transform=proj, markersize = 3, label = str(float_WMO) + ' float trajectory')
+        plt.legend(bbox_to_anchor=(1.02, 1), loc='upper left')
+
+    land_feature = cfeature.NaturalEarthFeature(
+            category='physical', name='land', scale='50m', facecolor=[0.9375, 0.9375, 0.859375])
+    ax.add_feature(land_feature, edgecolor='black')
+
+    defaults = {'linewidth': .5, 'color': 'gray', 'alpha': 0.5, 'linestyle': '--'}
+    gl = ax.gridlines(crs=ax.projection,draw_labels=True, **defaults)
+    gl.xlocator = mticker.FixedLocator(np.arange(-180, 180+1, 4))
+    gl.ylocator = mticker.FixedLocator(np.arange(-90, 90+1, 4))
+    gl.xformatter = LONGITUDE_FORMATTER
+    gl.yformatter = LATITUDE_FORMATTER
+    gl.xlabel_style = {'fontsize': 8}
+    gl.ylabel_style = {'fontsize': 8}
+    gl.xlabels_top = False
+    gl.ylabels_right = False
+    lon_180 = np.mod((ds['long']+180),360)-180
+    ax.set_xlim([lon_180.min()-1, lon_180.max()+1])
+    ax.set_ylim([ds['lat'].min()-1, ds['lat'].max()+1])
+
+    plt.draw()
 
 class Plotter:
     '''New class for visualisation of data from pyxpcm
