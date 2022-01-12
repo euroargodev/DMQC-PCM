@@ -157,60 +157,96 @@ def order_class_names(ds_out, K):
 
     return ds_out
 
-def get_regulargrid_dataset(ds, corr_dist, season='all'):    
-    '''Re-sampling the dataset selecting profiles separated the correlation distance
+def cal_dist_matrix(lats, lons):
+    '''Calculate distance matrix
+
+           Parameters
+           ----------
+               lats: latitude vector
+               lons: longitude vector
+
+           Returns
+           ------
+               Distance maytrix in int16
+
+               '''    
+    from sklearn.metrics.pairwise import haversine_distances
+    from math import radians
+    
+    lats_in_radians = np.array([radians(_) for _ in lats])
+    lons_in_radians = np.array([radians(_) for _ in lons])
+    coords_in_radians = np.column_stack((lats_in_radians, lons_in_radians))
+    dist_matrix = haversine_distances(coords_in_radians).astype(np.float32)
+    dist_matrix = dist_matrix * 6371  # multiply by Earth radius to get kilometers
+    dist_matrix = dist_matrix.astype(np.int16)
+    
+    return dist_matrix
+
+def get_regulargrid_dataset(ds, corr_dist, season='all'):
+    '''Re-sampling od the dataset selecting profiles separated the correlation distance
 
            Parameters
            ----------
                ds: reference profiles dataset
                corr_dist: correlation distance
-               season: choose season between 'DJF', 'MAM', 'JJA','SON' (default: 'all')
+               dist_matrix: distannces matrix
+               season: choose season: 'DJF', 'MAM', 'JJA','SON' (default: 'all')
 
            Returns
            ------
                Re-sampled dataset
 
                '''
-
-    # create distance matrix
-    from sklearn.metrics.pairwise import haversine_distances
-    from math import radians
-    lats_in_radians = np.array([radians(_) for _ in ds['lat'].values])
-    lons_in_radians = np.array([radians(_) for _ in ds['long'].values])
-    coords_in_radians = np.column_stack((lats_in_radians, lons_in_radians))
-    dist_matrix = haversine_distances(coords_in_radians)
-    #dist_matrix = haversine_distances(coords_in_radians).astype(np.float32)
-    dist_matrix = haversine_distances(coords_in_radians).astype(np.float16) 
-    dist_matrix = dist_matrix * 6371  # multiply by Earth radius to get kilometers
-    dist_matrix = dist_matrix.astype(np.int16)    
     
+    ds['n_profiles'] = np.arange(len(ds['n_profiles']))
     # create mask
     mask_s = np.empty((1,len(ds['n_profiles'].values)))
     mask_s[:] = np.NaN
     ds["mask_s"]=(['n_profiles'],  np.squeeze(mask_s))
     
+    plus_degrees = corr_dist/111 +1 # from km to degrees
+    
     #loop
     n_iterations = range(len(ds['n_profiles'].values))
+    import time
+
     for i in n_iterations:
         
+        # choose random profile
         random_p = np.random.choice(ds['n_profiles'].where(np.isnan(ds['mask_s']), drop=True).values, 1, replace=False)
         random_p = int(random_p[0])
+        lat_p = ds['lat'].sel(n_profiles = random_p).values
+        long_p = ds['long'].sel(n_profiles = random_p).values
+        
+        # dataset arround random point
+        ds_slice = ds[['lat', 'long', 'mask_s']]
+        ds_slice = ds_slice.where(ds['lat'] > (lat_p - plus_degrees), drop=True)
+        ds_slice = ds_slice.where(ds_slice['lat'] < (lat_p + plus_degrees), drop=True)
+        ds_slice = ds_slice.where(ds_slice['long'] > (long_p - plus_degrees), drop=True)
+        ds_slice = ds_slice.where(ds_slice['long'] < (long_p + plus_degrees), drop=True)
+        random_p_i = np.argwhere(ds_slice['n_profiles'].values == random_p)
+        
+        # calculate distance matrix
+        dist_matrix = cal_dist_matrix(ds_slice['lat'].values, ds_slice['long'].values)
         
         # points near than corr_dist = 1
-        mask_dist = np.isnan(ds['mask_s'].values)*1
-        dist_vector = np.array(dist_matrix[:,random_p]).astype('float')*np.array(mask_dist)
+        mask_dist = np.isnan(ds_slice['mask_s'].values)*1
+        dist_vector = np.array(np.squeeze(dist_matrix[:,random_p_i])).astype('float')*np.array(mask_dist)
         dist_vector[dist_vector == 0] = np.NaN
         bool_near_points = (dist_vector < corr_dist)
+        n_profiles_near_points = ds_slice['n_profiles'].values[bool_near_points]
         
         # change mask
         ds['mask_s'][random_p] = 1
-        ds['mask_s'][bool_near_points] = 0
+        ds['mask_s'][n_profiles_near_points] = 0
         
         # stop condition
+        #print(sum(np.isnan(ds['mask_s'].values)))
         if np.any(np.isnan(ds['mask_s'])) == False:
             #print('no more points to delate')
             #print(i)
             break
+        
                             
     # choose season
     if 'all' not in season:
@@ -231,4 +267,4 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
     
     del dist_matrix
 
-    return ds_t  
+    return ds_t
