@@ -208,7 +208,6 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
     
     #loop
     n_iterations = range(len(ds['n_profiles'].values))
-    import time
 
     for i in n_iterations:
         

@@ -10,13 +10,12 @@ from scipy import interpolate
 import copy
 import struct
 
-def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path, config, map_pv_use):
+def get_refdata(float_mat_path, wmo_boxes, ref_path, config, map_pv_use):
     """ Get data from argo reference database
 
         Parameters
         ----------
         geo_extent: array with geographical extent [min lon, max lon, min lat, max lat]
-        WMOboxes_latlon: WMOboxes_latlon file name
         wmo_boxes: wmo_boxes file name
         ref_path: path to argo reference database
         config: dict with config parameter in ow_config.txt file
@@ -40,6 +39,7 @@ def get_refdata(float_mat_path, WMOboxes_latlon, wmo_boxes, ref_path, config, ma
                   mat_dict_float['LAT'].max() + latitude_large + plus_box]
     
     # Read wmo boxes latlon: load txt file
+    WMOboxes_latlon = 'PCM_utils_forDMQC/WMO_boxes_latlon.txt'
     WMOboxes_latlon = np.loadtxt(WMOboxes_latlon, skiprows=1)
 
     # select boxes
