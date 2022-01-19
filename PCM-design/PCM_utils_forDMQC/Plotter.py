@@ -787,6 +787,7 @@ class Plotter:
 
            Parameters
            ----------
+                var_name: probabilité variable name (default: 'PCM_POST')
                 save_fig: path to save figure (default: [])
 
             Returns

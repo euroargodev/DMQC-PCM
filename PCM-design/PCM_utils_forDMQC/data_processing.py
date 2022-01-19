@@ -1,7 +1,6 @@
 # function for data processing
 import xarray as xr
 import numpy as np
-import pandas as pd
 
 import scipy as sp
 from scipy import interpolate
@@ -189,7 +188,6 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
            ----------
                ds: reference profiles dataset
                corr_dist: correlation distance
-               dist_matrix: distannces matrix
                season: choose season: 'DJF', 'MAM', 'JJA','SON' (default: 'all')
 
            Returns

@@ -12,14 +12,13 @@ from .data_processing import get_regulargrid_dataset
 
 def BIC_calculation(ds, corr_dist, pcm_features, features_in_ds, z_dim, Nrun=10, NK=20):
     '''Calculation of BIC (Bayesian Information Criteria) for a training dataset.
-        The calculation is parallelised using ThreadPoolExecutor.
 
            Parameters
            ----------
                ds: dataset
                corr_dist: correlation distance
                pcm_features: dictionary with pcm features {'temperature': z vector}
-               features_in_ds: dictionary with the name of feaures in the model and in the dataste
+               features_in_ds: dictionary with the name of feaures in the model and in the dataset
                     {temperature: thetao} 
                z_dim: name of the z variable
                Nrun: number of runs
