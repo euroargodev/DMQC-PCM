@@ -10,16 +10,16 @@ from scipy import interpolate
 import copy
 import struct
 
-def get_refdata(float_mat_path, wmo_boxes, ref_path, config, map_pv_use):
+def get_refdata(float_mat_path, wmo_boxes, ref_path, config, map_pv_use=0):
     """ Get data from argo reference database
 
         Parameters
         ----------
-        geo_extent: array with geographical extent [min lon, max lon, min lat, max lat]
+        float_mat_path: path to .mat file with float data
         wmo_boxes: wmo_boxes file name
         ref_path: path to argo reference database
         config: dict with config parameter in ow_config.txt file
-        map_pv_use: use potential vorticity to calculate ellipses or not
+        map_pv_use: use potential vorticity to calculate ellipses or not (default 0)
 
         Returns
         -------
@@ -204,7 +204,7 @@ def add_floatdata(float_WMO, float_mat_path, ds):
         ----------
         float_WMO: float reference number
         float_mat_path: path to float mat file
-        ds = reference profiles dataset 
+        ds: reference profiles dataset 
 
         Returns
         -------
