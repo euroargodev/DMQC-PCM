@@ -19,23 +19,17 @@ User inputs
 
 - **Correlation distance**: spatial correlation scale in your dataset (in km). It is determined by the user, regarding his/her knowledge of the region.
 
-.. ipython:: python
-    :okwarning:
-
+.. code-block:: text
     corr_dist = 50 # correlation distance in km
 
 - **Number of runs**: For each K range run, a subset of the training dataset is randomly selected in order to use *independent* profiles. Indeed, the ocean exhibits spatial correlations that reduce the real information contained in the training dataset. This has to be taken into account. The dataset is sub-sampled into several subsets of uncorrelated profiles, finally allowing us to compute several times each K range run and hence to compute a standard deviation on the BIC metric.
 
-.. ipython:: python
-    :okwarning:
-
+.. code-block:: text
     Nrun = 10 # number of runs for each k
 
 - **Max number of classes**: Maximum number of classes to explore.
 
-.. ipython:: python
-    :okwarning:
-
+.. code-block:: text
     NK = 15 # max number of classes to explore
 
 Increasing the number of runs *Nrun* or the max number of classes *NK*, will increase the computation time.
@@ -44,8 +38,8 @@ Increasing the number of runs *Nrun* or the max number of classes *NK*, will inc
 BIC plot
 --------
 
+.. image:: _static/BIC_plot_ex.png
 
-(plot figure)
 
 If the BIC curve is not showing a clear minimum, it can be an indication that some profiles remained correlated in the training set, so try to adjust more precisely the correlation scale.
 

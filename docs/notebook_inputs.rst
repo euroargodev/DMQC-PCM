@@ -39,8 +39,7 @@ Float reference number
 
 You should provide the WMO number of the float you want to correct in OWC. THree examples are provided in the notebook (and explained in the deliverable, link):float 4900136 crossing the Gulf Stream, float 3901928 in the Southern Ocean and float 3901915 in the Agulhas Current.
 
-.. ipython:: python
-    :okwarning:
+.. code-block:: text
     float_WMO = 4900136
 
 
@@ -49,9 +48,7 @@ Number of classes
 
 The number of classes K is a key parameter when designing a PCM. You are invited to try different K values to evaluate if the results are coherent with your knowledge of possible ocean regimes in the region. It is also possible to use the BIC notebook (BIC_plot.ipynb, see next section), which can help you to choose the optimal number of classes K.
 
-.. ipython:: python
-    :okwarning:
-
+.. code-block:: text
     K=4
 
 
