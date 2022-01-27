@@ -10,9 +10,7 @@ Configuration file
 
 You should provide the path to the OWC configuration file (**ow_config.txt**). This is a critical input because the **ow_config.txt** file is used to make the reference profile initial selection and to define important paths, so make sure that this file is set up properly (look at OWC cookbook).
 
-.. ipython:: python
-    :okwarning:
-
+.. code-block:: text
     config_filename = 'DMQC-PCM/OWC-pcm/matlabow/ow_config.txt'
 
 
@@ -32,11 +30,8 @@ Interpolation depth
 
 The PCM can not deal with NaN values, so the reference dataset is interpolated on standard depth levels and the profiles shallower than the max_depth, are dropped out. A max depth of 1000m can be enough, however you should find a compromise between keeping a sufficient number of reference profiles and having a comprehensive representation of the oceanography in the region. You should also consider the depth of the float profiles: if they are shallower than the max depth, they will be dropped out, and they will not be classified by the PCM. In such cases, a lower value of max depth is recommended.
 
-.. ipython:: python
-    :okwarning:
-
-    max_depth = 1000
-
+.. code-block:: text
+    max_depth = 1000  
 
 
 Float reference number
@@ -46,7 +41,6 @@ You should provide the WMO number of the float you want to correct in OWC. THree
 
 .. ipython:: python
     :okwarning:
-
     float_WMO = 4900136
 
 
