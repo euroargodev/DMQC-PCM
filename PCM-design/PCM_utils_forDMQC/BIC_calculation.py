@@ -15,7 +15,8 @@ def BIC_calculation(ds, corr_dist, pcm_features, features_in_ds, z_dim, Nrun=10,
 
            Parameters
            ----------
-               ds: dataset
+               ds: xarray bool list(int)
+                   dataset
                corr_dist: correlation distance
                pcm_features: dictionary with pcm features {'temperature': z vector}
                features_in_ds: dictionary with the name of feaures in the model and in the dataset

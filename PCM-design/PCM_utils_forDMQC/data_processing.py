@@ -16,7 +16,8 @@ def interpolate_standard_levels(ds, std_lev):
 
         Returns
         -------
-        Datset array with interpolated values
+        :class:`xarray.DataArray`
+            Dataset array with interpolated values
     """
 
     # Selecting profiles that have a max(pressure) > max(std_lev) to avoid extrapolation in that direction
@@ -136,7 +137,8 @@ def order_class_names(ds_out, K):
 
         Returns
         -------
-        Dataset ordered class names in PCM_LABELS variable
+        :class:`xarray.DataArray`
+            Dataset ordered class names in PCM_LABELS variable
     """
 
     def assign_cluster_number(x):
@@ -191,7 +193,8 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
                season: choose season: 'DJF', 'MAM', 'JJA','SON' (default: 'all')
 
            Returns
-           ------
+           -------
+           :class:`xarray.DataArray`
                Re-sampled dataset
 
                '''

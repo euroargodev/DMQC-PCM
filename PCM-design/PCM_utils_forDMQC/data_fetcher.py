@@ -23,7 +23,8 @@ def get_refdata(float_mat_path, wmo_boxes, ref_path, config, map_pv_use=0):
 
         Returns
         -------
-        Dataset with data
+        :class:`xarray.DataArray`
+            Dataset with data
     """
     
     # get float trajectory
@@ -208,7 +209,8 @@ def add_floatdata(float_WMO, float_mat_path, ds):
 
         Returns
         -------
-        Dataset with float profiles
+        :class:`xarray.DataArray`
+            Dataset with float profiles
     """
 
     # load float profiles from .mat file
@@ -369,7 +371,8 @@ def select_ellipses(mat_dict_float, ds, config, map_pv_use=0):
 
         Returns
         -------
-        Dataset with selected profiles 
+        :class:`xarray.DataArray`
+            Dataset with selected profiles 
     """    
     
     longitude_large = float(config['mapscale_longitude_large'])
