@@ -11,7 +11,7 @@ The preliminary implementation workflow is structured in some Jupyter Notebooks 
   <img src="https://user-images.githubusercontent.com/59824937/146351682-2aa8c72d-dc2f-4038-b372-44836c3a34b7.png" width="500">
 </p>
 
-*Figure 1. Workflow of the preliminary implemetation.*
+*Figure 1. Workflow of the preliminary implementation.*
 
 
 In the **PCM-design** folder you will find the classification notebook *Classif_ArgoReferenceDatabase.ipynb*. It allows the design, training and prediction of a PCM (__Profile Classification Model__) using a selection of the Argo reference database. A PCM allows to automatically assemble ocean profiles into clusters according to their vertical structure similarities. It provides an unsupervised, i.e. automatic, method to distinguish profiles from different dynamical regimes of the ocean (e.g. eddies, fronts, quiescent water masses). For more information about the method, see [*Maze et al, Prg.Oc, 2017*](https://www.sciencedirect.com/science/article/pii/S0079661116300714).
