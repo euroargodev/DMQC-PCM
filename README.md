@@ -1,6 +1,6 @@
-# DMQC-PCM
+# The SO quality assessment tool
 
-*Authors*: Andrea Garcia Juan (andrea.garcia.juan@ifremer.fr), Kevin Balem (kevin.balem@ifremer.fr), Cécile Cabanes (cecile.cabanes@ifremer.fr) and Guillaume Maze (gmaze@ifremer.fr)
+*Authors*: Kamila Walicka (kamwal@noc.ac.uk), Clive Neil (clive.neil@noc.ac.uk), Andrea Garcia Juan (andrea.garcia.juan@ifremer.fr), Kevin Balem (kevin.balem@ifremer.fr), Cécile Cabanes (cecile.cabanes@ifremer.fr) and Guillaume Maze (gmaze@ifremer.fr)
 ***
 
 The DMQC-PCM is a new quality control method based on machine learning. It uses a statistical classifier (a PCM: Profile Classification Model) to organize and select more appropriately reference data for the quality control of an Argo float. You will find a preliminary implementation of this method in the current repository.
