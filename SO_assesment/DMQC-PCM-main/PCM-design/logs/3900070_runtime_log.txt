@@ -1,0 +1,7 @@
+2022-07-26 12:17:40 - starting processing
+2022-07-26 12:17:48 - Wong matrix created
+2022-07-26 12:17:48 - loading reference data
+2022-07-26 12:22:00 - applying BIC
+2022-07-26 12:35:12 - >>> classes: 6
+2022-07-26 12:35:12 - applying PCM
+2022-07-26 12:40:04 - >>> successful

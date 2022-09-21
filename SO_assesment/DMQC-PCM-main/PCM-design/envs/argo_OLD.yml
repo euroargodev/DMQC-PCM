@@ -1,0 +1,22 @@
+name: dmqc_pcm
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+
+  - xarray=0.20.2
+  - scipy>=1.7.3
+  - scikit-learn=1.0.2
+  - netCDF4=1.5.8
+  - dask=2021.12.0
+  - toolz=0.11.2
+  - erddapy=0.6
+  - fsspec=2021.11.1
+  - gsw=3.4.0
+  - aiohttp=3.6.2
+  - packaging=21.3
+  - cftime=1.5.1.1
+  - jupyter=1.0.0
+  - cartopy=0.18.0
+  - seaborn=0.11.2
+  - pip=21.2.2
