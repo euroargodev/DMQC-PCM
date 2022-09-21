@@ -1,0 +1,17 @@
+
+% ============================================================
+%
+%    global constants needed by SO assessment PCM python code
+%
+
+%local directory of BODC's weekly updated NetCDF data from GDAC
+GDAC_MIRROR = /scratch/argo/gdac_mirror
+ARGO_INDEX = /scratch/argo/gdac_mirror/argo-index/ar_index_global_traj.txt
+
+
+% PCM can not deal with NaN values, so the reference data set is interpolated
+% on standard depth levels and  profiles shallower than the max_depth excluded
+MAX_DEPTH = 1000
+CORR_DISTANCE = 50
+NUMBER_RUNS = 10
+NK = 15
