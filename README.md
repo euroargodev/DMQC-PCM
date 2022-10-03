@@ -15,8 +15,8 @@ The SO_assesment brunch repository includes the two versions of the SO assessmen
 
 ## The SO assessment workflow
 
-
-*Figure 1. Workflow of the SO quality assessment method.*
+![place image](https://github.com/euroargodev/DMQC-PCM/blob/SO_assesment/SO_assesment/workflow.PNG)
+Figure 1. Workflow of the SO quality assessment method.
 
 
 In the **PCM-design** folder you will find the classification notebook *Classif_ArgoReferenceDatabase.ipynb*. It allows the design, training and prediction of a PCM (__Profile Classification Model__) using a selection of the Argo reference database. A PCM allows to automatically assemble ocean profiles into clusters according to their vertical structure similarities. It provides an unsupervised, i.e. automatic, method to distinguish profiles from different dynamical regimes of the ocean (e.g. eddies, fronts, quiescent water masses). For more information about the method, see [*Maze et al, Prg.Oc, 2017*](https://www.sciencedirect.com/science/article/pii/S0079661116300714).
