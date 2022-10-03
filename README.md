@@ -41,13 +41,13 @@ The list of WMO numbers of floats which are intended to go through the SO qualit
 
 ### DMQC-PCM-Python
 (1 ) Setup configuration files<br />
-All necessary directories, constant values for PCM, and objective mapping parameters which are needed to run both PCM and OWC software can be set in one initial file below. The configurations used are the same as in the DMQC-PCM-main software.  
--*pcm_ow_config.ini-*
+All necessary directories, constant values for PCM, and objective mapping parameters which are needed to run both PCM and OWC software can be set in one initial file below. The configurations used are the same as in the DMQC-PCM-main software. <br /> 
+-*pcm_ow_config.ini*
 
 (2) Select floats for analysis and run the codes in software<br />
 The list of WMO numbers of floats which are intended to go through the SO quality assessment needs to be specified in the following code below. This code is also used to run the entire software.<br />
 
-- *so_dmqc_master.py-*<br />
+- *so_dmqc_master.py *<br />
 In addition to the code from the DMQC-PCM-main, this code is also performing the automatic OWC Python calculations. 
 
 
