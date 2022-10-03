@@ -48,7 +48,7 @@ All necessary directories, constant values for PCM, and objective mapping parame
 (2) Select floats for analysis and run the codes in software<br />
 The list of WMO numbers of floats which are intended to go through the SO quality assessment needs to be specified in the following code below. This code is also used to run the entire software. <br />
 
-- *so_dmqc_master.py *<br />
+- *so_dmqc_master.py* <br />
 In addition to the code from the DMQC-PCM-main, this code is also performing the automatic OWC Python calculations. 
 
 
