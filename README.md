@@ -1,17 +1,22 @@
 # The Southern Ocean quality assessment tool
 
-*Authors*: Kamila Walicka (kamwal@noc.ac.uk), Clive Neil (clive.neil@noc.ac.uk), Andrea Garcia Juan (andrea.garcia.juan@ifremer.fr), Kevin Balem (kevin.balem@ifremer.fr), Cécile Cabanes (cecile.cabanes@ifremer.fr) and Guillaume Maze (gmaze@ifremer.fr)
+*Authors of the SO assessment tool*: Kamila Walicka (kamwal@noc.ac.uk), Clive Neil (clive.neil@noc.ac.uk)
+
+*Authors of the DMQC-PCM tool*: Andrea Garcia Juan (andrea.garcia.juan@ifremer.fr), Kevin Balem (kevin.balem@ifremer.fr), Cécile Cabanes (cecile.cabanes@ifremer.fr) and Guillaume Maze (gmaze@ifremer.fr)
 ***
 
-The DMQC-PCM is a new quality control method based on machine learning. It uses a statistical classifier (a PCM: Profile Classification Model) to organize and select more appropriately reference data for the quality control of an Argo float. You will find a preliminary implementation of this method in the current repository.
+The quality assessment method in the Southern Ocean (SO) uses the pre-classified core Argo float and climatological data belonging to similar water mass regimes using the Profile Characterisation Model (PCM). These pre-classified reference data are further used in the DMQC software - OWC analysis. This method allows the DMQC operator to avoid noise from other water masses leading to a more robust quality control analysis of salinity data in delayed mode. 
 
-The preliminary implementation workflow is structured in some Jupyter Notebooks and a OWC version including the PCM option.
+The SO quality assessment software is designed based on the currently available version of DMQC-PCM (the main branch of this repository) and the OWC software. The DMQC-PCM is a quality control method based on machine learning. It uses a statistical classifier (a PCM: Profile Classification Model) to organize and select more appropriately climatology (reference) data for the quality control of an Argo float.
 
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/59824937/146351682-2aa8c72d-dc2f-4038-b372-44836c3a34b7.png" width="500">
-</p>
+The SO_assesment brunch repository includes the two versions of the SO assessment software:
+- **DMQC-PCM-main** - which includes the DMQC-PCM and OWC Matlab software
+- **DMQC-PCM-Python** -which includes the DMQC-PCM and OWC  Python software
 
-*Figure 1. Workflow of the preliminary implementation.*
+## The SO assessment workflow
+
+
+*Figure 1. Workflow of the SO quality assessment method.*
 
 
 In the **PCM-design** folder you will find the classification notebook *Classif_ArgoReferenceDatabase.ipynb*. It allows the design, training and prediction of a PCM (__Profile Classification Model__) using a selection of the Argo reference database. A PCM allows to automatically assemble ocean profiles into clusters according to their vertical structure similarities. It provides an unsupervised, i.e. automatic, method to distinguish profiles from different dynamical regimes of the ocean (e.g. eddies, fronts, quiescent water masses). For more information about the method, see [*Maze et al, Prg.Oc, 2017*](https://www.sciencedirect.com/science/article/pii/S0079661116300714).
