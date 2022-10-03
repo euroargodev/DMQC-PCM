@@ -7,48 +7,47 @@
 
 The quality assessment method in the Southern Ocean (SO) uses the pre-classified core Argo float and climatological data belonging to similar water mass regimes using the Profile Characterisation Model (PCM). These pre-classified reference data are further used in the DMQC software - OWC analysis. This method allows the DMQC operator to avoid noise from other water masses leading to a more robust quality control analysis of salinity data in delayed mode. 
 
-The SO quality assessment software is designed based on the currently available version of DMQC-PCM (the main branch of this repository) and the OWC software. The DMQC-PCM is a quality control method based on machine learning. It uses a statistical classifier (a PCM: Profile Classification Model) to organize and select more appropriately climatology (reference) data for the quality control of an Argo float.
+The SO quality assessment software is designed based on the currently available version of DMQC-PCM (the main branch of this repository) and the OWC software. The DMQC-PCM is a quality control method based on machine learning. It uses a statistical classifier (a PCM: Profile Classification Model) to organize and select more appropriately climatology (reference) data for the quality control of an Argo float. It has been shown that the DMQC-PCM software is able to improve the detection of salinity drift and temperature or salinity outliers. Moreover, when combined with the standard salinity calibration method, DMQC-PCM software is able to reduce the error on the correction while preserving confidence in this correction amplitude.
 
 The SO_assesment brunch repository includes the two versions of the SO assessment software:
 - **DMQC-PCM-main** - which includes the DMQC-PCM and OWC Matlab software
 - **DMQC-PCM-Python** -which includes the DMQC-PCM and OWC  Python software
 
 ## The SO assessment workflow
+The general workflow of the SO quality assessment method is presented in figure 1. In the first step, the software uses the aropy package to retrieve the Argo float temperature and salinity profiles from the local repository (it can be also set up to pull data directly from GDAC). Then, these data are used to generate the source data file including appended Argo float profiles. The source data files are used as the input to both the DMQC-PCM classification software and further to the DMQC OWC software. Both software uses as input files the configuration file and the reference data (from both CTD and/or Argo climatology data). The configuration file used in the method includes all necessary directories and setups. The reference data are used for comparison with the Argo float profiles. The DMQC PCM firstly runs the BIC function to estimate the number of classes for a training dataset to the PCM model. Then the output from the BIC is automatically implemented in the DMQC PCM code. This code generates the classification figures, the trained model and the text file containing the classification labels corresponding to each Argo float profile. The classification labels file is then read by the DMQC OWC software, which produces the suggested salinity correction outputs and associated diagnostic plots.  In this step, the DMQC operator can assess if the Argo float is affected by any salinity drift or offset and decide to apply appropriate adjustments.
 
 ![place image](https://github.com/euroargodev/DMQC-PCM/blob/SO_assesment/SO_assesment/workflow.PNG)
 Figure 1. Workflow of the SO quality assessment method.
 
+## Implementation and usage
+Since the SO quality assessment software is designed for both Matlab and Python users of the OWC software, hence the procedures for running the software are slightly different. The code used and their description are as follows.
 
-In the **PCM-design** folder you will find the classification notebook *Classif_ArgoReferenceDatabase.ipynb*. It allows the design, training and prediction of a PCM (__Profile Classification Model__) using a selection of the Argo reference database. A PCM allows to automatically assemble ocean profiles into clusters according to their vertical structure similarities. It provides an unsupervised, i.e. automatic, method to distinguish profiles from different dynamical regimes of the ocean (e.g. eddies, fronts, quiescent water masses). For more information about the method, see [*Maze et al, Prg.Oc, 2017*](https://www.sciencedirect.com/science/article/pii/S0079661116300714).
+### DMQC-PCM-main
+(1) Setup configuration files<br />
+- *pcm-config.txt* <br />
+  This file is used by the DMQC-PCM Python software and includes the directories to the local archive including the weekly updated NetCDF data from GDAC. Moreover,   it also includes the following constants: the maximal interpolation depth from which reference data (MAX_DEPTH = 1000), correlation distance (CORR_DISTANCE =     50), number of runs in BIC for each class (NUMBER_RUNS = 10) and maximal number of classes to explore (NK = 10).
+  
+- *ow_config_linux_ctd_argo.txt*<br />
+This file includes the configurations used in OWC Matlab software for the Argo floats analysis. To best represent the dynamic condition in this region and for further comparison of output with the DM data the constant values of the objective mapping parameters have been used (Table 3.1). In Task 5.3, the floats which are going through the SO quality assessment analysis are firstly run using the first “SO1” configurations. The other sets of configurations are used if the specific float requires more iterations. Moreover, this file also includes the option for including the class labels from the PCM analysis (USE_PCM=1).
 
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/59824937/146352107-08b59ffd-ed73-4e70-84ee-cd002f98fb15.png" width="700">
-</p>
+(2) Select floats for analysis and run the codes in software<br />
+The list of WMO numbers of floats which are intended to go through the SO quality assessment needs to be inserted in the following codes. After these edits, the following codes need to be run:<br />
 
-*Figure 2. Example of classification spatial distribution for float 4900136 using argo reference database.*
+- *so_dmqc_master.py* <br />
+  This Python code (1) retrieves data from the local repository or GDAC (using argopy package), (2) automatically generates the source code for OWC analysis (using   argopy package), (3) runs the BIC function which is estimating the most suitable number of classes for a training dataset to model, (4) runs the DMQC-PCM   software and generate the output plots, model and class labels.
+  
+- *ow_calibration_pcm.m*<br />
+  This Matlab code runs the OWC software including the class labels from the PCM and generates the diagnostic plots.
 
+### DMQC-PCM-Python
+(1 ) Setup configuration files<br />
+All necessary directories, constant values for PCM, and objective mapping parameters which are needed to run both PCM and OWC software can be set in one initial file below. The configurations used are the same as in the DMQC-PCM-main software.  
+-*pcm_ow_config.ini-*
 
-As output you will obtain a txt file including the class labels for each reference profile that can be used in the OWC software. You can find the OWC software version including the PCM option in the **OWC-pcm** folder. To run it, you should modify the *ow_config.txt* file :
+(2) Select floats for analysis and run the codes in software<br />
+The list of WMO numbers of floats which are intended to go through the SO quality assessment needs to be specified in the following code below. This code is also used to run the entire software.<br />
 
-- set the USE_PCM variable to 1;
-- give the path to the classes txt file you have created within the notebook.
-
-OWC will use reference profiles in the same class to compare with the float profiles you want to quality control.
-
-The DMQC-PCM method improves the reference profile selection in OWC, selecting reference profiles that are in the same oceanographic regime as the float profile we want to qualify. It leads to a reduction in the variability of reference profiles.
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/59824937/146352649-bf7c2649-1eff-4f7c-b7dc-fc6ec7e13f2a.jpg" width="600">
-</p>
-
-*Figure 3. Reference profiles (in black) selected for float profiles 77, 78, 79 (in red) using OWC standard selection [a), b) and c)] and using PCM based selection [d), e) and f)], for float 4900136.*
+- *so_dmqc_master.py-*<br />
+In addition to the code from the DMQC-PCM-main, this code is also performing the automatic OWC Python calculations. 
 
 
-You can find a performance assessment and implementation plan of the DMQC-PCM method in (link to the deliverable)
-
-***
-This repository has been developed at the Laboratory for Ocean Physics and Satellite remote sensing, IFREMER, within the framework of the Euro-ArgoRISE project. This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement no 824131. Call INFRADEV-03-2018-2019: Individual support to ESFRI and other world-class research infrastructures.
-
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/59824937/146353099-bcd2bd4e-d310-4807-aee2-9cf24075f0c3.jpg" width="100"/> <img src="https://user-images.githubusercontent.com/59824937/146353157-b45e9943-9643-45d0-bab5-80c22fc2d889.jpg" width="100"/> <img src="https://user-images.githubusercontent.com/59824937/146353317-56b3e70e-aed9-40e0-9212-3393d2e0ddd9.png" width="100"/>
-</p>
