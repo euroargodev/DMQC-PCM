@@ -36,16 +36,17 @@ The list of WMO numbers of floats which are intended to go through the SO qualit
 - *so_dmqc_master.py* <br />
   This Python code (1) retrieves data from the local repository or GDAC (using argopy package), (2) automatically generates the source code for OWC analysis (using   argopy package), (3) runs the BIC function which is estimating the most suitable number of classes for a training dataset to model, (4) runs the DMQC-PCM   software and generate the output plots, model and class labels.
   
-- *ow_calibration_pcm.m*<br />
+- *ow_calibration_pcm.m* <br />
   This Matlab code runs the OWC software including the class labels from the PCM and generates the diagnostic plots.
 
 ### DMQC-PCM-Python
-(1 ) Setup configuration files<br />
+(1 ) Setup configuration files <br />
 All necessary directories, constant values for PCM, and objective mapping parameters which are needed to run both PCM and OWC software can be set in one initial file below. The configurations used are the same as in the DMQC-PCM-main software. <br /> 
--*pcm_ow_config.ini*
+
+- *pcm_ow_config.ini*
 
 (2) Select floats for analysis and run the codes in software<br />
-The list of WMO numbers of floats which are intended to go through the SO quality assessment needs to be specified in the following code below. This code is also used to run the entire software.<br />
+The list of WMO numbers of floats which are intended to go through the SO quality assessment needs to be specified in the following code below. This code is also used to run the entire software. <br />
 
 - *so_dmqc_master.py *<br />
 In addition to the code from the DMQC-PCM-main, this code is also performing the automatic OWC Python calculations. 
