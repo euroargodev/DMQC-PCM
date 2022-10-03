@@ -1,4 +1,4 @@
-# The SO quality assessment tool
+# The Southern Ocean quality assessment tool
 
 *Authors*: Kamila Walicka (kamwal@noc.ac.uk), Clive Neil (clive.neil@noc.ac.uk), Andrea Garcia Juan (andrea.garcia.juan@ifremer.fr), Kevin Balem (kevin.balem@ifremer.fr), Cécile Cabanes (cecile.cabanes@ifremer.fr) and Guillaume Maze (gmaze@ifremer.fr)
 ***
