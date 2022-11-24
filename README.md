@@ -8,7 +8,7 @@ The DMQC-PCM is a new quality control method based on machine learning. It uses 
 The preliminary implementation workflow is structured in some Jupyter Notebooks and a OWC version including the PCM option.
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/59824937/146351682-2aa8c72d-dc2f-4038-b372-44836c3a34b7.png" width="500">
+  <img src="https://user-images.githubusercontent.com/1956032/203730134-c4af6109-e70f-4428-8d4f-09f48804df4d.png" width="500">
 </p>
 
 *Figure 1. Workflow of the preliminary implementation.*
