@@ -2,6 +2,7 @@
 import xarray as xr
 import numpy as np
 import pandas as pd
+import os
 
 import scipy as sp
 from scipy.io import loadmat
@@ -9,6 +10,7 @@ from scipy import interpolate
 
 import copy
 import struct
+import urllib
 
 def get_refdata(float_mat_path, wmo_boxes, ref_path, config, map_pv_use=0):
     """ Get data from argo reference database
@@ -40,7 +42,7 @@ def get_refdata(float_mat_path, wmo_boxes, ref_path, config, map_pv_use=0):
                   mat_dict_float['LAT'].max() + latitude_large + plus_box]
     
     # Read wmo boxes latlon: load txt file
-    WMOboxes_latlon = 'PCM_utils_forDMQC/WMO_boxes_latlon.txt'
+    WMOboxes_latlon = os.path.join(os.path.dirname(__file__), 'WMO_boxes_latlon.txt')
     WMOboxes_latlon = np.loadtxt(WMOboxes_latlon, skiprows=1)
 
     # select boxes
@@ -68,26 +70,26 @@ def get_refdata(float_mat_path, wmo_boxes, ref_path, config, map_pv_use=0):
         # duplicate boxes list
         boxes_list = np.concatenate((boxes_list, boxes_list))
         # start with argo data
-        file_str = 'argo_'
-        folder = '/argo_profiles/'
+        file_str = os.path.split(config['historical_argo_prefix'])[-1]
+        folder = os.path.split(config['historical_argo_prefix'])[0]
     elif argo_data:
-        file_str = 'argo_'
-        folder = '/argo_profiles/'
+        file_str = os.path.split(config['historical_argo_prefix'])[-1]
+        folder = os.path.split(config['historical_argo_prefix'])[0]
     elif ctd_data:
-        file_str = 'ctd_'
-        folder = '/historical_ctd/'
+        file_str = os.path.split(config['historical_ctd_prefix'])[-1]
+        folder = os.path.split(config['historical_ctd_prefix'])[0]
 
     # load from .mat files
     # files loop
     cnt = 0
     iprofiles = 0
     for ifile in boxes_list:
-
-        print(ref_path + folder + file_str + str(int(ifile)) + '.mat')
+        # apath = ref_path + folder + file_str + str(int(ifile)) + '.mat'
+        apath = os.sep.join([config['historical_directory'], folder, file_str + str(int(ifile)) + '.mat'])
+        apath = os.path.normpath(apath)
 
         try:
-            mat_dict_load = sp.io.loadmat(
-                ref_path + folder + file_str + str(int(ifile)) + '.mat')
+            mat_dict_load = sp.io.loadmat(apath)
         except FileNotFoundError:
             print('file not found')
             continue
@@ -148,7 +150,7 @@ def get_refdata(float_mat_path, wmo_boxes, ref_path, config, map_pv_use=0):
                 (mat_dict['ptmp'], mat_dict_load['ptmp']), axis=1)
             mat_dict['sal'] = np.concatenate(
                 (mat_dict['sal'], mat_dict_load['sal']), axis=1)
-            mat_dict['source'][len(mat_dict['source'])                                   :] = mat_dict_load['source']
+            mat_dict['source'][len(mat_dict['source']):] = mat_dict_load['source']
             mat_dict['long'] = np.concatenate(
                 (mat_dict['long'], mat_dict_load['long']), axis=1)
             mat_dict['lat'] = np.concatenate(
@@ -160,8 +162,8 @@ def get_refdata(float_mat_path, wmo_boxes, ref_path, config, map_pv_use=0):
 
         # if ctd + argo
         if ifile == last_file:
-            file_str = 'ctd_'
-            folder = '/historical_ctd/'
+            file_str = os.path.split(config['historical_ctd_prefix'])[-1]
+            folder = os.path.split(config['historical_ctd_prefix'])[0]
 
     # convert from dict to xarray
     ds = xr.Dataset(
@@ -312,50 +314,56 @@ def get_topo_grid(min_long, max_long, min_lat, max_lat):
 
     # Open the binary file
     # TODO: this should use a with statement to avoid holding on to an open handle in the event of an exception
-    elev_file = open('/home6/homedir10/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/lib/m_map1.4/m_map1.4_mod/tbase.int', "rb")  # pylint: disable=consider-using-with
+    # elev_file = open('/home6/homedir10/perso/agarciaj/EARISE/DMQC-PCM/OWC-pcm/matlabow/lib/m_map1.4/m_map1.4_mod/tbase.int', "rb")  # pylint: disable=consider-using-with
     #elev_file = open(os.path.sep.join([config['CONFIG_DIRECTORY'], "tbase.int"]), "rb")  # pylint: disable=consider-using-with
 
-    if decoder[1] > 4319:
-        nlat = int(round(decoder[2] - decoder[3])) + 1  # get the amount of elevation values we need
-        nlgr = int(round(decoder[1] - 4320)) + 1
-        nlgl = int(4320 - decoder[0])
+    # file = os.path.sep.join([config['CONFIG_DIRECTORY'], "tbase.int"])
+    file = os.path.join(".", "tbase.int")
+    if not os.path.exists(file):
+        repo = "https://github.com/ArgoDMQC/matlab_owc"
+        urllib.request.urlretrieve(os.path.join(repo, "blob/master/lib/m_map1.4/m_map1.4_mod/tbase.int?raw=true"),
+                                   file)
 
-        # initialise matrix to hold z values
-        topo_end = np.zeros((nlat, nlgr))
+    with open(file, "rb") as elev_file:
 
-        # decode the file, and get values
-        for i in range(nlat):
-            elev_file.seek((i + decoder[3]) * 360 * 12 * 2)
-            for j in range(nlgr):
-                topo_end[i, j] = struct.unpack('h', elev_file.read(2))[0]
+        if decoder[1] > 4319:
+            nlat = int(round(decoder[2] - decoder[3])) + 1  # get the amount of elevation values we need
+            nlgr = int(round(decoder[1] - 4320)) + 1
+            nlgl = int(4320 - decoder[0])
 
-        topo_beg = np.zeros((nlat, nlgl))
+            # initialise matrix to hold z values
+            topo_end = np.zeros((nlat, nlgr))
 
-        for i in range(nlat):
-            elev_file.seek((i + decoder[3]) * 360 * 12 * 2 + decoder[0] * 2)
-            for j in range(nlgl):
-                topo_beg[i, j] = struct.unpack('h', elev_file.read(2))[0]
+            # decode the file, and get values
+            for i in range(nlat):
+                elev_file.seek((i + decoder[3]) * 360 * 12 * 2)
+                for j in range(nlgr):
+                    topo_end[i, j] = struct.unpack('h', elev_file.read(2))[0]
 
-        topo = np.concatenate([topo_beg, topo_end], axis=1)
-    else:
-        # get the amount of elevation values we need
-        nlat = int(round(decoder[2] - decoder[3])) + 1
-        nlong = int(round(decoder[1] - decoder[0])) + 1
+            topo_beg = np.zeros((nlat, nlgl))
 
-        # initialise matrix to hold z values
-        topo = np.zeros((nlat, nlong))
+            for i in range(nlat):
+                elev_file.seek((i + decoder[3]) * 360 * 12 * 2 + decoder[0] * 2)
+                for j in range(nlgl):
+                    topo_beg[i, j] = struct.unpack('h', elev_file.read(2))[0]
 
-        # decode the file, and get values
-        for i in range(nlat):
-            elev_file.seek((i + decoder[3]) * 360 * 12 * 2 + decoder[0] * 2)
-            for j in range(nlong):
-                topo[i, j] = struct.unpack('h', elev_file.read(2))[0]
+            topo = np.concatenate([topo_beg, topo_end], axis=1)
+        else:
+            # get the amount of elevation values we need
+            nlat = int(round(decoder[2] - decoder[3])) + 1
+            nlong = int(round(decoder[1] - decoder[0])) + 1
 
-    # make the grid
-    longs, lats = np.meshgrid(lgs, lts)
+            # initialise matrix to hold z values
+            topo = np.zeros((nlat, nlong))
 
-    # close the file
-    elev_file.close()
+            # decode the file, and get values
+            for i in range(nlat):
+                elev_file.seek((i + decoder[3]) * 360 * 12 * 2 + decoder[0] * 2)
+                for j in range(nlong):
+                    topo[i, j] = struct.unpack('h', elev_file.read(2))[0]
+
+        # make the grid
+        longs, lats = np.meshgrid(lgs, lts)
 
     return topo, longs, lats
 
