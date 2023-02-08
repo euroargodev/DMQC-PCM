@@ -596,7 +596,6 @@ class Plotter:
         land_feature = cfeature.NaturalEarthFeature(
             category='physical', name='land', scale='50m', facecolor=[0.9375, 0.9375, 0.859375])
         ax.add_feature(land_feature, edgecolor='black')
-        title_str = '$\\bf{Spatial\\ ditribution\\ of\\ classes\\ (CTD\\ database)}$'
         ax.set_title(title_str)
         fig.canvas.draw()
         fig.tight_layout()
