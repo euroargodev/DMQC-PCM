@@ -39,3 +39,9 @@ dependencies:
   - flake8=4.0.1
   - pytest-cov=3.0.0
   - pytest-env=0.6.2
+
+  - pip:
+    - git+https://github.com/obidam/pyxpcm.git@master
+    - git+https://github.com/euroargodev/argopy.git@master
+    - git+https://github.com/euroargodev/argodmqc_owc.git@master
+
