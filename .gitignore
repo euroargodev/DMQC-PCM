@@ -129,3 +129,9 @@ dmypy.json
 .pyre/
 
 .idea/
+
+# ignore all files in output folder and subfolders
+output/**/*
+# but keep the folders themselves
+!output/**/
+!output/**/.gitkeep
