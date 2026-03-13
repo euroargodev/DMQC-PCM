@@ -1,10 +1,12 @@
 #!/usr/bin/env python
+import argparse
 import configparser
 import logging
 import os
 import sys
 from pathlib import Path
 
+import argopy
 import xarray as xr
 from argodmqc_owc.pyowc import calibration, configuration, plot
 from argodmqc_pcm.PCM_utils_forDMQC.BIC_calculation import plot_BIC
@@ -12,8 +14,6 @@ from argodmqc_pcm.PCM_utils_forDMQC.classification import applyBIC, applyPCM, lo
 from argodmqc_pcm.PCM_utils_forDMQC.config_context import config_context
 from argopy import DataFetcher as ArgoDataFetcher
 from argopy.errors import DataNotFound, NetCDF4FileNotFoundError
-
-float_list = [3900070]  # run all the way through
 
 
 class SO_DMQC:
@@ -47,6 +47,32 @@ class SO_DMQC:
             },
         }
 
+    def _should_regenerate_cache(self, cache_file: Path, wong_matrix_path: Path, logger) -> bool:
+        """Regenerate cache if it doesn't exist or source data is newer."""
+        runtime_logger = logger or logging.getLogger(__name__)
+        if not cache_file.exists():
+            runtime_logger.info("Cache file does not exist, will generate.")
+            return True
+
+        cache_mtime = cache_file.stat().st_mtime
+        source_mtime = wong_matrix_path.stat().st_mtime
+
+        if source_mtime > cache_mtime:
+            runtime_logger.info(
+                "Source data newer than cache (source: %s, cache: %s), regenerating.",
+                datetime.fromtimestamp(source_mtime),
+                datetime.fromtimestamp(cache_mtime),
+            )
+            return True
+
+        cache_size = cache_file.stat().st_size
+        if cache_size < 1024:  # suspiciously small — likely corrupt/empty
+            runtime_logger.warning("Cache file suspiciously small (%d bytes), regenerating.", cache_size)
+            return True
+
+        runtime_logger.info("Cache is up to date (%d bytes), loading from cache.", cache_size)
+        return False
+
     def run(self):
         # process each float in the list of WMO numbers in turn
         with config_context(self._full_config):
@@ -55,8 +81,7 @@ class SO_DMQC:
 
                 log_file_path = f"{self.LOGS_DIR}{float_WMO}_runtime_log.txt"
                 logger_name = f"{float_WMO}_runtime_logger"
-                setupLogger(logger_name=logger_name, log_file=log_file_path, level=logging.INFO)
-                runtime_logger = logging.getLogger(logger_name)
+                runtime_logger = setupLogger(logger_name=logger_name, log_file=log_file_path, level=logging.INFO)
                 info_message = "starting processing"
                 runtime_logger.info(f"{info_message} WMO number: {float_WMO}")
                 runtime_logger.info(info_message)
@@ -66,17 +91,20 @@ class SO_DMQC:
 
                 if not os.path.exists(wong_matrix_path):
                     try:
-                        ds = (
-                            ArgoDataFetcher(
-                                src="localftp",
-                                local_ftp=self.PCM_CONFIG["GDAC_MIRROR"],
-                                cache=True,
-                                mode="expert",
-                            )
-                            .float(float_WMO)
-                            .load()
-                            .data
-                        )
+                        data_src = self.PCM_CONFIG.get("SRC", "gdac").lower()
+                        if data_src == "localftp":
+                            # local copy of GDAC
+                            with argopy.set_options(src="gdac", gdac=self.PCM_CONFIG["GDAC_MIRROR"], mode="expert"):
+                                ds = ArgoDataFetcher().float(float_WMO).load().data
+
+                        elif data_src == "gdac":
+                            with argopy.set_options(src="gdac", gdac=self.PCM_CONFIG["GDAC"], mode="expert"):
+                                ds = ArgoDataFetcher().float(float_WMO).load().data
+
+                        else:
+                            # erddap, argovis etc
+                            with argopy.set_options(src=data_src, mode="expert"):
+                                ds = ArgoDataFetcher().float(float_WMO).load().data
 
                         ds.argo.create_float_source(self.FLOAT_SOURCE_RAW)
                         ds.argo.create_float_source(self.FLOAT_SOURCE_ADJUSTED, force="adjusted")
@@ -87,8 +115,8 @@ class SO_DMQC:
                         runtime_logger.info(error_message)
                         logging.shutdown()
                         continue
-                    except ValueError:
-                        error_message = "XXX ValueError: check whether WMO is valid"
+                    except ValueError as e:
+                        error_message = f"XXX ValueError: check whether WMO is valid :{e!s}"
                         print(error_message + " - skipping")
                         runtime_logger.info(error_message)
                         logging.shutdown()
@@ -139,12 +167,8 @@ class SO_DMQC:
                     runtime_logger.info(info_message)
 
                     # Starting the PCM analysis
-                    # ds = loadReferenceData(float_mat_path=wong_matrix_path, ow_config=self.OWC_CONFIG)
-                    cache_file = Path(f"{self.CACHE_DIR}/reference_data.nc")
-                    if cache_file.exists():
-                        runtime_logger.info("Loading cached dataset...")
-                        ds = xr.open_dataset(cache_file)
-                    else:
+                    cache_file = Path(f"{self.CACHE_DIR}/cache_{float_WMO}.nc")
+                    if self._should_regenerate_cache(cache_file, Path(wong_matrix_path), logger=runtime_logger):
                         runtime_logger.info("Computing reference dataset...")
                         ds = loadReferenceData(
                             float_mat_path=wong_matrix_path,
@@ -153,14 +177,9 @@ class SO_DMQC:
                         ds = ds.compute()  # ensure no lazy graph
                         ds.to_netcdf(cache_file)
                         runtime_logger.info("Written file exists? %s", cache_file.exists())
-                        exists = cache_file.exists()
-                        size = cache_file.stat().st_size if exists else "N/A"
-
-                        runtime_logger.info(
-                            "Cache exists: %s | Size: %s bytes",
-                            exists,
-                            size,
-                        )
+                    else:
+                        runtime_logger.info("Loading cached dataset...")
+                        ds = xr.open_dataset(cache_file)
 
                     info_message = ">>> applying BIC"
                     print(info_message)
@@ -288,6 +307,11 @@ class SO_DMQC:
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Run SO-DMQC assessment.")
+    parser.add_argument("floats", metavar="WMO", type=int, nargs="*", help="One or more WMO float numbers")
+
+    args = parser.parse_args()
+    float_list = args.floats
     # turn off console warnings
     if not sys.warnoptions:
         import warnings

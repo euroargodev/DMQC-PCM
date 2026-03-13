@@ -58,15 +58,8 @@ In addition to the code from the DMQC-PCM-main, this code is also performing the
 
 Dependencies for the **DMQC-PCM-Python** software are managed using [Poetry](https://python-poetry.org/), which handles virtual environment creation and package installation automatically.
 
+
 **Prerequisites:** Poetry must be installed. See the [Poetry installation guide](https://python-poetry.org/docs/#installation) if needed.
-
----
-
----
-
-### How to use Poetry to run DMQC-PCM-Python
-
-Dependencies for the **DMQC-PCM-Python** software are managed using [Poetry](https://python-poetry.org/), which handles virtual environment creation and package installation automatically.
 
 ---
 
@@ -108,6 +101,15 @@ poetry --version
 ```
 
 3. Run the software:
+   Use poetry run followed by the WMO number of the float you wish to analyze:
 ```
-   poetry run python so_dmqc_master.py
+poetry run python so_dmqc_master.py 1902081
+```
+### Operational Use on Different Drives:
+You do not need to move Poetry to your operational drive. You can run it from any location. If you wish to keep all project dependencies on a specific drive (to avoid copying files across or using space in /home), configure Poetry to store the environment locally within the project folder:
+
+```
+cd </path/to/your/operational/drive>/DMQC-PCM-Python
+poetry config virtualenvs.in-project true
+poetry install
 ```

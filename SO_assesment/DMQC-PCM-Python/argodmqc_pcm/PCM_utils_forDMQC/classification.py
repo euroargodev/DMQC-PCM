@@ -27,6 +27,7 @@ def setupLogger(logger_name, log_file, level=logging.INFO):
 
     l.setLevel(level)
     l.addHandler(fileHandler)
+    return l
 
 
 def loadReferenceData(float_mat_path, ow_config):
