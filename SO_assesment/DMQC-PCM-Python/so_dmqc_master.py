@@ -106,8 +106,16 @@ class SO_DMQC:
                             with argopy.set_options(src=data_src, mode="expert"):
                                 ds = ArgoDataFetcher().float(float_WMO).load().data
 
-                        ds.argo.create_float_source(self.FLOAT_SOURCE_RAW)
-                        ds.argo.create_float_source(self.FLOAT_SOURCE_ADJUSTED, force="adjusted")
+                        # ds.argo.create_float_source(self.FLOAT_SOURCE_RAW)
+                        # ds.argo.create_float_source(self.FLOAT_SOURCE_ADJUSTED, force="adjusted")
+                        try:
+                            # Attempt to create source using Adjusted data
+                            ds.argo.create_float_source("outputs/owc/float_calib/adjusted", force="adjusted")
+                            print("Success: Adjusted source created.")
+                        except argopy.errors.NoDataLeft:
+                            print("Warning: No adjusted data found. Falling back to RAW data...")
+                            # Create source using Raw data instead
+                            ds.argo.create_float_source("outputs/owc/float_calib/raw")
 
                     except DataNotFound:
                         error_message = "XXX DataNotFound error: due to QC flags (check netCDF file) - skipping"
