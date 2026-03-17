@@ -45,6 +45,9 @@ All necessary directories, constant values for PCM, and objective mapping parame
 
 - *pcm_ow_config.ini*
 
+👉 In the config there is a configuration called 'ROLE'. By default it is set as 'auditor'. The only other role can be 'operational'
+When role is auditor the app will try to retrive adjusted and raw data where operational will only pull raw data to analyse.
+
 (2) Select floats for analysis and run the codes in software<br />
 The list of WMO numbers of floats which are intended to go through the SO quality assessment needs to be specified in the following code below. This code is also used to run the entire software. <br />
 

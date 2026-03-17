@@ -519,15 +519,25 @@ def calc_piecewisefit(float_name, system_config):
         # In SciPy (1.14.0+) the interp2d function has been completely deleted. It was deprecated for years.
         x_axis = x_grid[0, :]
         y_axis = y_grid[:, 0]
-        grid_interp = RegularGridInterpolator((y_axis, x_axis), elev, method="linear")
-        # grid_interp = interpolate.interp2d(x_grid[0, :], y_grid[:, 0], elev, kind="linear")
+        grid_interp = RegularGridInterpolator(
+            (y_axis, x_axis),
+            elev,
+            method="linear",
+            bounds_error=False,
+            fill_value=np.nan,
+        )
 
-        z_grid = []
-        for i in range(long_1[0].__len__()):
-            z_grid.append(grid_interp(long_1[0][i], lat[0][i]))
+        # Stack points (lat, lon)
+        points = np.column_stack((lat.flatten(), long_1.flatten()))
+        z_grid = grid_interp(points)
+        # apply sign
+        z_grid = -z_grid
+        # Final structure:
+        long_1 = np.asarray(long_1).reshape(-1)
+        lat = np.asarray(lat).reshape(-1)
+        z_grid = np.asarray(z_grid).reshape(-1)
 
-        z_grid = -np.array(z_grid)
-        coord_float = np.column_stack((long.T, lat.T, z_grid))
+        coord_float = np.column_stack((long_1, lat, z_grid))
 
     # load the calibration settings
     float_calseries_path = os.path.join(

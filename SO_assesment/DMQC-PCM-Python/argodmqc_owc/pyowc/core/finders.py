@@ -1,122 +1,152 @@
-""" Functions dedicated to search
+"""Functions dedicated to search
 
-        Parameters
-        ----------
+Parameters
+----------
 
-        Returns
-        -------
+Returns
+-------
 
 """
 
 import copy
 import math
+
 import numpy as np
 import pandas as pd
-from scipy.interpolate import interpolate
+from scipy.interpolate import interp1d
 
 from ..utilities import potential_vorticity, spatial_correlation
 
 
-#pylint: disable=too-many-arguments
-def find_ellipse(data_long, ellipse_long, ellipse_size_long,
-                 data_lat, ellipse_lat, ellipse_size_lat,
-                 phi, data_pv=0, ellipse_pv=0):
-    """ Finds whether a data point exists inside an ellipse
+# pylint: disable=too-many-arguments
+def find_ellipse(
+    data_long,
+    ellipse_long,
+    ellipse_size_long,
+    data_lat,
+    ellipse_lat,
+    ellipse_size_lat,
+    phi,
+    data_pv=0,
+    ellipse_pv=0,
+):
+    """Finds whether a data point exists inside an ellipse
 
-        Calculates whether or not a value exists inside of an ellipse
-        of specifed size. If the answer is <1, it exists in the ellipse
+    Calculates whether or not a value exists inside of an ellipse
+    of specifed size. If the answer is <1, it exists in the ellipse
 
-        Used to belong in "find_besthist", but was refactored and removed
-        to its own file for neatness.
+    Used to belong in "find_besthist", but was refactored and removed
+    to its own file for neatness.
 
-        Parameters
-        ----------
-        data_long: longitude of the data point
-        ellipse_long: longitude of the centre of the ellipse
-        ellipse_size_long: size of the ellipse in the longitudinal direction
-        data_lat: latitude of the data point
-        ellipse_lat: latitude of the centre of the ellipse
-        ellipse_size_lat: size of the ellipse in the latitudinal direction
-        phi: cross-isobath scale for ellipse
-        data_pv: potential vorticity of the data point
-        ellipse_pv: potential vorticity of the centre of the ellipse
+    Parameters
+    ----------
+    data_long: longitude of the data point
+    ellipse_long: longitude of the centre of the ellipse
+    ellipse_size_long: size of the ellipse in the longitudinal direction
+    data_lat: latitude of the data point
+    ellipse_lat: latitude of the centre of the ellipse
+    ellipse_size_lat: size of the ellipse in the latitudinal direction
+    phi: cross-isobath scale for ellipse
+    data_pv: potential vorticity of the data point
+    ellipse_pv: potential vorticity of the centre of the ellipse
 
-        Returns
-        -------
-        float. If <1, it exists inside the ellipse
+    Returns
+    -------
+    float. If <1, it exists inside the ellipse
+
     """
-
     total_pv = 0
     if data_pv != 0 and ellipse_pv != 0:
-        total_pv = (ellipse_pv - data_pv) / math.sqrt(ellipse_pv ** 2 + data_pv ** 2) / phi
+        total_pv = (ellipse_pv - data_pv) / math.sqrt(ellipse_pv**2 + data_pv**2) / phi
 
-    ellipse = math.sqrt((data_long - ellipse_long) ** 2 / (ellipse_size_long * 3) ** 2 + \
-                        (data_lat - ellipse_lat) ** 2 / (ellipse_size_lat * 3) ** 2 + \
-                        total_pv ** 2)
+    ellipse = math.sqrt(
+        (data_long - ellipse_long) ** 2 / (ellipse_size_long * 3) ** 2
+        + (data_lat - ellipse_lat) ** 2 / (ellipse_size_lat * 3) ** 2
+        + total_pv**2,
+    )
 
     return ellipse
 
 
-#pylint: disable=fixme
+# pylint: disable=fixme
 # TODO: ARGODEV-155 or github in argodmqc_owc/issues/27
 # Refactor this code to take objects and dictionaries instead of a ludicrous amount of arguments
 # In fact, this function still requires a serious refactor, because it is doing far too much
-#pylint: disable=too-many-arguments
-#pylint: disable=too-many-locals
-#pylint: disable=too-many-branches
-#pylint: disable=too-many-statements
+# pylint: disable=too-many-arguments
+# pylint: disable=too-many-locals
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-statements
 
 
-def find_besthist(grid_lat, grid_long, grid_dates, grid_z_value, lat, long, date, z_value,
-                  latitude_large, latitude_small, longitude_large, longitude_small,
-                  phi_large, phi_small, age_large, age_small, map_pv_use, max_casts, use_pcm, pcm_file):
-    """ Find correlated points in historical data
+def find_besthist(
+    grid_lat,
+    grid_long,
+    grid_dates,
+    grid_z_value,
+    lat,
+    long,
+    date,
+    z_value,
+    latitude_large,
+    latitude_small,
+    longitude_large,
+    longitude_small,
+    phi_large,
+    phi_small,
+    age_large,
+    age_small,
+    map_pv_use,
+    max_casts,
+    use_pcm,
+    pcm_file,
+):
+    """Find correlated points in historical data
 
-        Finds ln_max_casts number of unique historical data points that are most
-        strongly correlated with the float profile being processed
+    Finds ln_max_casts number of unique historical data points that are most
+    strongly correlated with the float profile being processed
 
-        Find ln_max_casts unique historical points that are most strongly correlated
-        with the float profile
+    Find ln_max_casts unique historical points that are most strongly correlated
+    with the float profile
 
-        Rewritten in December 2006 to only use latitude, longitude, data, and water
-        depth as arguments and to return index of the station list
+    Rewritten in December 2006 to only use latitude, longitude, data, and water
+    depth as arguments and to return index of the station list
 
-        N.B. Change to code on the xx/06/2013: add age_large when computing
-        correlation_large
-        - C Cabanes
+    N.B. Change to code on the xx/06/2013: add age_large when computing
+    correlation_large
+    - C Cabanes
 
-        N.B Change during conversion to python on the 31/10/2019: Potential Vorticity,
-        Correlation, and ellipse are calculated multiple times, so I moved them into
-        their own function. These functions can be vectorised using the numpy library
-        (numpy.vectorize(function)) to use the functions on arrays.
-        - Edward Small
+    N.B Change during conversion to python on the 31/10/2019: Potential Vorticity,
+    Correlation, and ellipse are calculated multiple times, so I moved them into
+    their own function. These functions can be vectorised using the numpy library
+    (numpy.vectorize(function)) to use the functions on arrays.
+    - Edward Small
 
-        Parameters
-        ----------
-        grid_lat: array of latitudes of historical data
-        grid_long: array of longitudes of historical data
-        grid_dates: array of ages of the historical data
-        grid_z_value: array of depths of the historical data
-        lat: latitude of the float profile
-        long: longitude of the float profile
-        date: age of the float profile
-        z_value: depth of the float profile
-        latitude_large: latitude of large ellipse
-        latitude_small: latitude of small ellipse
-        longitude_large: longitude of large ellipse
-        longitude_small: longitude of small ellipse
-        phi_large: cross-isobath scale for large ellipse
-        phi_small: cross-isobath scale for small ellipse
-        age_large: age of data in large ellipse
-        age_small: age of data in small ellipse
-        map_pv_use: flag for whether to use potential vorticity (see load_configuration.py)
-        max_casts: maximum number of data points wanted
+    Parameters
+    ----------
+    grid_lat: array of latitudes of historical data
+    grid_long: array of longitudes of historical data
+    grid_dates: array of ages of the historical data
+    grid_z_value: array of depths of the historical data
+    lat: latitude of the float profile
+    long: longitude of the float profile
+    date: age of the float profile
+    z_value: depth of the float profile
+    latitude_large: latitude of large ellipse
+    latitude_small: latitude of small ellipse
+    longitude_large: longitude of large ellipse
+    longitude_small: longitude of small ellipse
+    phi_large: cross-isobath scale for large ellipse
+    phi_small: cross-isobath scale for small ellipse
+    age_large: age of data in large ellipse
+    age_small: age of data in small ellipse
+    map_pv_use: flag for whether to use potential vorticity (see load_configuration.py)
+    max_casts: maximum number of data points wanted
 
-        Returns
-        -------
-        indices of historical data to use
+    Returns
+    -------
+    indices of historical data to use
+
     """
-
     # make sure arrays are 1 dimensional
     grid_lat = grid_lat.flatten()
     grid_long = grid_long.flatten()
@@ -136,8 +166,17 @@ def find_besthist(grid_lat, grid_long, grid_dates, grid_z_value, lat, long, date
     # calculate ellipse
     find_ellipse_vec = np.vectorize(find_ellipse)
 
-    ellipse = find_ellipse_vec(grid_long, long, longitude_large, grid_lat, lat, latitude_large,
-                               phi_large, pv_hist, pv_float)
+    ellipse = find_ellipse_vec(
+        grid_long,
+        long,
+        longitude_large,
+        grid_lat,
+        lat,
+        latitude_large,
+        phi_large,
+        pv_hist,
+        pv_float,
+    )
 
     # find points that lie within the ellipse
     hist_long = []
@@ -154,12 +193,11 @@ def find_besthist(grid_lat, grid_long, grid_dates, grid_z_value, lat, long, date
     index = index_ellipse
     # check to see if too many data points were found
     if index_ellipse.__len__() > max_casts:
-
         # uses pseudo-random numbers so the same random numbers are selected for each run
         np.random.seed(index_ellipse.__len__())
 
         # pick max_casts/3 random points
-        index_rand = np.round(np.random.rand(math.ceil(max_casts / 3)) * (index_ellipse.__len__())-1)
+        index_rand = np.round(np.random.rand(math.ceil(max_casts / 3)) * (index_ellipse.__len__()) - 1)
         index_rand[index_rand == -1] = 0
 
         # make sure the points are all unique
@@ -175,7 +213,7 @@ def find_besthist(grid_lat, grid_long, grid_dates, grid_z_value, lat, long, date
         remain_hist_z_value = []
         remain_hist_dates = []
 
-        for i in range(0, len(hist_lat)):
+        for i in range(len(hist_lat)):
             if i not in index_rand:
                 index_remain.append(i)
 
@@ -191,10 +229,20 @@ def find_besthist(grid_lat, grid_long, grid_dates, grid_z_value, lat, long, date
 
         # calculate the large spatial correlation for each point
         spatial_correlation_vec = np.vectorize(spatial_correlation)
-        correlation_large = spatial_correlation_vec(remain_hist_long, long, longitude_large,
-                                                    remain_hist_lat, lat, latitude_large,
-                                                    remain_hist_dates, date, age_large,
-                                                    pv_hist, pv_float, phi_large)
+        correlation_large = spatial_correlation_vec(
+            remain_hist_long,
+            long,
+            longitude_large,
+            remain_hist_lat,
+            lat,
+            latitude_large,
+            remain_hist_dates,
+            date,
+            age_large,
+            pv_hist,
+            pv_float,
+            phi_large,
+        )
 
         correlation_large_sorted = correlation_large.argsort()
 
@@ -212,7 +260,7 @@ def find_besthist(grid_lat, grid_long, grid_dates, grid_z_value, lat, long, date
         # work out how many large spatial data points needed
         lsegment2 = math.ceil(max_casts / 3) + math.ceil(max_casts / 3) - index_rand.__len__()
 
-        index_z = np.arange(lsegment2, int(len(z_remain_long)))
+        index_z = np.arange(lsegment2, len(z_remain_long))
 
         # remove the currently selected indices again
         s_remain_hist_lat = []
@@ -229,17 +277,23 @@ def find_besthist(grid_lat, grid_long, grid_dates, grid_z_value, lat, long, date
         # sort the remaining points by short spatial and temporal correlations
         # if using potential vorticity, calculate it
         if map_pv_use == 1:
-            pv_hist = potential_vorticity_vec(
-                s_remain_hist_lat, s_remain_hist_z_value)
+            pv_hist = potential_vorticity_vec(s_remain_hist_lat, s_remain_hist_z_value)
 
         # calculate the small spatial correlation for each point
-        correlation_small = spatial_correlation_vec(s_remain_hist_long,
-                                                    long, longitude_small,
-                                                    s_remain_hist_lat,
-                                                    lat, latitude_small,
-                                                    s_remain_hist_dates,
-                                                    date, age_small,
-                                                    pv_hist, pv_float, phi_small)
+        correlation_small = spatial_correlation_vec(
+            s_remain_hist_long,
+            long,
+            longitude_small,
+            s_remain_hist_lat,
+            lat,
+            latitude_small,
+            s_remain_hist_dates,
+            date,
+            age_small,
+            pv_hist,
+            pv_float,
+            phi_small,
+        )
 
         correlation_small_sorted = correlation_small.argsort()
 
@@ -294,27 +348,27 @@ def find_besthist(grid_lat, grid_long, grid_dates, grid_z_value, lat, long, date
             rand_small = np.concatenate((index_rand_ellipse, index_small_spatial))
             large_small = np.concatenate((index_large_spatial, index_small_spatial))
             print("unique points: ", np.unique(index).__len__())
-            print("unique rand large: ", rand_large.__len__(),
-                  " : ", np.unique(rand_large).__len__())
-            print("unique rand small: ", rand_small.__len__(),
-                  " : ", np.unique(rand_small).__len__())
-            print("unique large small: ", large_small.__len__(),
-                  " : ", np.unique(large_small).__len__())
+            print("unique rand large: ", rand_large.__len__(), " : ", np.unique(rand_large).__len__())
+            print("unique rand small: ", rand_small.__len__(), " : ", np.unique(rand_small).__len__())
+            print("unique large small: ", large_small.__len__(), " : ", np.unique(large_small).__len__())
 
     # ensure that the index is integers
     index = index.flatten()
     index = index.astype(int)
 
     if use_pcm:
-
         header_rows = 1
-        class_matrix_df = pd.read_csv(pcm_file, skiprows=header_rows, sep=' ',
-                                      skipinitialspace=True,
-                                      names=['source', 'lat', 'long', 'label'])
+        class_matrix_df = pd.read_csv(
+            pcm_file,
+            skiprows=header_rows,
+            sep=" ",
+            skipinitialspace=True,
+            names=["source", "lat", "long", "label"],
+        )
 
-        class_lats = class_matrix_df['lat']
-        class_lons = class_matrix_df['long']
-        class_values = class_matrix_df['label']
+        class_lats = class_matrix_df["lat"]
+        class_lons = class_matrix_df["long"]
+        class_values = class_matrix_df["label"]
 
         hist_long = grid_long[index]
         hist_lat = grid_lat[index]
@@ -329,53 +383,53 @@ def find_besthist(grid_lat, grid_long, grid_dates, grid_z_value, lat, long, date
             if hist_long[i] >= 360:
                 hist_long_new[i] = hist_long[i] - 360
 
-        profile_class = list(class_values[(abs(class_lats-lat) < 1e-3) & \
-                                  (abs(class_lons-long_new) < 1e-3)])
+        profile_class = list(class_values[(abs(class_lats - lat) < 1e-3) & (abs(class_lons - long_new) < 1e-3)])
 
         if profile_class:
             profile_class = profile_class[0]
 
-        class_elip = np.full(len(hist_lat), fill_value=np.NaN)
+        class_elip = np.full(len(hist_lat), fill_value=np.nan)
 
         for iprof in range(len(class_lats)):
-
-            iclass_logical = (abs(hist_lat-class_lats[iprof]) < 1e-3) & \
-                             (abs(hist_long_new-class_lons[iprof]) < 1e-3)
+            iclass_logical = (abs(hist_lat - class_lats[iprof]) < 1e-3) & (
+                abs(hist_long_new - class_lons[iprof]) < 1e-3
+            )
 
             if np.sum(iclass_logical) == 1:
                 class_elip[iclass_logical] = list(class_values)[iprof]
 
-        print(f'profiles in ellipse: {len(hist_lat)}')
-        print(f'profiles in class.txt: {np.sum(~np.isnan(class_elip))}')
+        print(f"profiles in ellipse: {len(hist_lat)}")
+        print(f"profiles in class.txt: {np.sum(~np.isnan(class_elip))}")
 
         if profile_class:
-            print(f'profiles in the same class: {sum(class_elip == profile_class)}')
+            print(f"profiles in the same class: {sum(class_elip == profile_class)}")
 
             if sum(class_elip == profile_class) == 0:
-                print('There is not profiles with the same class in the ellipse. All profiles in ellipse are used')
+                print("There is not profiles with the same class in the ellipse. All profiles in ellipse are used")
             else:
                 index = index[class_elip == profile_class]
 
         else:
-            print('Profile is not classified. All profiles in ellipse are used')
+            print("Profile is not classified. All profiles in ellipse are used")
 
     return index
 
 
 def nearest_neighbour(x_axis, y_axis, table, x_input, y_input):
-    """  Find the nearest neighbour
+    """Find the nearest neighbour
 
-        Parameters
-        ----------
-        x_axis: x-axis values
-        y_axis: y-axis values
-        table: grid data
-        x_input: data to interpolate
-        y_input: data to interpolate
+    Parameters
+    ----------
+    x_axis: x-axis values
+    y_axis: y-axis values
+    table: grid data
+    x_input: data to interpolate
+    y_input: data to interpolate
 
-        Returns
-        -------
-        nearest neighbour
+    Returns
+    -------
+    nearest neighbour
+
     """
     x_output = np.abs(x_axis - x_input).argmin()
     y_output = np.abs(y_axis - y_input).argmin()
@@ -383,76 +437,78 @@ def nearest_neighbour(x_axis, y_axis, table, x_input, y_input):
 
 
 def find_25boxes(pn_float_long, pn_float_lat, pa_wmo_boxes):
-    """ Find WMO boxes centered on profile
+    """Find WMO boxes centered on profile
 
-        Finds the 5 x 5 = 25 WMO boxes with the float profile in the centre
-        The WMO box numbers, between 90N and 90S are stored in /data/constants/wmo_boxes.mat
-        The structure of the matrix is as such:
+    Finds the 5 x 5 = 25 WMO boxes with the float profile in the centre
+    The WMO box numbers, between 90N and 90S are stored in /data/constants/wmo_boxes.mat
+    The structure of the matrix is as such:
 
-        Column 1 - box number
-        Column 2 - Do we have CTD data (1 = yes, 0 = no)
-        Column 3 - Do we have bottle data (1 = yes, 0 = no)
-        Column 4 - do we have Argo data (1 = yes, 0 = no)
+    Column 1 - box number
+    Column 2 - Do we have CTD data (1 = yes, 0 = no)
+    Column 3 - Do we have bottle data (1 = yes, 0 = no)
+    Column 4 - do we have Argo data (1 = yes, 0 = no)
 
-        N.B. Change to code on the xx/11/2014: extend la_x so interp2 does not
-        think that longitudes in the range [5W 5E] are out-of-bound with matlab
-        version >=R2012b - C Cabanes
+    N.B. Change to code on the xx/11/2014: extend la_x so interp2 does not
+    think that longitudes in the range [5W 5E] are out-of-bound with matlab
+    version >=R2012b - C Cabanes
 
-        N.B. Change during conversion to python on the 01/10/2019. Struggled to
-        find an interpolation function that exactly mirrored Matlab's, so
-        I wrote my own - Edward Small
+    N.B. Change during conversion to python on the 01/10/2019. Struggled to
+    find an interpolation function that exactly mirrored Matlab's, so
+    I wrote my own - Edward Small
 
-        First, we need to create a look-up table in the form of
+    First, we need to create a look-up table in the form of
 
-        .. code-block::
+    .. code-block::
 
-               | -5    5   15  ...  355  365
-           ----|----------------------------
-            85 | 631   1   19  ...  631   1
-            75 | 632   2   20  ...  632   2
-            65 | 633   3   21  ...  633   3
-            ...|...   ...  ... ...  ...  ...
-            -85| 648   18  36  ...  648   18
+           | -5    5   15  ...  355  365
+       ----|----------------------------
+        85 | 631   1   19  ...  631   1
+        75 | 632   2   20  ...  632   2
+        65 | 633   3   21  ...  633   3
+        ...|...   ...  ... ...  ...  ...
+        -85| 648   18  36  ...  648   18
 
-        ..
+    ..
 
-         We do this using 3 matrices:
+     We do this using 3 matrices:
 
-         - A 1-D matrix for the x axis (la_lookup_x)
-         - A 1-D matrix for the y axis (la_lookup_y)
-         - A 2-D matrix for the grid data (la_lookup_no)
+     - A 1-D matrix for the x axis (la_lookup_x)
+     - A 1-D matrix for the y axis (la_lookup_y)
+     - A 2-D matrix for the grid data (la_lookup_no)
 
-        Parameters
-        ----------
-        pn_float_long: float longitude, float
-        pn_float_lat: float latitude, float
-        pa_wmo_boxes: wmo boxes (explained above), data frame
+    Parameters
+    ----------
+    pn_float_long: float longitude, float
+    pn_float_lat: float latitude, float
+    pa_wmo_boxes: wmo boxes (explained above), data frame
 
-        Returns
-        -------
-        (explained above), 25x4 matrix
+    Returns
+    -------
+    (explained above), 25x4 matrix
+
     """
-
     la_lookup_x = np.arange(-5, 366, 10, int)
 
     la_lookup_y = np.arange(85, -86, -10).transpose()
 
     la_lookup_no = np.full((1, 648), np.arange(1, 649), dtype=int).reshape(36, 18)
     la_lookup_no = np.insert(
-        la_lookup_no, 0, la_lookup_no[la_lookup_no.shape[0] - 1]
+        la_lookup_no,
+        0,
+        la_lookup_no[la_lookup_no.shape[0] - 1],
     ).reshape(37, 18)
     la_lookup_no = np.insert(la_lookup_no, 666, la_lookup_no[1]).reshape(38, 18).transpose()
 
     # Set up longitudinal and latitudinal values
     ln_x = []
     ln_y = []
-    ln_x.append(pn_float_long + .01)
+    ln_x.append(pn_float_long + 0.01)
     ln_x.append(pn_float_long + 10.01)
     ln_x.append(pn_float_long - 9.99)
     ln_x.append(pn_float_long + 20.01)
     ln_x.append(pn_float_long - 19.99)
 
-    ln_y.append(pn_float_lat + .01)
+    ln_y.append(pn_float_lat + 0.01)
     ln_y.append(pn_float_lat + 10.01)
     ln_y.append(pn_float_lat - 9.99)
     ln_y.append(pn_float_lat + 20.01)
@@ -476,54 +532,52 @@ def find_25boxes(pn_float_long, pn_float_lat, pa_wmo_boxes):
 
     if not np.isnan(pn_float_long) and not np.isnan(pn_float_lat):
         ln_i = []
-        for i in range(0, 5):
-            for j in range(0, 5):
+        for i in range(5):
+            for j in range(5):
                 ln_i.append(
-                    nearest_neighbour(la_lookup_x, la_lookup_y, la_lookup_no, ln_x[j], ln_y[i])
+                    nearest_neighbour(la_lookup_x, la_lookup_y, la_lookup_no, ln_x[j], ln_y[i]),
                 )
 
     else:
         ln_i = np.full(25, np.nan)
 
     pa_wmo_numbers = np.full((25, 4), np.nan)
-    for i in range(0, 25):
+    for i in range(25):
         if not np.isnan(ln_i[i]):
-            pa_wmo_numbers[i] = pa_wmo_boxes.get('la_wmo_boxes')[ln_i[i] - 1]
+            pa_wmo_numbers[i] = pa_wmo_boxes.get("la_wmo_boxes")[ln_i[i] - 1]
 
     return pa_wmo_numbers
 
 
-#pylint:disable=too-many-arguments
-#pylint:disable=too-many-locals
-#pylint:disable=too-many-branches
-#pylint:disable=too-many-statements
-def find_10thetas(sal, ptmp, pres, la_ptmp,
-                  use_theta_lt, use_theta_gt,
-                  use_pres_lt, use_pres_gt, use_percent_gt=0.5):
-    """ Find on which theta levels salinity variance is lowest
+# pylint:disable=too-many-arguments
+# pylint:disable=too-many-locals
+# pylint:disable=too-many-branches
+# pylint:disable=too-many-statements
+def find_10thetas(sal, ptmp, pres, la_ptmp, use_theta_lt, use_theta_gt, use_pres_lt, use_pres_gt, use_percent_gt=0.5):
+    """Find on which theta levels salinity variance is lowest
 
-        Chooses 10 theta levels from the float series for use in the linear fit.
-        These 10 theta levels are the ones with the minimum S variance on theta.
+    Chooses 10 theta levels from the float series for use in the linear fit.
+    These 10 theta levels are the ones with the minimum S variance on theta.
 
-        These 10 theta levels are distinct (ie. they don't repeat each other).
+    These 10 theta levels are distinct (ie. they don't repeat each other).
 
-        Parameters
-        ----------
-        sal: float salinity
-        ptmp: float potential temperature
-        pres: float pressure
-        la_ptmp: mapped potential temperature
-        use_theta_lt: lower bound for potential temperature
-        use_theta_gt: upper bound for potential temperature
-        use_pres_lt: lower bound for pressure
-        use_pres_gt: upper bound for pressure
-        use_percent_gt: use percentage greater than
+    Parameters
+    ----------
+    sal: float salinity
+    ptmp: float potential temperature
+    pres: float pressure
+    la_ptmp: mapped potential temperature
+    use_theta_lt: lower bound for potential temperature
+    use_theta_gt: upper bound for potential temperature
+    use_pres_lt: lower bound for pressure
+    use_pres_gt: upper bound for pressure
+    use_percent_gt: use percentage greater than
 
-        Returns
-        -------
-        Theta levels where salinity varies the least
+    Returns
+    -------
+    Theta levels where salinity varies the least
+
     """
-
     # We only want 10 theta levels
     no_levels = 10
 
@@ -563,8 +617,8 @@ def find_10thetas(sal, ptmp, pres, la_ptmp,
             ptmp[i[0], i[1]] = np.nan
 
     if use_theta_lt.__len__() > 0 and use_theta_gt.__len__() > 0:
-        theta_range_lt = (ptmp < use_theta_gt)
-        theta_range_gt = (ptmp > use_theta_lt)
+        theta_range_lt = ptmp < use_theta_gt
+        theta_range_gt = ptmp > use_theta_lt
 
         if use_theta_lt < use_theta_gt:
             # exclude middle band
@@ -574,7 +628,6 @@ def find_10thetas(sal, ptmp, pres, la_ptmp,
             theta_range = np.argwhere(np.logical_or(theta_range_gt, theta_range_lt))
 
         for i in theta_range:
-
             pres[i[0], i[1]] = np.nan
             sal[i[0], i[1]] = np.nan
             ptmp[i[0], i[1]] = np.nan
@@ -594,8 +647,8 @@ def find_10thetas(sal, ptmp, pres, la_ptmp,
             ptmp[i[0], i[1]] = np.nan
 
     if use_pres_lt.__len__() > 0 and use_pres_gt.__len__() > 0:
-        pres_range_lt = (pres < use_pres_gt)
-        pres_range_gt = (pres > use_pres_lt)
+        pres_range_lt = pres < use_pres_gt
+        pres_range_gt = pres > use_pres_lt
 
         if use_pres_lt < use_pres_gt:
             pres_range = np.argwhere(np.logical_and(pres_range_lt, pres_range_gt))
@@ -614,7 +667,6 @@ def find_10thetas(sal, ptmp, pres, la_ptmp,
 
     # only find levels if we have a valid theta range
     if min_theta < max_theta:
-
         # get pressure levels
         increment = 50
         max_pres = np.nanmax(pres)
@@ -631,15 +683,27 @@ def find_10thetas(sal, ptmp, pres, la_ptmp,
     interp_t = np.empty((pres_levels.__len__(), profile_depth)) * np.nan
 
     for depth in range(profile_depth):
-        good = np.argwhere(np.logical_and(~np.isnan(pres[:, depth]),
-                                          ~np.isnan(ptmp[:, depth])))
+        good = (~np.isnan(pres[:, depth])) & (~np.isnan(ptmp[:, depth]))
 
-        if good.__len__() > 0:
-            for pres_i in range(pres_levels.__len__()):
-                if np.nanmax(pres[good, depth]) > pres_levels[pres_i] > np.nanmin(pres[good, depth]):
-                    interp = interpolate.interp1d(pres[good, depth].flatten(),
-                                                  ptmp[good, depth].flatten())
-                    interp_t[pres_i, depth] = interp(pres_levels[pres_i])
+        if np.any(good):
+            x = pres[good, depth]
+            y = ptmp[good, depth]
+
+            sort_idx = np.argsort(x)
+            x = x[sort_idx]
+            y = y[sort_idx]
+
+            interp = interp1d(
+                x,
+                y,
+                bounds_error=False,
+                fill_value=np.nan,
+                assume_sorted=True,
+            )
+            interp_vals = interp(pres_levels)
+            valid = (pres_levels > x.min()) & (pres_levels < x.max())
+
+            interp_t[valid, depth] = interp_vals[valid]
 
     # find mean of the interpolated pressure at each level
 
@@ -661,7 +725,6 @@ def find_10thetas(sal, ptmp, pres, la_ptmp,
     # find indices that minimise theta on each level
 
     for depth in range(profile_depth):
-
         for level in range(theta_levels.__len__()):
             theta_diff = np.array([np.nan])
 
@@ -672,8 +735,7 @@ def find_10thetas(sal, ptmp, pres, la_ptmp,
                 theta_level_indices[level, depth] = np.nan
 
             else:
-                theta_level_indices[level, depth] = np.min(np.argwhere(theta_diff ==
-                                                                       np.nanmin(theta_diff)))
+                theta_level_indices[level, depth] = np.min(np.argwhere(theta_diff == np.nanmin(theta_diff)))
 
     # find salinity variance on these theta levels
 
@@ -686,9 +748,11 @@ def find_10thetas(sal, ptmp, pres, la_ptmp,
             # only continue if we have a good index
             if ~np.isnan(theta_index):
                 theta_index = int(theta_index)
-                interval = np.arange(np.max([theta_index - 1, 0]),
-                                     np.min([theta_index + 1, profile_no - 1]) + 1,
-                                     dtype=int)
+                interval = np.arange(
+                    np.max([theta_index - 1, 0]),
+                    np.min([theta_index + 1, profile_no - 1]) + 1,
+                    dtype=int,
+                )
 
                 ptmp_diff = ptmp[theta_index, depth] - ptmp[interval, depth]
 
@@ -717,19 +781,31 @@ def find_10thetas(sal, ptmp, pres, la_ptmp,
                     k_index = theta_index
 
                 # interpolate theta level, if possible
-                if (k_index != theta_index and ~np.isnan(sal[theta_index, depth]) and
-                        ~np.isnan(sal[k_index, depth]) and ~np.isnan(ptmp[theta_index, depth]) and
-                        ~np.isnan(ptmp[k_index, depth])):
-                    interp_ptmp_sal = interpolate.interp1d([ptmp[theta_index, depth],
-                                                            ptmp[k_index, depth]],
-                                                           [sal[theta_index, depth],
-                                                            sal[k_index, depth]])
+                ptmp1 = ptmp[theta_index, depth]
+                ptmp2 = ptmp[k_index, depth]
+                sal1 = sal[theta_index, depth]
+                sal2 = sal[k_index, depth]
 
-                    sal_temp[level, depth] = interp_ptmp_sal(theta_levels[level])
+                # Validate inputs
+                if (
+                    k_index != theta_index
+                    and not np.isnan(ptmp1)
+                    and not np.isnan(ptmp2)
+                    and not np.isnan(sal1)
+                    and not np.isnan(sal2)
+                ):
+                    # Avoid division by zero
+                    if ptmp1 != ptmp2:
+                        t = theta_levels[level]
 
-                # else we use the closest points
-                else:
-                    sal_temp[level, depth] = sal[theta_index, depth]
+                        # Linear interpolation formula
+                        sal_interp = sal1 + (sal2 - sal1) * (t - ptmp1) / (ptmp2 - ptmp1)
+
+                        sal_temp[level, depth] = sal_interp
+
+                    else:
+                        # Degenerate case: identical ptmp values
+                        sal_temp[level, depth] = sal1  # or np.nan if preferred
 
     num_good = np.empty((theta_levels.__len__(), 1)) * np.nan
     percent_s_profs = np.empty((theta_levels.__len__(), 1)) * np.nan
