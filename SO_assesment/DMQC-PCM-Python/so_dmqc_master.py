@@ -36,9 +36,12 @@ class SO_DMQC:
         self.CONFIG_DIR = self.OWC_CONFIG["CONFIG_DIRECTORY"]
         self.ELEVATION_FILE = self.OWC_CONFIG["ELEVATION_FILE"]
 
+        self.ROLE = self.OWC_CONFIG["ROLE"]
+
         self._full_config = {
             "PCM": self.PCM_CONFIG,
             "OWC": self.OWC_CONFIG,
+            "ROLE": self.ROLE,
             "ELEVATION_FILE": self.ELEVATION_FILE,
             "OUTPUT_DIRECTORIES": {
                 "CACHE_DIR": str(self.CACHE_DIR),
@@ -106,16 +109,13 @@ class SO_DMQC:
                             with argopy.set_options(src=data_src, mode="expert"):
                                 ds = ArgoDataFetcher().float(float_WMO).load().data
 
-                        # ds.argo.create_float_source(self.FLOAT_SOURCE_RAW)
-                        # ds.argo.create_float_source(self.FLOAT_SOURCE_ADJUSTED, force="adjusted")
-                        try:
-                            # Attempt to create source using Adjusted data
-                            ds.argo.create_float_source("outputs/owc/float_calib/adjusted", force="adjusted")
-                            print("Success: Adjusted source created.")
-                        except argopy.errors.NoDataLeft:
-                            print("Warning: No adjusted data found. Falling back to RAW data...")
-                            # Create source using Raw data instead
-                            ds.argo.create_float_source("outputs/owc/float_calib/raw")
+                        if self.ROLE == "auditor":  # Attempt to create source using Adjusted data
+                            ds.argo.create_float_source(self.FLOAT_SOURCE_ADJUSTED, force="adjusted")
+                            ds.argo.create_float_source(self.FLOAT_SOURCE_RAW)
+                            print("Success: Adjusted and Raw source created.")
+                        elif self.ROLE == "operational":
+                            ds.argo.create_float_source(self.FLOAT_SOURCE_RAW)
+                            print("Success: Raw data source created")
 
                     except DataNotFound:
                         error_message = "XXX DataNotFound error: due to QC flags (check netCDF file) - skipping"
