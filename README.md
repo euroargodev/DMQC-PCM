@@ -5,7 +5,7 @@
 *Authors of the DMQC-PCM tool*: Andrea Garcia Juan (andrea.garcia.juan@ifremer.fr), Kevin Balem (kevin.balem@ifremer.fr), Cécile Cabanes (cecile.cabanes@ifremer.fr) and Guillaume Maze (gmaze@ifremer.fr)
 ***
 
-The quality assessment method in the Southern Ocean (SO) uses the pre-classified core Argo float and climatological data belonging to similar water mass regimes using the Profile Characterisation Model (PCM). These pre-classified reference data are further used in the DMQC software - OWC analysis. This method allows the DMQC operator to avoid noise from other water masses leading to a more robust quality control analysis of salinity data in delayed mode. 
+The quality assessment method in the Southern Ocean (SO) uses the pre-classified core Argo float and climatological data belonging to similar water mass regimes using the Profile Characterisation Model (PCM). These pre-classified reference data are further used in the DMQC software - OWC analysis. This method allows the DMQC operator to avoid noise from other water masses leading to a more robust quality control analysis of salinity data in delayed mode.
 
 The SO quality assessment software is designed based on the currently available version of DMQC-PCM (the main branch of this repository) and the OWC software. The DMQC-PCM is a quality control method based on machine learning. It uses a statistical classifier (a PCM: Profile Classification Model) to organize and select more appropriately climatology (reference) data for the quality control of an Argo float. It has been shown that the DMQC-PCM software is able to improve the detection of salinity drift and temperature or salinity outliers. Moreover, when combined with the standard salinity calibration method, DMQC-PCM software is able to reduce the error on the correction while preserving confidence in this correction amplitude.
 
@@ -26,7 +26,7 @@ Since the SO quality assessment software is designed for both Matlab and Python 
 (1) Setup configuration files<br />
 - *pcm-config.txt* <br />
   This file is used by the DMQC-PCM Python software and includes the directories to the local archive including the weekly updated NetCDF data from GDAC. Moreover,   it also includes the following constants: the maximal interpolation depth from which reference data (MAX_DEPTH = 1000), correlation distance (CORR_DISTANCE =     50), number of runs in BIC for each class (NUMBER_RUNS = 10) and maximal number of classes to explore (NK = 10).
-  
+
 - *ow_config_linux_ctd_argo.txt*<br />
 This file includes the configurations used in OWC Matlab software for the Argo floats analysis. To best represent the dynamic condition in this region and for further comparison of output with the DM data the constant values of the objective mapping parameters have been used (Table 3.1). In Task 5.3, the floats which are going through the SO quality assessment analysis are firstly run using the first “SO1” configurations. The other sets of configurations are used if the specific float requires more iterations. Moreover, this file also includes the option for including the class labels from the PCM analysis (USE_PCM=1).
 
@@ -35,20 +35,84 @@ The list of WMO numbers of floats which are intended to go through the SO qualit
 
 - *so_dmqc_master.py* <br />
   This Python code (1) retrieves data from the local repository or GDAC (using argopy package), (2) automatically generates the source code for OWC analysis (using   argopy package), (3) runs the BIC function which is estimating the most suitable number of classes for a training dataset to model, (4) runs the DMQC-PCM   software and generate the output plots, model and class labels.
-  
+
 - *ow_calibration_pcm.m* <br />
   This Matlab code runs the OWC software including the class labels from the PCM and generates the diagnostic plots.
 
 ### DMQC-PCM-Python
 (1 ) Setup configuration files <br />
-All necessary directories, constant values for PCM, and objective mapping parameters which are needed to run both PCM and OWC software can be set in one initial file below. The configurations used are the same as in the DMQC-PCM-main software. <br /> 
+All necessary directories, constant values for PCM, and objective mapping parameters which are needed to run both PCM and OWC software can be set in one initial file below. The configurations used are the same as in the DMQC-PCM-main software. <br />
 
 - *pcm_ow_config.ini*
+
+👉 In the config there is a configuration called 'ROLE'. By default it is set as 'auditor'. The only other role can be 'operational'
+When role is auditor the app will try to retrive adjusted and raw data where operational will only pull raw data to analyse.
 
 (2) Select floats for analysis and run the codes in software<br />
 The list of WMO numbers of floats which are intended to go through the SO quality assessment needs to be specified in the following code below. This code is also used to run the entire software. <br />
 
 - *so_dmqc_master.py* <br />
-In addition to the code from the DMQC-PCM-main, this code is also performing the automatic OWC Python calculations. 
+In addition to the code from the DMQC-PCM-main, this code is also performing the automatic OWC Python calculations.
 
 
+---
+
+### How to use Poetry to run DMQC-PCM-Python
+
+Dependencies for the **DMQC-PCM-Python** software are managed using [Poetry](https://python-poetry.org/), which handles virtual environment creation and package installation automatically.
+
+
+**Prerequisites:** Poetry must be installed. See the [Poetry installation guide](https://python-poetry.org/docs/#installation) if needed.
+
+---
+
+#### Installing Poetry
+
+If Poetry is not already installed:
+
+- **Windows / macOS:**
+```
+  pip install poetry
+```
+
+- **Linux:**
+```
+  curl -sSL https://install.python-poetry.org | python3 -
+```
+  Then add Poetry to your PATH (adjust the path to match your username):
+```
+  export PATH="/home/<username>/.local/bin:$PATH"
+```
+
+Verify the installation:
+```
+poetry --version
+```
+
+---
+
+#### Running DMQC-PCM-Python
+
+1. Navigate to the `DMQC-PCM-Python` directory:
+```
+   cd SO_assesment/DMQC-PCM-Python
+```
+
+2. Install dependencies (first time only, or after any changes to `pyproject.toml`):
+```
+   poetry install
+```
+
+3. Run the software:
+   Use poetry run followed by the WMO number of the float you wish to analyze:
+```
+poetry run python so_dmqc_master.py 1902081
+```
+### Operational Use on Different Drives:
+You do not need to move Poetry to your operational drive. You can run it from any location. If you wish to keep all project dependencies on a specific drive (to avoid copying files across or using space in /home), configure Poetry to store the environment locally within the project folder:
+
+```
+cd </path/to/your/operational/drive>/DMQC-PCM-Python
+poetry config virtualenvs.in-project true
+poetry install
+```
