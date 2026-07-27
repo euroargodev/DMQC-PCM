@@ -8,7 +8,7 @@ from pathlib import Path
 
 import argopy
 import xarray as xr
-from argodmqc_owc.pyowc import calibration, configuration, plot
+from pyowc import calibration, configuration, plot
 from argodmqc_pcm.PCM_utils_forDMQC.BIC_calculation import plot_BIC
 from argodmqc_pcm.PCM_utils_forDMQC.classification import applyBIC, applyPCM, loadReferenceData, setupLogger
 from argodmqc_pcm.PCM_utils_forDMQC.config_context import config_context
