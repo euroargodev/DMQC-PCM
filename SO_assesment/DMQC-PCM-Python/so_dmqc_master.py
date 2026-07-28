@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 import argparse
-import configparser
+import json
 import logging
 import os
 import sys
+from datetime import datetime
 from pathlib import Path
 
 import argopy
@@ -18,9 +19,8 @@ from argopy.errors import DataNotFound, NetCDF4FileNotFoundError
 
 class SO_DMQC:
     def __init__(self, config_file):
-        config = configparser.ConfigParser()
-        print(config_file)
-        config.read(config_file)
+        with open(config_file) as file:
+            config = json.loads(file.read())
         base_dir = Path(__file__).resolve().parent
 
         self.PCM_CONFIG = config["PCM"]
@@ -161,12 +161,11 @@ class SO_DMQC:
 
                 if PCM_file_name:
                     run_PCM_flag = False
-                    if int(self.OWC_CONFIG["USE_PCM"]):
-                        error_message = "PCM has already been run"
-                        print(error_message + " - skipping ")
-                        runtime_logger.info(error_message)
+                    error_message = "PCM has already been run"
+                    print(error_message + " - skipping ")
+                    runtime_logger.info(error_message)
 
-                if run_PCM_flag and int(self.OWC_CONFIG["USE_PCM"]):
+                if run_PCM_flag:
                     info_message = "applying PCM"
                     print(info_message)
                     runtime_logger.info(info_message)
@@ -253,7 +252,7 @@ class SO_DMQC:
                     info_message = ">>> updating salinity mapper"
                     print(info_message)
                     runtime_logger.info(info_message)
-                    calibration.update_salinity_mapping(str(float_WMO), self.OWC_CONFIG, self.PCM_CONFIG["CLASSES_DIR"])
+                    calibration.update_salinity_mapping("", self.OWC_CONFIG, str(float_WMO), self.PCM_CONFIG["CLASSES_DIR"])
                     runtime_logger.info(">>> successful")
 
                 except FileNotFoundError:
@@ -271,7 +270,7 @@ class SO_DMQC:
                     info_message = ">>> setting cal series"
                     print(info_message)
                     runtime_logger.info(info_message)
-                    configuration.set_calseries(str(float_WMO), self.OWC_CONFIG)
+                    configuration.set_calseries("", str(float_WMO), self.OWC_CONFIG)
                     runtime_logger.info(">>> successful")
 
                 except FileNotFoundError:
@@ -284,7 +283,7 @@ class SO_DMQC:
                     info_message = ">>> calculating piecewise fit"
                     print(info_message)
                     runtime_logger.info(info_message)
-                    fit_type = calibration.calc_piecewisefit(str(float_WMO), self.OWC_CONFIG)
+                    fit_type = calibration.calc_piecewisefit("", str(float_WMO), self.OWC_CONFIG)
                     runtime_logger.info(f">>> fit type {fit_type}")
                     runtime_logger.info(">>> successful")
 
@@ -303,7 +302,8 @@ class SO_DMQC:
                     info_message = ">>> generating plots"
                     print(info_message)
                     runtime_logger.info(info_message)
-                    plot.dashboard(str(float_WMO), self.OWC_CONFIG)
+                    # plot_diagnostics(float_dir, float_name, config, levels=2, headless: bool = False, file_suffix: str = "")
+                    plot.dashboard("", str(float_WMO), self.OWC_CONFIG)
                     runtime_logger.info(">>> successful")
 
                 except FileNotFoundError:
@@ -327,5 +327,5 @@ if __name__ == "__main__":
         warnings.simplefilter("ignore")
 
     # Make an instance of the class and implement the run function
-    obj = SO_DMQC("pcm_owc_config.ini")
+    obj = SO_DMQC("pcm_owc_config.json")
     obj.run()
