@@ -202,7 +202,7 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
     ds['n_profiles'] = np.arange(len(ds['n_profiles']))
     # create mask
     mask_s = np.empty((1,len(ds['n_profiles'].values)))
-    mask_s[:] = np.NaN
+    mask_s[:] = np.nan
     ds["mask_s"]=(['n_profiles'],  np.squeeze(mask_s))
     
     plus_degrees = corr_dist/111 +1 # from km to degrees
@@ -232,7 +232,7 @@ def get_regulargrid_dataset(ds, corr_dist, season='all'):
         # points near than corr_dist = 1
         mask_dist = np.isnan(ds_slice['mask_s'].values)*1
         dist_vector = np.array(np.squeeze(dist_matrix[:,random_p_i])).astype('float')*np.array(mask_dist)
-        dist_vector[dist_vector == 0] = np.NaN
+        dist_vector[dist_vector == 0] = np.nan
         bool_near_points = (dist_vector < corr_dist)
         n_profiles_near_points = ds_slice['n_profiles'].values[bool_near_points]
         
