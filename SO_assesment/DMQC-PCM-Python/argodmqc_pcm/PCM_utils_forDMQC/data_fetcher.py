@@ -84,13 +84,13 @@ def get_refdata(float_mat_path, config, map_pv_use=0):
 
     """
     # get float trajectory
-    wmo_boxes = config["config_directory"] + config["config_wmo_boxes"]
-    ref_path = config["historical_directory"]
+    wmo_boxes = config["CONFIG_DIRECTORY"] + config["CONFIG_WMO_BOXES"]
+    ref_path = config["HISTORICAL_DIRECTORY"]
     mat_dict_float = sp.io.loadmat(float_mat_path)
     # calculate geographical extent
     plus_box = 10  # degrees
-    longitude_large = float(config["mapscale_longitude_large"])
-    latitude_large = float(config["mapscale_latitude_large"])
+    longitude_large = float(config["MAPSCALE_LONGITUDE_LARGE"])
+    latitude_large = float(config["MAPSCALE_LATITUDE_LARGE"])
     lon_float_180 = np.mod((mat_dict_float["LONG"] + 180), 360) - 180
     geo_extent = [
         lon_float_180.min() - longitude_large - plus_box,
@@ -439,9 +439,9 @@ def select_ellipses(mat_dict_float, ds, config, map_pv_use=0):
         Dataset with selected profiles
 
     """
-    longitude_large = float(config["mapscale_longitude_large"])
-    latitude_large = float(config["mapscale_latitude_large"])
-    phi_large = float(config["mapscale_phi_large"])
+    longitude_large = float(config["MAPSCALE_LONGITUDE_LARGE"])
+    latitude_large = float(config["MAPSCALE_LATITUDE_LARGE"])
+    phi_large = float(config["MAPSCALE_PHI_LARGE"])
 
     long_vector = np.array(ds["long"].values)
     lat_vector = np.array(ds["lat"].values)
