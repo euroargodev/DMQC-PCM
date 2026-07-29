@@ -22,6 +22,7 @@ def interpolate_standard_levels(ds, std_lev):
 
     # Selecting profiles that have a max(pressure) > max(std_lev) to avoid extrapolation in that direction
     # For levels < min(pressure), first level values of the profile are extended to surface.
+    ds.load()
     i1 = (ds['pres'].max('n_pres') >= std_lev[-1])
     ds = ds.where(i1, drop=True)
 
