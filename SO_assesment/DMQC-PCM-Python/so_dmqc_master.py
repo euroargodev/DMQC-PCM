@@ -174,19 +174,25 @@ class SO_DMQC:
                     runtime_logger.info(info_message)
 
                     # Starting the PCM analysis
-                    cache_file = Path(f"{self.CACHE_DIR}/cache_{float_WMO}.nc")
-                    if self._should_regenerate_cache(cache_file, Path(wong_matrix_path), logger=runtime_logger):
-                        runtime_logger.info("Computing reference dataset...")
-                        ds = loadReferenceData(
-                            float_mat_path=wong_matrix_path,
-                            ow_config=self.OWC_CONFIG,
-                        )
-                        ds = ds.compute()  # ensure no lazy graph
-                        ds.to_netcdf(cache_file)
-                        runtime_logger.info("Written file exists? %s", cache_file.exists())
-                    else:
-                        runtime_logger.info("Loading cached dataset...")
-                        ds = xr.open_dataset(cache_file)
+                    runtime_logger.info("Computing reference dataset...")
+                    ds = loadReferenceData(
+                        float_mat_path=wong_matrix_path,
+                        ow_config=self.OWC_CONFIG,
+                    )
+                    ds = ds.compute()  # ensure no lazy graph
+                    # cache_file = Path(f"{self.CACHE_DIR}/cache_{float_WMO}.nc")
+                    # if self._should_regenerate_cache(cache_file, Path(wong_matrix_path), logger=runtime_logger):
+                    #     runtime_logger.info("Computing reference dataset...")
+                    #     ds = loadReferenceData(
+                    #         float_mat_path=wong_matrix_path,
+                    #         ow_config=self.OWC_CONFIG,
+                    #     )
+                    #     ds = ds.compute()  # ensure no lazy graph
+                    #     ds.to_netcdf(cache_file)
+                    #     runtime_logger.info("Written file exists? %s", cache_file.exists())
+                    # else:
+                    #     runtime_logger.info("Loading cached dataset...")
+                    #     ds = xr.open_dataset(cache_file)
 
                     info_message = ">>> applying BIC"
                     print(info_message)
