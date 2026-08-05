@@ -4,24 +4,20 @@ import json
 import logging
 import os
 import sys
-from datetime import datetime
 from pathlib import Path
 
 import argopy
-import xarray as xr
 from pyowc import calibration, configuration, plot
 from argodmqc_pcm.PCM_utils_forDMQC.BIC_calculation import plot_BIC
 from argodmqc_pcm.PCM_utils_forDMQC.classification import applyBIC, applyPCM, loadReferenceData, setupLogger
 from argodmqc_pcm.PCM_utils_forDMQC.config_context import config_context
 from argopy import DataFetcher as ArgoDataFetcher
-from argopy.errors import DataNotFound, NetCDF4FileNotFoundError
 
 
 class SO_DMQC:
     def __init__(self, config_file):
         with open(config_file) as file:
             config = json.loads(file.read())
-        base_dir = Path(__file__).resolve().parent
 
         self.PCM_CONFIG = config["PCM"]
         self.OWC_CONFIG = config["OWC"]
@@ -31,8 +27,6 @@ class SO_DMQC:
 
         self.FLOAT_SOURCE_RAW = self.OWC_CONFIG["FLOAT_SOURCE_DIRECTORY"]
         self.FLOAT_SOURCE_ADJUSTED = self.FLOAT_SOURCE_RAW.replace("default", "adjusted")
-        self.CACHE_DIR = base_dir / config["OUTPUT DIRECTORIES"]["CACHE_DIR"]
-        self.CACHE_DIR.mkdir(parents=True, exist_ok=True)
         self.CONFIG_DIR = self.OWC_CONFIG["CONFIG_DIRECTORY"]
         self.ELEVATION_FILE = self.OWC_CONFIG["ELEVATION_FILE"]
 
@@ -44,110 +38,111 @@ class SO_DMQC:
             "ROLE": self.ROLE,
             "ELEVATION_FILE": self.ELEVATION_FILE,
             "OUTPUT_DIRECTORIES": {
-                "CACHE_DIR": str(self.CACHE_DIR),
                 "LOGS_DIR": self.LOGS_DIR,
                 "DAC_COMP_DIR": self.DAC_COMP_DIR,
             },
         }
 
-    def _should_regenerate_cache(self, cache_file: Path, wong_matrix_path: Path, logger) -> bool:
-        """Regenerate cache if it doesn't exist or source data is newer."""
-        runtime_logger = logger or logging.getLogger(__name__)
-        if not cache_file.exists():
-            runtime_logger.info("Cache file does not exist, will generate.")
-            return True
+    def create_wong_matrix(self, float_wmo, logger):
+        data_src = self.PCM_CONFIG.get("SRC", "gdac").lower()
+        if data_src == "localftp":
+            # local copy of GDAC
+            with argopy.set_options(src="gdac", gdac=self.PCM_CONFIG["GDAC_MIRROR"], mode="expert"):
+                ds = ArgoDataFetcher().float(float_wmo).load().data
 
-        cache_mtime = cache_file.stat().st_mtime
-        source_mtime = wong_matrix_path.stat().st_mtime
+        elif data_src == "gdac":
+            with argopy.set_options(src="gdac", gdac=self.PCM_CONFIG["GDAC"], mode="expert"):
+                ds = ArgoDataFetcher().float(float_wmo).load().data
 
-        if source_mtime > cache_mtime:
-            runtime_logger.info(
-                "Source data newer than cache (source: %s, cache: %s), regenerating.",
-                datetime.fromtimestamp(source_mtime),
-                datetime.fromtimestamp(cache_mtime),
-            )
-            return True
+        else:
+            # erddap, argovis etc
+            with argopy.set_options(src=data_src, mode="expert"):
+                ds = ArgoDataFetcher().float(float_wmo).load().data
 
-        cache_size = cache_file.stat().st_size
-        if cache_size < 1024:  # suspiciously small — likely corrupt/empty
-            runtime_logger.warning("Cache file suspiciously small (%d bytes), regenerating.", cache_size)
-            return True
+        if self.ROLE == "auditor":  # Attempt to create source using Adjusted data
+            ds.argo.create_float_source(self.FLOAT_SOURCE_ADJUSTED, force="adjusted")
+            ds.argo.create_float_source(self.FLOAT_SOURCE_RAW)
+            logger.info("Success: Adjusted and Raw source created.")
+        elif self.ROLE == "operational":
+            ds.argo.create_float_source(self.FLOAT_SOURCE_RAW)
+            logger.info("Success: Raw data source created")
 
-        runtime_logger.info("Cache is up to date (%d bytes), loading from cache.", cache_size)
-        return False
+    def run_pcm(self, logger, wong_matrix_path, float_wmo):
+        logger.info("applying PCM")
+        logger.info(">>> loading reference data")
 
-    def run(self):
+        # Starting the PCM analysis
+        logger.info("Computing reference dataset...")
+        ds = loadReferenceData(
+            float_mat_path=wong_matrix_path,
+            ow_config=self.OWC_CONFIG,
+        )
+        ds = ds.compute()  # ensure no lazy graph
+        logger.info(">>> applying BIC")
+
+        # apply BIC function to determine most suitable number of classes
+        BIC, number_classes = applyBIC(
+            ds=ds,
+            Nrun=int(self.PCM_CONFIG["NUMBER_RUNS"]),
+            NK=int(self.PCM_CONFIG["NK"]),
+            corr_dist=int(self.PCM_CONFIG["CORR_DISTANCE"]),
+            max_depth=int(self.PCM_CONFIG["MAX_DEPTH"]),
+            logger_name=logger.name,
+        )
+
+        logger.info(f">>> classes: {number_classes}")
+
+        # generate the BIC plot
+        plot_BIC(
+            BIC=BIC,
+            NK=int(self.PCM_CONFIG["NK"]),
+            float_WMO=float_wmo,
+            plots_dir=self.PCM_CONFIG["PLOTS_DIR"],
+        )
+        logger.info(">>> BIC successful")
+
+        logger.info(">>> classifying")
+        pcm_file_path = (
+            self.PCM_CONFIG["CLASSES_DIR"] + f"PCM_classes_{float_wmo}_K{number_classes}.txt"
+        )
+        logger.info("pcm file will be saved to %s", pcm_file_path)
+        # run PCM function to calculate the classes and save OWC text file
+        applyPCM(
+            ds=ds,
+            float_WMO=float_wmo,
+            float_mat_path=wong_matrix_path,
+            pcm_file_path=pcm_file_path,
+            number_classes=number_classes,
+            corr_dist=int(self.PCM_CONFIG["CORR_DISTANCE"]),
+            max_depth=int(self.PCM_CONFIG["MAX_DEPTH"]),
+            plots_dir=self.PCM_CONFIG["PLOTS_DIR"],
+            models_dir=self.PCM_CONFIG["MODELS_DIR"],
+        )
+
+        logger.info(">>> applying PCM successful")
+
+    def run(self, float_list: list[str]):
         # process each float in the list of WMO numbers in turn
         with config_context(self._full_config):
             for float_WMO in float_list:
-                run_PCM_flag = True
-
+                ##### Setup logger #####
                 log_file_path = f"{self.LOGS_DIR}{float_WMO}_runtime_log.txt"
                 logger_name = f"{float_WMO}_runtime_logger"
-                runtime_logger = setupLogger(logger_name=logger_name, log_file=log_file_path, level=logging.INFO)
+                logger = setupLogger(logger_name=logger_name, log_file=log_file_path, level=logging.INFO)
                 info_message = "starting processing"
-                runtime_logger.info(f"{info_message} WMO number: {float_WMO}")
-                runtime_logger.info(info_message)
+                logger.info(f"{info_message} WMO number: {float_WMO}")
 
-                # Generating Wong matrix for raw data
+                ##### Generate Wong matrix for raw data #####
                 wong_matrix_path = os.path.join(self.FLOAT_SOURCE_RAW, f"{float_WMO}.mat")
-
                 if not os.path.exists(wong_matrix_path):
-                    try:
-                        data_src = self.PCM_CONFIG.get("SRC", "gdac").lower()
-                        if data_src == "localftp":
-                            # local copy of GDAC
-                            with argopy.set_options(src="gdac", gdac=self.PCM_CONFIG["GDAC_MIRROR"], mode="expert"):
-                                ds = ArgoDataFetcher().float(float_WMO).load().data
-
-                        elif data_src == "gdac":
-                            with argopy.set_options(src="gdac", gdac=self.PCM_CONFIG["GDAC"], mode="expert"):
-                                ds = ArgoDataFetcher().float(float_WMO).load().data
-
-                        else:
-                            # erddap, argovis etc
-                            with argopy.set_options(src=data_src, mode="expert"):
-                                ds = ArgoDataFetcher().float(float_WMO).load().data
-
-                        if self.ROLE == "auditor":  # Attempt to create source using Adjusted data
-                            ds.argo.create_float_source(self.FLOAT_SOURCE_ADJUSTED, force="adjusted")
-                            ds.argo.create_float_source(self.FLOAT_SOURCE_RAW)
-                            print("Success: Adjusted and Raw source created.")
-                        elif self.ROLE == "operational":
-                            ds.argo.create_float_source(self.FLOAT_SOURCE_RAW)
-                            print("Success: Raw data source created")
-
-                    except DataNotFound:
-                        error_message = "XXX DataNotFound error: due to QC flags (check netCDF file) - skipping"
-
-                        runtime_logger.info(error_message)
-                        logging.shutdown()
-                        continue
-                    except ValueError as e:
-                        error_message = f"XXX ValueError: check whether WMO is valid :{e!s}"
-                        print(error_message + " - skipping")
-                        runtime_logger.info(error_message)
-                        logging.shutdown()
-                        continue
-                    except NetCDF4FileNotFoundError:
-                        error_message = "XXX NetCDF4FileNotFoundError: check whether WMO is valid"
-                        print(error_message + " - skipping")
-                        runtime_logger.info(error_message)
-                        logging.shutdown()
-                        continue
-
-                    info_message = "Wong matrix created"
+                    self.create_wong_matrix(float_WMO, logger)
+                    logger.info("Wong matrix created")
                 else:
-                    info_message = "Wong matrix already exists"
+                    logger.info("Wong matrix already exists")
 
-                print(info_message)
-                runtime_logger.info(info_message)
-
-                # if the PCM output file already exists skip this float
-                # NB that the number of classes in the output file name can vary
+                ##### Apply PCM #####
                 pcm_file_root = f"PCM_classes_{float_WMO}"
                 PCM_file_name = []
-
                 classes_dir = Path(self.PCM_CONFIG["CLASSES_DIR"])
                 if classes_dir.is_dir():
                     PCM_file_name = [
@@ -156,166 +151,27 @@ class SO_DMQC:
                         if file_name.name[: len(pcm_file_root)] == pcm_file_root
                     ]
                 else:
-                    runtime_logger.warning(f"CLASSES_DIR does not exist: {classes_dir}")
+                    logger.info(f"CLASSES_DIR does not exist: {classes_dir} - creating")
                     os.makedirs(classes_dir, exist_ok=True)
-
+                # if the PCM output file already exists skip this float
+                # NB that the number of classes in the output file name can vary
                 if PCM_file_name:
-                    run_PCM_flag = False
-                    error_message = "PCM has already been run"
-                    print(error_message + " - skipping ")
-                    runtime_logger.info(error_message)
+                    logger.info("PCM has already been run - skipping")
+                else:
+                    self.run_pcm(logger, wong_matrix_path, float_WMO)
 
-                if run_PCM_flag:
-                    info_message = "applying PCM"
-                    print(info_message)
-                    runtime_logger.info(info_message)
-                    info_message = ">>> loading reference data"
-                    print(info_message)
-                    runtime_logger.info(info_message)
-
-                    # Starting the PCM analysis
-                    runtime_logger.info("Computing reference dataset...")
-                    ds = loadReferenceData(
-                        float_mat_path=wong_matrix_path,
-                        ow_config=self.OWC_CONFIG,
-                    )
-                    ds = ds.compute()  # ensure no lazy graph
-                    # cache_file = Path(f"{self.CACHE_DIR}/cache_{float_WMO}.nc")
-                    # if self._should_regenerate_cache(cache_file, Path(wong_matrix_path), logger=runtime_logger):
-                    #     runtime_logger.info("Computing reference dataset...")
-                    #     ds = loadReferenceData(
-                    #         float_mat_path=wong_matrix_path,
-                    #         ow_config=self.OWC_CONFIG,
-                    #     )
-                    #     ds = ds.compute()  # ensure no lazy graph
-                    #     ds.to_netcdf(cache_file)
-                    #     runtime_logger.info("Written file exists? %s", cache_file.exists())
-                    # else:
-                    #     runtime_logger.info("Loading cached dataset...")
-                    #     ds = xr.open_dataset(cache_file)
-
-                    info_message = ">>> applying BIC"
-                    print(info_message)
-                    runtime_logger.info(info_message)
-
-                    # apply BIC function to determine most suitable number of classes
-                    BIC, number_classes = applyBIC(
-                        ds=ds,
-                        Nrun=int(self.PCM_CONFIG["NUMBER_RUNS"]),
-                        NK=int(self.PCM_CONFIG["NK"]),
-                        corr_dist=int(self.PCM_CONFIG["CORR_DISTANCE"]),
-                        max_depth=int(self.PCM_CONFIG["MAX_DEPTH"]),
-                        logger_name=logger_name,
-                    )
-
-                    runtime_logger.info(f">>> classes: {number_classes}")
-
-                    # generate the BIC plot
-                    plot_BIC(
-                        BIC=BIC,
-                        NK=int(self.PCM_CONFIG["NK"]),
-                        float_WMO=float_WMO,
-                        plots_dir=self.PCM_CONFIG["PLOTS_DIR"],
-                    )
-                    runtime_logger.info(">>> successful")
-
-                    try:
-                        info_message = ">>> classifying"
-                        print(info_message)
-                        runtime_logger.info(info_message)
-                        pcm_file_path = (
-                            self.PCM_CONFIG["CLASSES_DIR"] + f"PCM_classes_{float_WMO}_K{number_classes}.txt"
-                        )
-                        print("pcm file will be saved to %s", pcm_file_path)
-                        # run PCM function to calculate the classes and save OWC text file
-                        applyPCM(
-                            ds=ds,
-                            float_WMO=float_WMO,
-                            float_mat_path=wong_matrix_path,
-                            pcm_file_path=pcm_file_path,
-                            number_classes=number_classes,
-                            corr_dist=int(self.PCM_CONFIG["CORR_DISTANCE"]),
-                            max_depth=int(self.PCM_CONFIG["MAX_DEPTH"]),
-                            plots_dir=self.PCM_CONFIG["PLOTS_DIR"],
-                            models_dir=self.PCM_CONFIG["MODELS_DIR"],
-                        )
-
-                        runtime_logger.info(">>> successful")
-
-                    except IndexError:
-                        error_message = "XXX IndexError: too few profiles in data_fetcher.py to index array"
-                        print(error_message)
-                        runtime_logger.info(error_message)
-                    except MemoryError:
-                        error_message = "XXX ArrayMemoryError: Unable to allocate sufficient memory"
-                        print(error_message + ' for numpy array in "pyxpcm/xarray.py"')
-                        runtime_logger.info(error_message)
-
-                info_message = "applying OWC"
-                print(info_message)
-                runtime_logger.info(info_message)
-                try:
-                    info_message = ">>> updating salinity mapper"
-                    print(info_message)
-                    runtime_logger.info(info_message)
-                    calibration.update_salinity_mapping("", self.OWC_CONFIG, str(float_WMO), self.PCM_CONFIG["CLASSES_DIR"])
-                    runtime_logger.info(">>> successful")
-
-                except FileNotFoundError:
-                    error_message = "XXX file not found - check float source"
-                    print(error_message)
-                    runtime_logger.info(error_message)
-                    continue
-                except RuntimeError:
-                    error_message = 'XXX "NO DATA FOUND" - most likely calibration.get_region_data'
-                    print(error_message)
-                    runtime_logger.info(error_message)
-                    continue
-
-                try:
-                    info_message = ">>> setting cal series"
-                    print(info_message)
-                    runtime_logger.info(info_message)
-                    configuration.set_calseries("", str(float_WMO), self.OWC_CONFIG)
-                    runtime_logger.info(">>> successful")
-
-                except FileNotFoundError:
-                    error_message = "XXX file not found - check float mapped"
-                    print(error_message)
-                    runtime_logger.info(error_message)
-                    continue
-
-                try:
-                    info_message = ">>> calculating piecewise fit"
-                    print(info_message)
-                    runtime_logger.info(info_message)
-                    fit_type = calibration.calc_piecewisefit("", str(float_WMO), self.OWC_CONFIG)
-                    runtime_logger.info(f">>> fit type {fit_type}")
-                    runtime_logger.info(">>> successful")
-
-                except AttributeError:
-                    error_message = "XXX most likely no good data was found in core.stats.fit_cond"
-                    print(error_message)
-                    runtime_logger.info(error_message)
-                    continue
-                except ValueError:
-                    error_message = "XXX issue fitting with breaks in pyowc.core.stats.fit_cond"
-                    print(error_message)
-                    runtime_logger.info(error_message)
-                    continue
-
-                try:
-                    info_message = ">>> generating plots"
-                    print(info_message)
-                    runtime_logger.info(info_message)
-                    # plot_diagnostics(float_dir, float_name, config, levels=2, headless: bool = False, file_suffix: str = "")
-                    plot.dashboard("", str(float_WMO), self.OWC_CONFIG)
-                    runtime_logger.info(">>> successful")
-
-                except FileNotFoundError:
-                    error_message = "XXX file not found - either float source, mapped or calibrated"
-                    print(error_message)
-                    runtime_logger.info(error_message)
+                ##### Apply OWC #####
+                logger.info("applying OWC")
+                logger.info(">>> updating salinity mapper")
+                calibration.update_salinity_mapping("", self.OWC_CONFIG, str(float_WMO), self.PCM_CONFIG["CLASSES_DIR"])
+                logger.info(">>> setting cal series")
+                configuration.set_calseries("", str(float_WMO), self.OWC_CONFIG)
+                logger.info(">>> calculating piecewise fit")
+                fit_type = calibration.calc_piecewisefit("", str(float_WMO), self.OWC_CONFIG)
+                logger.info(f">>> fit type {fit_type}")
+                logger.info(">>> generating plots")
+                plot.dashboard("", str(float_WMO), self.OWC_CONFIG)
+                logger.info(">>> OWC successful")
 
                 logging.shutdown()
 
@@ -334,4 +190,4 @@ if __name__ == "__main__":
 
     # Make an instance of the class and implement the run function
     obj = SO_DMQC("pcm_owc_config.json")
-    obj.run()
+    obj.run(float_list)

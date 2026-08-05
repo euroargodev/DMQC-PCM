@@ -25,8 +25,13 @@ def setupLogger(logger_name, log_file, level=logging.INFO):
     fileHandler = logging.FileHandler(filename=log_file, mode="w")
     fileHandler.setFormatter(fmt=formatter)
 
+    consoleHandler = logging.StreamHandler()
+    consoleFormatter = logging.Formatter(fmt="%(message)s")
+    consoleHandler.setFormatter(consoleFormatter)
+
     l.setLevel(level)
     l.addHandler(fileHandler)
+    l.addHandler(consoleHandler)
     return l
 
 
