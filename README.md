@@ -64,33 +64,6 @@ Dependencies for the **DMQC-PCM-Python** software are managed using [Poetry](htt
 
 **Prerequisites:** Poetry must be installed. See the [Poetry installation guide](https://python-poetry.org/docs/#installation) if needed.
 
----
-
-#### Installing Poetry
-
-If Poetry is not already installed:
-
-- **Windows / macOS:**
-```
-  pip install poetry
-```
-
-- **Linux:**
-```
-  curl -sSL https://install.python-poetry.org | python3 -
-```
-  Then add Poetry to your PATH (adjust the path to match your username):
-```
-  export PATH="/home/<username>/.local/bin:$PATH"
-```
-
-Verify the installation:
-```
-poetry --version
-```
-
----
-
 #### Running DMQC-PCM-Python
 
 1. Navigate to the `DMQC-PCM-Python` directory:
@@ -104,7 +77,7 @@ poetry --version
 ```
 
 3. Run the software:
-   Use poetry run followed by the WMO number of the float you wish to analyze:
+   Use `poetry run so_dmqc_master.py` followed by the WMO number of the float you wish to analyze, e.g.
 ```
 poetry run python so_dmqc_master.py 1902081
 ```
