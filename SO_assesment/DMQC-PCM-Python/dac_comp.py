@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import argparse
 import os
 import sys
 import pandas as pd
@@ -9,7 +10,6 @@ from argodmqc_pcm.PCM_utils_forDMQC.classification import dac_comparison
 DAC_COMP_EXCEL_FILE = "DAC_comp_descisions.xlsx"
 
 
-float_list = [3900070]
 class DAC_COMP(object):
 
     def __init__(self, config_file):
@@ -19,7 +19,7 @@ class DAC_COMP(object):
             self.DAC_COMP_DIR = config['OUTPUT DIRECTORIES']['DAC_COMP_DIR']
 
 
-    def run(self):
+    def run(self, float_list):
         decision_list = []
         # process each float in the list of WMO numbers in turn
         for float_WMO in float_list:
@@ -50,6 +50,12 @@ class DAC_COMP(object):
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("floats", metavar="WMO", type=int, nargs="*", help="One or more WMO float numbers")
+
+    args = parser.parse_args()
+    float_list = args.floats
+
     # turn off console warnings
     if not sys.warnoptions:
         import warnings
@@ -57,4 +63,4 @@ if __name__ == '__main__':
 
     # Make an instance of the class and implement the run function
     obj = DAC_COMP('pcm_owc_config.json')
-    obj.run()
+    obj.run(float_list)
