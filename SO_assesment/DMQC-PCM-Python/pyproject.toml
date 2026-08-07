@@ -41,3 +41,4 @@ pyxpcm = {git = "https://github.com/obidam/pyxpcm.git"}
 scikit-learn = ">=1.2.1,<1.6"
 netcdf4 = ">=1.5.8"
 argodmqc-owc = "^0.2.1"
+openpyxl = "^3.1.5"

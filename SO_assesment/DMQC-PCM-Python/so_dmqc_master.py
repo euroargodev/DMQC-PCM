@@ -23,24 +23,19 @@ class SO_DMQC:
         self.OWC_CONFIG = config["OWC"]
 
         self.LOGS_DIR = config["OUTPUT DIRECTORIES"]["LOGS_DIR"]
-        self.DAC_COMP_DIR = config["OUTPUT DIRECTORIES"]["DAC_COMP_DIR"]
 
         self.FLOAT_SOURCE_RAW = self.OWC_CONFIG["FLOAT_SOURCE_DIRECTORY"]
         self.FLOAT_SOURCE_ADJUSTED = self.FLOAT_SOURCE_RAW.replace("default", "adjusted")
         self.CONFIG_DIR = self.OWC_CONFIG["CONFIG_DIRECTORY"]
         self.ELEVATION_FILE = self.OWC_CONFIG["ELEVATION_FILE"]
 
-        self.ROLE = self.OWC_CONFIG["ROLE"]
+        self.ROLE = config["ROLE"]
 
         self._full_config = {
             "PCM": self.PCM_CONFIG,
             "OWC": self.OWC_CONFIG,
             "ROLE": self.ROLE,
             "ELEVATION_FILE": self.ELEVATION_FILE,
-            "OUTPUT_DIRECTORIES": {
-                "LOGS_DIR": self.LOGS_DIR,
-                "DAC_COMP_DIR": self.DAC_COMP_DIR,
-            },
         }
 
     def create_wong_matrix(self, float_wmo, logger):

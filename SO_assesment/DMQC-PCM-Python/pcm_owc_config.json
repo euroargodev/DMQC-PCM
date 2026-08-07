@@ -1,6 +1,6 @@
 {
+    "ROLE": "operational",
     "OWC": {
-        "ROLE": "operational",
         "HISTORICAL_DIRECTORY": "/bodc2/vault/archive/argo/cls100061",
         "HISTORICAL_CTD_PREFIX": "/historical_ctd/CTD_for_DMQC_2026V01/ctd_",
         "HISTORICAL_BOTTLE_PREFIX": "/historical_bot/bot_",
@@ -62,11 +62,10 @@
     },
     "OUTPUT DIRECTORIES": {
         "LOGS_DIR": "outputs/logs/",
-        "DAC_COMP_DIR": "outputs/dac_comp/",
-        "CACHE_DIR": "outputs/cache"
+        "DAC_COMP_DIR": "outputs/dac_comp/"
     },
     "INDEX READER": {
-        "INDEX_FILE": "/scratch/argo/gdac_mirror/argo-index/ar_index_global_prof.txt",
+        "INDEX_FILE": "ar_index_global_prof.txt",
         "INDEX_FILE_HEADER_ROWS": 9,
         "EXCEL_FILE": "outputs/float_index/SO_argo_floats.xlsx",
         "MODE": "D"
