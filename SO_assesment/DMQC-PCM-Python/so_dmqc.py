@@ -165,7 +165,7 @@ class SO_DMQC:
                 fit_type = calibration.calc_piecewisefit("", str(float_WMO), self.OWC_CONFIG)
                 logger.info(f">>> fit type {fit_type}")
                 logger.info(">>> generating plots")
-                plot.dashboard("", str(float_WMO), self.OWC_CONFIG)
+                plot.dashboard("", str(float_WMO), self.OWC_CONFIG, headless=True)
                 logger.info(">>> OWC successful")
 
                 logging.shutdown()
