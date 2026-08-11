@@ -1,3 +1,5 @@
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -135,3 +137,5 @@ output/**/*
 # but keep the folders themselves
 !output/**/
 !output/**/.gitkeep
+
+ar_index_global_prof.txt
